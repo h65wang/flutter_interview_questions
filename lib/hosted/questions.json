@@ -1,6 +1,6 @@
 [
   {
-    "question": "If you need to declare an AnimationController, you are likely creating a:",
+    "title": "If you need to declare an AnimationController, you are likely creating a:",
     "answer": "explicit animation",
     "candidates": [
       "stateless widget",
@@ -14,7 +14,7 @@
     "credit": null
   },
   {
-    "question": "Which of the following properties of an `AnimatedContainer` will NOT get animated when its value is changed?",
+    "title": "Which of the following properties of an `AnimatedContainer` will NOT get animated when its value is changed?",
     "answer": "child",
     "candidates": [
       "width",
