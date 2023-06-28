@@ -1,0 +1,30 @@
+[
+  {
+    "question": "If you need to declare an AnimationController, you are likely creating a:",
+    "answer": "explicit animation",
+    "candidates": [
+      "stateless widget",
+      "implicit animation",
+      "AnimatedContainer widget"
+    ],
+    "tags": [
+      "animation"
+    ],
+    "difficulty": 1,
+    "credit": null
+  },
+  {
+    "question": "Which of the following properties of an `AnimatedContainer` will NOT get animated when its value is changed?",
+    "answer": "child",
+    "candidates": [
+      "width",
+      "color",
+      "padding"
+    ],
+    "tags": [
+      "animation"
+    ],
+    "difficulty": 1,
+    "credit": null
+  }
+]
