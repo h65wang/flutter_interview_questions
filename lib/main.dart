@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'model/repo.dart';
+import 'model/quiz_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,8 +11,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepoProvider(
-      create: () => Repo(),
+    return Provider(
+      create: () => QuizModel(),
       child: MaterialApp(
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -29,31 +29,24 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final repo = RepoProvider.of(context).repo;
+    final questions = context.watch<QuizModel>().questions;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('FiQ'),
       ),
-      body: ListenableBuilder(
-        listenable: repo,
-        builder: (BuildContext context, Widget? child) {
-          final questions = repo.questions;
-          if (questions == null) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          return ListView.builder(
-            itemCount: questions.length,
-            itemBuilder: (_, index) {
-              final q = questions[index];
-              return ListTile(
-                title: Text(q.title),
-              );
-            },
-          );
-        },
-      ),
+      body: questions != null
+          ? ListView.builder(
+              itemCount: questions.length,
+              itemBuilder: (_, index) {
+                final q = questions[index];
+                return ListTile(
+                  title: Text(q.title),
+                );
+              },
+            )
+          : const Center(child: CircularProgressIndicator()),
     );
   }
 }
