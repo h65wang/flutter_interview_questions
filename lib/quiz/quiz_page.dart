@@ -18,18 +18,24 @@ class _QuizPageState extends State<QuizPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Quiz Page'),
       ),
-      body: Column(
-        children: [
-          const _Overview(),
-          const Divider(),
-          Expanded(
-            child: PageView.builder(
-              itemCount: quizItems.length,
-              itemBuilder: (_, int index) => _PageItem(index),
+      body: quizItems.isEmpty
+          ? const Center(
+              child: Text(
+                'There are no matching questions in the question bank',
+              ),
+            )
+          : Column(
+              children: [
+                const _Overview(),
+                const Divider(),
+                Expanded(
+                  child: PageView.builder(
+                    itemCount: quizItems.length,
+                    itemBuilder: (_, int index) => _PageItem(index),
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Submit',
         child: const Icon(Icons.done),
