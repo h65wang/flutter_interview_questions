@@ -1,0 +1,6 @@
+{
+  "questions": [
+    "questions/animations.json",
+    "questions/mock.json"
+  ]
+}
