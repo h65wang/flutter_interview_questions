@@ -1,3 +1,4 @@
+/// Describe a question from the knowledge base, stored in JSON format.
 class Question {
   final String title;
   final String answer;
