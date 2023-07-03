@@ -74,7 +74,9 @@ class _QuizPageState extends State<QuizPage> {
                     itemCount: quizItems.length,
                     itemBuilder: (_, int index) => _PageItem(
                       index,
-                      onTap: () => _pageController.nextPage(duration: _kAnimationDuration, curve: _kAnimationCurve),
+                      onTap: () => _pageController.nextPage(
+                          duration: _kAnimationDuration,
+                          curve: _kAnimationCurve),
                     ),
                     onPageChanged: _updateOverviewPosition,
                   ),
@@ -92,10 +94,16 @@ class _QuizPageState extends State<QuizPage> {
             completed = (await showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                          content: const Text('You are missing some answers, continue?'),
+                          content: const Text(
+                              'You are missing some answers, continue?'),
                           actions: [
-                            TextButton(onPressed: Navigator.of(context).pop, child: const Text('no')),
-                            TextButton(onPressed: () => Navigator.of(context).pop(true), child: const Text('yes')),
+                            TextButton(
+                                onPressed: Navigator.of(context).pop,
+                                child: const Text('no')),
+                            TextButton(
+                                onPressed: () =>
+                                    Navigator.of(context).pop(true),
+                                child: const Text('yes')),
                           ],
                         )) ==
                 true);
@@ -112,7 +120,8 @@ class _QuizPageState extends State<QuizPage> {
 }
 
 class _Overview extends StatelessWidget {
-  const _Overview({Key? key, required this.scrollController, this.onTap}) : super(key: key);
+  const _Overview({Key? key, required this.scrollController, this.onTap})
+      : super(key: key);
 
   final void Function(int index)? onTap;
   final ScrollController scrollController;
@@ -147,7 +156,8 @@ class _Overview extends StatelessWidget {
 }
 
 class _OverviewItem extends StatelessWidget {
-  const _OverviewItem({required this.index, required this.isAnswered, this.onTap});
+  const _OverviewItem(
+      {required this.index, required this.isAnswered, this.onTap});
   final int index;
   final bool isAnswered;
   final VoidCallback? onTap;
@@ -156,7 +166,9 @@ class _OverviewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return RawMaterialButton(
       onPressed: onTap,
-      shape: CircleBorder(side: BorderSide(color: isAnswered ? Colors.green : const Color(0xFF000000))),
+      shape: CircleBorder(
+          side: BorderSide(
+              color: isAnswered ? Colors.green : const Color(0xFF000000))),
       child: Text('$index'),
     );
   }
