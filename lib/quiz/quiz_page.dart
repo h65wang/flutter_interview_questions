@@ -74,10 +74,13 @@ class _QuizPageState extends State<QuizPage> {
                     itemCount: quizItems.length,
                     itemBuilder: (_, int index) => _PageItem(
                       index,
-                      onTap: () => _pageController.nextPage(
-                          duration: _kAnimationDuration,
-                          curve: _kAnimationCurve),
-                    ),
+                      onTap: () => {
+                              if (index < quizItems.length - 1){
+                                  _pageController.nextPage(
+                                      duration: _kAnimationDuration,
+                                      curve: _kAnimationCurve),
+                                }
+                            }),
                     onPageChanged: _updateOverviewPosition,
                   ),
                 ),
