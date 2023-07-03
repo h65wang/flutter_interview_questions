@@ -15,8 +15,7 @@ class Question {
         difficulty = json['difficulty'],
         credit = json['credit'];
 
-  Map<String, dynamic> toJson() {
-    return {
+  Map<String, dynamic> toJson() => {
       'title': title,
       'answer': answer,
       'candidates': candidates,
@@ -24,7 +23,6 @@ class Question {
       'difficulty': difficulty,
       'credit': credit,
     };
-  }
 
   @override
   String toString() =>
