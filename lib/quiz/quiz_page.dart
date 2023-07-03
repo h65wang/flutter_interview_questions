@@ -204,7 +204,10 @@ class _PageItem extends StatelessWidget {
           ],
         );
       },
-      child: Text(item.question.title),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(item.question.title,style: const TextStyle(fontSize: 16),),
+      ),
     );
   }
 }
