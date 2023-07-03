@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_interview_questions/model/difficulty.dart';
+import 'package:flutter_interview_questions/model/quiz_model.dart';
 import 'package:flutter_interview_questions/quiz/quiz_page.dart';
 
-import '../model/difficulty.dart';
-import '../model/quiz_model.dart';
 
 class SetupPage extends StatelessWidget {
   const SetupPage({super.key});
