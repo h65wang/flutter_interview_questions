@@ -42,12 +42,30 @@ class _QuizPageState extends State<QuizPage> {
         onPressed: () {
           final completed = quizItems.every((item) => item.answered);
           if (!completed) {
-            // TODO: alert dialog if they haven't answered all questions yet
-            print('you are missing some answers');
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text("Tips"),
+                    content: const Text("Haven't answered all questions yet"),
+                    actions: [
+                      TextButton(
+                        onPressed: () =>Navigator.of(context).pop(),
+                        child: const Text("Cancel"),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (_) => const ResultPage()),
+                          );
+                        },
+                        child: const Text("Sure"),
+                      ),
+                    ],
+                  );
+                });
           }
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => const ResultPage()),
-          );
         },
       ),
     );
