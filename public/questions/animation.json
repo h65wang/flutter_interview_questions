@@ -26,5 +26,20 @@
     ],
     "difficulty": 1,
     "credit": null
-  }
+  },
+  {
+  "title": "If you need to apply fading effect when switching texts on a screen, which of the following widget might be useful:\n\n",
+  "answer": "child",
+  "candidates": [
+    "AnimatedContainer",
+    "AnimatedText",
+    "AnimatedFade",
+    "AnimatedSwitcher"
+  ],
+  "tags": [
+    "AnimatedSwitcher"
+  ],
+  "difficulty": 1,
+  "credit": null
+}
 ]
