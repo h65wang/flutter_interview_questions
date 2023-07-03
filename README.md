@@ -45,12 +45,12 @@ The following questions came from the first session of live broadcast earlier to
 
 ## Animation
 
-If you need to declare an AnimationController, you are likely creating a:
+If you need to declare an AnimationController, you are likely creating:
 
-1. stateless widget
-2. implicit animation
-3. explicit animation
-4. AnimatedContainer widget
+1. a stateless widget
+2. an implicit animation
+3. an explicit animation
+4. a AnimatedContainer widget
 
 answer: 3
 
