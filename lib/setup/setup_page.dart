@@ -16,9 +16,7 @@ class SetupPage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Setup'),
       ),
-      body: allQuestions != null
-          ? const _SelectionArea()
-          : const Center(child: CircularProgressIndicator()),
+      body: allQuestions != null ? const _SelectionArea() : const Center(child: CircularProgressIndicator()),
     );
   }
 }
@@ -31,12 +29,17 @@ class _SelectionArea extends StatefulWidget {
 }
 
 class _SelectionAreaState extends State<_SelectionArea> {
-  late final ValueNotifier<int> _questionsCount = ValueNotifier(
-      context.read<QuizModel>().allQuestions!.values.expand((e) => e).length);
-  late final ValueNotifier<Set<String>> _selectedTags =
-      ValueNotifier(context.read<QuizModel>().allQuestions!.keys.toSet());
-  late final ValueNotifier<Set<Difficulty>> _selectedDifficulty =
-      ValueNotifier({Difficulty.easy});
+  late final ValueNotifier<int> _questionsCount = ValueNotifier(context.read<QuizModel>().allQuestions!.values.expand((e) => e).length);
+  late final ValueNotifier<Set<String>> _selectedTags = ValueNotifier(context.read<QuizModel>().allQuestions!.keys.toSet());
+  late final ValueNotifier<Set<Difficulty>> _selectedDifficulty = ValueNotifier({Difficulty.easy});
+
+  @override
+  void dispose() {
+    _questionsCount.dispose();
+    _selectedTags.dispose();
+    _selectedDifficulty.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,8 +90,7 @@ class _SelectionAreaState extends State<_SelectionArea> {
                           resultTemp.add(key);
                         } else {
                           if (resultTemp.length == 1) {
-                            ScaffoldMessenger.of(context)
-                                .showMessage('Choose at least one');
+                            ScaffoldMessenger.of(context).showMessage('Choose at least one');
                             return;
                           }
                           resultTemp.remove(key);
@@ -116,8 +118,7 @@ class _SelectionAreaState extends State<_SelectionArea> {
                           resultTemp.add(difficultyValue);
                         } else {
                           if (resultTemp.length == 1) {
-                            ScaffoldMessenger.of(context)
-                                .showMessage('Choose at least one');
+                            ScaffoldMessenger.of(context).showMessage('Choose at least one');
                             return;
                           }
                           resultTemp.remove(difficultyValue);
@@ -133,10 +134,7 @@ class _SelectionAreaState extends State<_SelectionArea> {
             onPressed: () {
               context.read<QuizModel>().setup(
                     count: _questionsCount.value,
-                    selectedTags: _selectedTags.value
-                        .map(_indexItem2Tag)
-                        .whereType<String>()
-                        .toSet(),
+                    selectedTags: _selectedTags.value.map(_indexItem2Tag).whereType<String>().toSet(),
                     selectedDifficulty: _selectedDifficulty.value,
                   );
               Navigator.of(context).push(
@@ -150,8 +148,7 @@ class _SelectionAreaState extends State<_SelectionArea> {
     );
   }
 
-  String? _indexItem2Tag(String value) =>
-      RegExp(r'/([^/]+).json').firstMatch(value)?.group(1);
+  String? _indexItem2Tag(String value) => RegExp(r'/([^/]+).json').firstMatch(value)?.group(1);
 }
 
 extension on ScaffoldMessengerState {
