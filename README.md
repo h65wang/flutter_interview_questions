@@ -119,3 +119,14 @@ screens?
 4. Use `Navigator` widgets and specify different values for `key`.
 
 answer: 1
+
+## Key
+
+Assume you have three TextFields vertically aligned in the order A, B, C. After entering 'input_a' into A, 'input_b' into B, and 'input_c' into C, you swap the positions of TextFields A and B. What will the contents of the TextFields on the screen be?
+
+1. input_b, input_a, input_c
+2. input_a, input_b, input_c
+3. input_a, input_c, input_b
+4. input_b, input_c, input_a
+
+answer: 2
