@@ -7,13 +7,17 @@ class QuizItem extends ValueNotifier<List<Choice>> {
 
   List<Choice> get choices => value;
 
-  QuizItem(this.question) : super(([question.answer, ...question.candidates]..shuffle()).map(Choice.new).toList());
+  QuizItem(this.question)
+      : super(([question.answer, ...question.candidates]..shuffle())
+            .map(Choice.new)
+            .toList());
 
   /// Returns true if user has selected ANYTHING at all.
   bool get answered => choices.any((choice) => choice.selected);
 
   /// Returns true if this question is answered correctly.
-  bool get correct => choices.every((choice) => (choice.content == question.answer) == choice.selected);
+  bool get correct => choices.every(
+      (choice) => (choice.content == question.answer) == choice.selected);
 
   void radioChoose(Choice choice) {
     for (var element in choices) {
