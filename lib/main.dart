@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_interview_questions/state/app_theme.dart';
 
 import 'model/quiz_model.dart';
-import 'setup/setup_page.dart';
+import 'pages/setup/setup_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    Provider(
+      create: () => AppTheme(),
+      child: const MyApp(),
+    ),
+  );
 }
+
+final navigatorKey = GlobalKey<NavigatorState>();
 
 /// First, we take users to [SetupPage], where they customize their questions.
 /// Then we take them to [QuizPage] for the main thing.
@@ -15,13 +23,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var appTheme = context.watch<AppTheme>();
     return Provider(
       create: () => QuizModel(),
       child: MaterialApp(
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
+        navigatorKey: navigatorKey,
+        theme: appTheme.lightTheme(),
+        darkTheme: appTheme.darkTheme(),
         home: const SetupPage(),
       ),
     );

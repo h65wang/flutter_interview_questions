@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_interview_questions/model/quiz_model.dart';
-import 'package:flutter_interview_questions/result/result_page.dart';
+
+import '../result/result_page.dart';
 
 class QuizPage extends StatefulWidget {
   const QuizPage({Key? key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../model/quiz_model.dart';
+import '../../model/quiz_model.dart';
 
 class ResultPage extends StatelessWidget {
   const ResultPage({super.key});
