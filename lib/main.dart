@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_interview_questions/state/app_theme.dart';
 
@@ -31,7 +32,18 @@ class MyApp extends StatelessWidget {
         theme: appTheme.lightTheme(),
         darkTheme: appTheme.darkTheme(),
         home: const SetupPage(),
+        scrollBehavior: _AppScrollBehavior(),
       ),
     );
   }
+}
+
+///方便web调试
+class _AppScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+        PointerDeviceKind.trackpad,
+      };
 }
