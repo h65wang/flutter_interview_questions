@@ -43,7 +43,8 @@ class _ToastWidget extends StatefulWidget {
   State<_ToastWidget> createState() => _ToastWidgetState();
 }
 
-class _ToastWidgetState extends State<_ToastWidget> with SingleTickerProviderStateMixin {
+class _ToastWidgetState extends State<_ToastWidget>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     duration: k300MS,
     vsync: this,
@@ -65,6 +66,8 @@ class _ToastWidgetState extends State<_ToastWidget> with SingleTickerProviderSta
     curve: Curves.easeOutCirc,
   ));
 
+  StreamSubscription? _hideSubscription;
+
   @override
   void initState() {
     super.initState();
@@ -77,10 +80,9 @@ class _ToastWidgetState extends State<_ToastWidget> with SingleTickerProviderSta
   }
 
   void hide() {
-    Future.delayed(
-      const Duration(seconds: 2),
-      () => _controller.reverse().then((value) {}),
-    );
+    _hideSubscription = Stream.fromFuture(
+      Future.delayed(const Duration(seconds: 2)),
+    ).listen((_) => _controller.reverse());
   }
 
   @override
@@ -120,5 +122,12 @@ class _ToastWidgetState extends State<_ToastWidget> with SingleTickerProviderSta
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _hideSubscription?.cancel();
+    super.dispose();
   }
 }
