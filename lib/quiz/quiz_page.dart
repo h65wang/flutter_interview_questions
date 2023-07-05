@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_interview_questions/model/quiz_model.dart';
 import 'package:flutter_interview_questions/result/result_page.dart';
+import 'package:flutter_interview_questions/util/string_utils.dart';
 
 const _kOverviewItemWidth = 56.0;
 const _kAnimationDuration = Duration(milliseconds: 800);
@@ -63,6 +64,7 @@ class _QuizPageState extends State<QuizPage> {
             )
           : Column(
               children: [
+                const SizedBox(height: 8),
                 _Overview(
                   scrollController: _overviewScrollController,
                   onTap: _animateToPage,
@@ -74,13 +76,10 @@ class _QuizPageState extends State<QuizPage> {
                     itemCount: quizItems.length,
                     itemBuilder: (_, int index) => _PageItem(
                       index,
-                      onTap: () => {
-                              if (index < quizItems.length - 1){
-                                  _pageController.nextPage(
-                                      duration: _kAnimationDuration,
-                                      curve: _kAnimationCurve),
-                                }
-                            }),
+                      onTap: () => _pageController.nextPage(
+                          duration: _kAnimationDuration,
+                          curve: _kAnimationCurve),
+                    ),
                     onPageChanged: _updateOverviewPosition,
                   ),
                 ),
@@ -161,6 +160,7 @@ class _Overview extends StatelessWidget {
 class _OverviewItem extends StatelessWidget {
   const _OverviewItem(
       {required this.index, required this.isAnswered, this.onTap});
+
   final int index;
   final bool isAnswered;
   final VoidCallback? onTap;
@@ -172,7 +172,11 @@ class _OverviewItem extends StatelessWidget {
       shape: CircleBorder(
           side: BorderSide(
               color: isAnswered ? Colors.green : const Color(0xFF000000))),
-      child: Text('$index'),
+      child: Text(
+        '$index',
+        style: TextStyle(
+            color: isAnswered ? Colors.green : const Color(0xFF000000)),
+      ),
     );
   }
 }
@@ -186,31 +190,30 @@ class _PageItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final item = context.read<QuizModel>().quizItems[index];
     return ValueListenableBuilder(
-      valueListenable: item,
-      builder: (context, choices, child) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            child!,
-            const Divider(),
-            for (final choice in choices)
-              ListTile(
-                title: Text(choice.content),
-                selected: choice.selected,
-                selectedColor: Colors.black,
-                selectedTileColor: Colors.green.shade200,
-                onTap: () {
-                  item.radioChoose(choice);
-                  onTap?.call();
-                },
-              ),
-          ],
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(item.question.title,style: const TextStyle(fontSize: 16),),
-      ),
-    );
+        valueListenable: item,
+        builder: (context, choices, child) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              child!,
+              const Divider(),
+              for (final choice in choices)
+                ListTile(
+                  title: Text(choice.content),
+                  selected: choice.selected,
+                  selectedColor: Colors.black,
+                  selectedTileColor: Colors.green.shade200,
+                  onTap: () {
+                    item.radioChoose(choice);
+                    onTap?.call();
+                  },
+                ),
+            ],
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(item.question.title.breakWord()),
+        ));
   }
 }
