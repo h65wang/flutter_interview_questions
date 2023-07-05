@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_interview_questions/model/quiz_model.dart';
-import 'package:flutter_interview_questions/result/result_page.dart';
+import 'package:flutter_interview_questions/pages/result/result_page.dart';
 import 'package:flutter_interview_questions/util/string_utils.dart';
 
 const _kOverviewItemWidth = 56.0;
