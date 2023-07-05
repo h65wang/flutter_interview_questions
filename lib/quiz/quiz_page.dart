@@ -29,11 +29,18 @@ class _QuizPageState extends State<QuizPage> {
 
   void _updateOverviewPosition(int pageNum) {
     if (_pageAnimating) return;
+
     _overviewScrollController.animateTo(
       _kOverviewItemWidth * pageNum,
       duration: _kAnimationDuration,
       curve: _kAnimationCurve,
     );
+    final items = context.read<QuizModel>().quizItems;
+    items
+        .firstWhere((element) => element.isCurrentQuizItem,
+            orElse: () => items[0])
+        .setCurrentQuizItem(false);
+    items[pageNum].setCurrentQuizItem(true);
   }
 
   void _animateToPage(int index) {
@@ -147,6 +154,7 @@ class _Overview extends StatelessWidget {
               return _OverviewItem(
                 index: index,
                 isAnswered: quizItems[index].answered,
+                isCurrentIndex: quizItems[index].isCurrentQuizItem,
                 onTap: () => onTap?.call(index),
               );
             },
@@ -159,23 +167,33 @@ class _Overview extends StatelessWidget {
 
 class _OverviewItem extends StatelessWidget {
   const _OverviewItem(
-      {required this.index, required this.isAnswered, this.onTap});
+      {required this.index,
+      required this.isAnswered,
+      required this.isCurrentIndex,
+      this.onTap});
 
   final int index;
   final bool isAnswered;
+  final bool isCurrentIndex;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
+      elevation: .0,
+      fillColor: isCurrentIndex ? Colors.green : Colors.white,
       onPressed: onTap,
       shape: CircleBorder(
           side: BorderSide(
-              color: isAnswered ? Colors.green : const Color(0xFF000000))),
+              color: isCurrentIndex
+                  ? Colors.green
+                  : (isAnswered ? Colors.green : const Color(0xFF000000)))),
       child: Text(
         '$index',
         style: TextStyle(
-            color: isAnswered ? Colors.green : const Color(0xFF000000)),
+            color: isCurrentIndex
+                ? Colors.white
+                : (isAnswered ? Colors.green : const Color(0xFF000000))),
       ),
     );
   }

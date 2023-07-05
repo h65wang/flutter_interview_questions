@@ -4,6 +4,10 @@ import 'package:flutter_interview_questions/model/question.dart';
 /// Describe a question shown in a quiz.
 class QuizItem extends ValueNotifier<List<Choice>> {
   final Question question;
+  bool _isCurrentQuizItem = false;
+
+  /// Describe a question shown in a quiz.
+  bool get isCurrentQuizItem => _isCurrentQuizItem;
 
   List<Choice> get choices => value;
 
@@ -23,6 +27,11 @@ class QuizItem extends ValueNotifier<List<Choice>> {
     for (var element in choices) {
       element.selected = element == choice;
     }
+    notifyListeners();
+  }
+
+  void setCurrentQuizItem(bool isCurrentQuizItem) {
+    _isCurrentQuizItem = isCurrentQuizItem;
     notifyListeners();
   }
 }

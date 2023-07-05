@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
-
 extension StringExtesnion on String? {
-  bool get isEmptyOrNull => this == null || (this != null && this!.isEmpty) || (this != null && this! == 'null');
+  bool get isEmptyOrNull =>
+      this == null ||
+      (this != null && this!.isEmpty) ||
+      (this != null && this! == 'null');
 
   String validate({String value = ''}) {
     if (isEmptyOrNull) {
