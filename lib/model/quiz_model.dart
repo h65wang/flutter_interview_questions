@@ -55,7 +55,8 @@ class QuizModel extends ChangeNotifier {
           .where((e) => selectedTags.intersection(e.tags.toSet()).isNotEmpty);
     }
 
-    quizItems = resultTemp.take(count).map<QuizItem>(QuizItem.new).toList();
+    quizItems = resultTemp.take(count).map<QuizItem>(QuizItem.new).toList()
+      ..first.setCurrentQuizItem(true);
   }
 
   @override
