@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_interview_questions/components/toast.dart';
 import 'package:flutter_interview_questions/model/quiz_model.dart';
 
 import '../result/result_page.dart';
@@ -11,6 +12,7 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  late final ValueNotifier<int> _currentFlage = ValueNotifier(0);
   @override
   Widget build(BuildContext context) {
     final quizItems = context.watch<QuizModel>().quizItems;
@@ -32,26 +34,52 @@ class _QuizPageState extends State<QuizPage> {
                 const Divider(),
                 Expanded(
                   child: PageView.builder(
+                    onPageChanged: (index) {
+                      _currentFlage.value = index;
+                      if (index > 0) {
+                        quizItems[index - 1].previousFlag = true;
+                      } else {
+                        quizItems[index].previousFlag = true;
+                      }
+                    },
                     itemCount: quizItems.length,
                     itemBuilder: (_, int index) => _PageItem(index),
                   ),
                 ),
+                ValueListenableBuilder(
+                  valueListenable: _currentFlage,
+                  builder: (BuildContext context, int value, Widget? child) {
+                    if (value != quizItems.length - 1) {
+                      return Container();
+                    }
+                    return Container(
+                        width: double.infinity,
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        child: ElevatedButton(
+                            onPressed: () => _submitEvent(quizItems),
+                            child: const Text('Submit')));
+                  },
+                ),
+                const SizedBox(
+                  height: 100,
+                ),
               ],
             ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Submit',
-        child: const Icon(Icons.done),
-        onPressed: () {
-          final completed = quizItems.every((item) => item.answered);
-          if (!completed) {
-            // TODO: alert dialog if they haven't answered all questions yet
-            print('you are missing some answers');
-          }
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => const ResultPage()),
-          );
-        },
-      ),
+    );
+  }
+
+  _submitEvent(List quizItems) async {
+    quizItems.lastOrNull.previousFlag = true;
+
+    final completed = quizItems.every((item) => item.answered);
+    if (!completed) {
+      // TODO: alert dialog if they haven't answered all questions yet
+      print('you are missing some answers');
+      Toast.show('you are missing some answers');
+      return;
+    }
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => const ResultPage()),
     );
   }
 }
@@ -109,7 +137,12 @@ class _PageItemState extends State<_PageItem> {
               selected: choice.selected,
               selectedColor: Colors.black,
               selectedTileColor: Colors.green.shade200,
-              onTap: () => setState(() => choice.selected = !choice.selected),
+              onTap: () {
+                if (item.previousFlag && item.answered) {
+                  return;
+                }
+                setState(() => choice.selected = !choice.selected);
+              },
             ),
           ),
       ],
