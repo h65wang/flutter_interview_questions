@@ -16,13 +16,13 @@ class Question {
         credit = json['credit'];
 
   Map<String, dynamic> toJson() => {
-      'title': title,
-      'answer': answer,
-      'candidates': candidates,
-      'tags': tags,
-      'difficulty': difficulty,
-      'credit': credit,
-    };
+        'title': title,
+        'answer': answer,
+        'candidates': candidates,
+        'tags': tags,
+        'difficulty': difficulty,
+        'credit': credit,
+      };
 
   @override
   String toString() =>

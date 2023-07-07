@@ -29,7 +29,7 @@ class QuizModel extends ChangeNotifier {
     Map<String, List<Question>> resultTemp = {};
     for (final filename in json['questions']) {
       final res = await http.get(Uri.parse('$root/$filename'));
-      if (res.statusCode != 200) throw   Exception('Network ex: ${res.body}');
+      if (res.statusCode != 200) throw Exception('Network ex: ${res.body}');
       final json = convert.jsonDecode(res.body) as List<dynamic>;
       final questionsTemp = json.map<Question>(Question.fromJson).toList();
       resultTemp.putIfAbsent(filename, () => questionsTemp);
