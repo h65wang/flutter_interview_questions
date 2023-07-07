@@ -80,14 +80,14 @@ class _ToastWidgetState extends State<_ToastWidget>
   }
 
   void hide() {
-    _hideSubscription = Stream.fromFuture(
+    _hideSubscription = Stream<void>.fromFuture(
       Future.delayed(const Duration(seconds: 2)),
     ).listen((_) => _controller.reverse());
   }
 
   @override
   Widget build(BuildContext context) {
-    var appTheme = context.watch<AppTheme>();
+    final appTheme = context.read<AppTheme>();
     return AnimatedBuilder(
       animation: _controller,
       builder: (BuildContext context, Widget? child) {

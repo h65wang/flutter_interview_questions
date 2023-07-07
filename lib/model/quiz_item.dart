@@ -1,16 +1,16 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_interview_questions/model/question.dart';
 
 /// Describe a question shown in a quiz.
-class QuizItem extends ValueNotifier<List<Choice>> {
+class QuizItem {
   final Question question;
 
-  List<Choice> get choices => value;
+  late final List<Choice> choices;
 
-  QuizItem(this.question)
-      : super(([question.answer, ...question.candidates]..shuffle())
-            .map(Choice.new)
-            .toList());
+  QuizItem(this.question) {
+    choices = ([question.answer, ...question.candidates]..shuffle())
+        .map(Choice.new)
+        .toList();
+  }
 
   /// Returns true if user has selected ANYTHING at all.
   bool get answered => choices.any((choice) => choice.selected);
@@ -23,7 +23,6 @@ class QuizItem extends ValueNotifier<List<Choice>> {
     for (var element in choices) {
       element.selected = element == choice;
     }
-    notifyListeners();
   }
 }
 

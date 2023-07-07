@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var appTheme = context.watch<AppTheme>();
+    final appTheme = context.watch<AppTheme>();
     return Provider(
       create: () => QuizModel(),
       child: MaterialApp(
