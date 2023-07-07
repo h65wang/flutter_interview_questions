@@ -93,15 +93,24 @@ class _PageItemState extends State<_PageItem> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(item.question.title),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            item.question.title,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+        ),
         const Divider(),
         for (final choice in item.choices)
-          ListTile(
-            title: Text(choice.content),
-            selected: choice.selected,
-            selectedColor: Colors.black,
-            selectedTileColor: Colors.green.shade200,
-            onTap: () => setState(() => choice.selected = !choice.selected),
+          Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: ListTile(
+              title: Text(choice.content),
+              selected: choice.selected,
+              selectedColor: Colors.black,
+              selectedTileColor: Colors.green.shade200,
+              onTap: () => setState(() => choice.selected = !choice.selected),
+            ),
           ),
       ],
     );
