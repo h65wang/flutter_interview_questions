@@ -24,6 +24,7 @@ class _QuizPageState extends State<QuizPage> {
     final quizItems = context.read<QuizModel>().quizItems;
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Quiz Page'),
       ),
@@ -64,7 +65,7 @@ class _QuizPageState extends State<QuizPage> {
           final navigator = Navigator.of(context);
           var completed = quizItems.every((item) => item.answered);
           if (!completed) {
-            completed = (await showDialog(
+            completed = (await showDialog<bool?>(
                   context: context,
                   builder: (context) => AlertDialog(
                     content:
@@ -84,7 +85,7 @@ class _QuizPageState extends State<QuizPage> {
                 true;
           }
           if (!completed) return;
-          navigator.push(
+          navigator.push<void>(
             MaterialPageRoute(builder: (_) => const ResultPage()),
           );
         },

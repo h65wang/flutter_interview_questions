@@ -9,7 +9,8 @@ class AppTheme with ChangeNotifier {
   ThemeData lightTheme() {
     _themeData = ThemeData(
       useMaterial3: true,
-      colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue, brightness: Brightness.light),
+      colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blue, brightness: Brightness.light),
       dividerColor: Colors.transparent,
       splashFactory: NoSplash.splashFactory,
       sliderTheme: SliderThemeData(
@@ -22,7 +23,8 @@ class AppTheme with ChangeNotifier {
   ThemeData darkTheme() {
     _themeData = ThemeData(
       useMaterial3: true,
-      colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue, brightness: Brightness.dark),
+      colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blue, brightness: Brightness.dark),
       dividerColor: Colors.transparent,
       splashFactory: NoSplash.splashFactory,
       sliderTheme: SliderThemeData(

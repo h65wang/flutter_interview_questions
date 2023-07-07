@@ -80,7 +80,7 @@ class _ToastWidgetState extends State<_ToastWidget>
   }
 
   void hide() {
-    _hideSubscription = Stream.fromFuture(
+    _hideSubscription = Stream<void>.fromFuture(
       Future.delayed(const Duration(seconds: 2)),
     ).listen((_) => _controller.reverse());
   }

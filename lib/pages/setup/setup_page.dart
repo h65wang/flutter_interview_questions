@@ -172,7 +172,7 @@ class _SelectionAreaState extends State<_SelectionArea> {
                 );
                 return;
               }
-              Navigator.of(context).push(
+              Navigator.of(context).push<void>(
                 MaterialPageRoute(builder: (_) => const QuizPage()),
               );
             },
