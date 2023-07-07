@@ -1,0 +1,17 @@
+[
+  {
+    "lang": "English",
+    "locale": "en-en",
+    "files": [
+      "en/animation.json",
+      "en/mock.json"
+    ]
+  },
+  {
+    "lang": "中文",
+    "locale": "zh-cn",
+    "files": [
+      "zh/mock.json"
+    ]
+  }
+]
