@@ -16,14 +16,23 @@ class QuizModel extends ChangeNotifier {
 
   late List<QuizItem> quizItems; // a set of questions used for a quiz
 
+  bool isLoading = false;
+
   QuizModel() {
-    _fetchAllQuestions();
+    fetchAllQuestions();
   }
 
-  Future _fetchAllQuestions() async {
+  Future fetchAllQuestions() async {
     const root = 'https://raw.githubusercontent.com/h65wang'
         '/flutter_interview_questions/main/public';
+    isLoading = true;
+    notifyListeners();
+
     final res = await http.get(Uri.parse('$root/index.json'));
+
+    isLoading = false;
+    notifyListeners();
+
     if (res.statusCode != 200) throw Exception('Network ex: ${res.body}');
     final json = convert.jsonDecode(res.body) as Map<String, dynamic>;
     Map<String, List<Question>> resultTemp = {};
