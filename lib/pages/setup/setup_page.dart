@@ -54,7 +54,7 @@ class _SelectionAreaState extends State<_SelectionArea> {
 
   @override
   Widget build(BuildContext context) {
-    if (!questionIsEmpty) {
+    if (questionIsEmpty) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

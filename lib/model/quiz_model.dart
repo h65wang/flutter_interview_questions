@@ -19,11 +19,7 @@ class QuizModel extends ChangeNotifier {
   bool isLoading = false;
 
   QuizModel() {
-    try {
-      fetchAllQuestions();
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+    fetchAllQuestions();
   }
 
   Future fetchAllQuestions() async {
