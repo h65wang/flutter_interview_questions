@@ -47,7 +47,7 @@ class _QuizPageState extends State<QuizPage> {
             // TODO: alert dialog if they haven't answered all questions yet
             print('you are missing some answers');
           }
-          Navigator.of(context).push(
+          Navigator.of(context).push<void>(
             MaterialPageRoute(builder: (_) => const ResultPage()),
           );
         },

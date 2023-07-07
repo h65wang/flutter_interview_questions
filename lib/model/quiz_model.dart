@@ -5,6 +5,7 @@ import 'package:flutter_interview_questions/model/difficulty.dart';
 import 'package:flutter_interview_questions/model/quiz_item.dart';
 import 'package:http/http.dart' as http;
 
+import 'common.dart';
 import 'question.dart';
 
 export '../components/provider.dart';
@@ -25,13 +26,14 @@ class QuizModel extends ChangeNotifier {
         '/flutter_interview_questions/main/public';
     final res = await http.get(Uri.parse('$root/index.json'));
     if (res.statusCode != 200) throw Exception('Network ex: ${res.body}');
-    final json = convert.jsonDecode(res.body);
-    Map<String, List<Question>> resultTemp = {};
-    for (final filename in json['questions']) {
+    final json = convert.jsonDecode(res.body) as Map<String, dynamic>;
+    final resultTemp = <String, List<Question>>{};
+    for (String filename in json['questions']) {
       final res = await http.get(Uri.parse('$root/$filename'));
       if (res.statusCode != 200) throw Exception('Network ex: ${res.body}');
       final json = convert.jsonDecode(res.body) as List<dynamic>;
-      final questionsTemp = json.map<Question>(Question.fromJson).toList();
+      final questionsTemp =
+          json.cast<Json>().map<Question>(Question.fromJson).toList();
       resultTemp.putIfAbsent(filename, () => questionsTemp);
     }
     allQuestions = resultTemp;
