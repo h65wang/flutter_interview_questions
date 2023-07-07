@@ -157,14 +157,21 @@ class _SelectionAreaState extends State<_SelectionArea> {
         ListTile(
           title: FilledButton(
             onPressed: () {
-              context.read<QuizModel>().setup(
-                    count: _questionsCount.value,
-                    selectedTags: _selectedTags.value
-                        .map(_indexItem2Tag)
-                        .whereType<String>()
-                        .toSet(),
-                    selectedDifficulty: _selectedDifficulty.value,
-                  );
+              final quizModel = context.read<QuizModel>();
+              quizModel.setup(
+                count: _questionsCount.value,
+                selectedTags: _selectedTags.value
+                    .map(_indexItem2Tag)
+                    .whereType<String>()
+                    .toSet(),
+                selectedDifficulty: _selectedDifficulty.value,
+              );
+              if (quizModel.quizItems.isEmpty) {
+                Toast.show(
+                  'There are no matching questions in the question bank',
+                );
+                return;
+              }
               Navigator.of(context).push<void>(
                 MaterialPageRoute(builder: (_) => const QuizPage()),
               );

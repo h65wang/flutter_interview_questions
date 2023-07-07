@@ -1,5 +1,3 @@
-import 'common.dart';
-
 /// Describe a question from the knowledge base, stored in JSON format.
 class Question {
   final String title;
@@ -9,15 +7,15 @@ class Question {
   final int? difficulty;
   final String? credit;
 
-  Question.fromJson(Json json)
+  Question.fromJson(Map<String, dynamic> json)
       : title = (json['title'] ?? json['question']) as String,
-        answer = json['answer'] as String,
+        answer = (json['answer']) as String,
         candidates = List.from(json['candidates'] as List),
         tags = List.from(json['tags'] as List),
         difficulty = json['difficulty'] as int?,
         credit = json['credit'] as String?;
 
-  Json toJson() => <String, dynamic>{
+  Map<String, dynamic> toJson() => <String, dynamic>{
         'title': title,
         'answer': answer,
         'candidates': candidates,
