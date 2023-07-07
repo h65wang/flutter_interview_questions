@@ -87,7 +87,7 @@ class _ToastWidgetState extends State<_ToastWidget>
 
   @override
   Widget build(BuildContext context) {
-    var appTheme = context.watch<AppTheme>();
+    final appTheme = context.read<AppTheme>();
     return AnimatedBuilder(
       animation: _controller,
       builder: (BuildContext context, Widget? child) {

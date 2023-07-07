@@ -7,7 +7,7 @@ class ResultPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final quizItems = context.watch<QuizModel>().quizItems;
+    final quizItems = context.read<QuizModel>().quizItems;
     final int corrects = quizItems.where((item) => item.correct).length;
 
     return Scaffold(
