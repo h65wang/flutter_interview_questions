@@ -11,7 +11,7 @@ class SetupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final allQuestions = context.watch<QuizModel>().allQuestions;
+    final isLoading = context.watch<QuizModel>().isLoading;
 
     return Scaffold(
       appBar: AppBar(
@@ -23,7 +23,9 @@ class SetupPage extends StatelessWidget {
         padding: const EdgeInsets.all(kDefaultPadding),
         child: AnimatedSwitcher(
           duration: k300MS,
-          child: allQuestions != null ? const _SelectionArea() : const Center(child: CircularProgressIndicator()),
+          child: !isLoading
+              ? const _SelectionArea()
+              : const Center(child: CircularProgressIndicator()),
         ),
       ),
     );
@@ -38,18 +40,41 @@ class _SelectionArea extends StatefulWidget {
 }
 
 class _SelectionAreaState extends State<_SelectionArea> {
-  late final ValueNotifier<int> _questionsCount =
-      ValueNotifier(context.read<QuizModel>().allQuestions!.values.expand((e) => e).length);
+  Map<String, List<Question>>? get allQuestions =>
+      context.read<QuizModel>().allQuestions;
 
-  late final ValueNotifier<Set<String>> _selectedTags =
-      ValueNotifier(context.read<QuizModel>().allQuestions!.keys.toSet());
+  bool get questionIsEmpty => allQuestions == null || allQuestions!.isEmpty;
 
-  late final ValueNotifier<Set<Difficulty>> _selectedDifficulty = ValueNotifier({Difficulty.easy});
+  final ValueNotifier<int> _questionsCount = ValueNotifier<int>(0);
+  final ValueNotifier<Set<String>> _selectedTags =
+      ValueNotifier<Set<String>>(<String>{});
+
+  final ValueNotifier<Set<Difficulty>> _selectedDifficulty =
+      ValueNotifier({Difficulty.easy});
 
   @override
   Widget build(BuildContext context) {
-    final allQuestions = context.watch<QuizModel>().allQuestions!;
-    final totalCount = allQuestions.values.expand((e) => e).length;
+    if (!questionIsEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            const Text('No Question Found... Please Retry...'),
+            const SizedBox(height: 12.0),
+            ElevatedButton(
+              onPressed: context.read<QuizModel>().fetchAllQuestions,
+              child: const Text('Retry'),
+            ),
+          ],
+        ),
+      );
+    }
+
+    final totalCount = allQuestions!.values.expand((e) => e).length;
+    _questionsCount.value = totalCount;
+    _selectedTags.value = allQuestions!.keys.toSet();
+
     var themeData = Theme.of(context);
     return ListView(
       children: [
@@ -87,10 +112,10 @@ class _SelectionAreaState extends State<_SelectionArea> {
           builder: (context, selectedTags, __) => Card(
             child: ExpansionTile(
               title: Text(
-                'Select Tags (${selectedTags.length}/${allQuestions.length})',
+                'Select Tags (${selectedTags.length}/${allQuestions!.length})',
                 style: themeData.textTheme.titleMedium,
               ),
-              children: allQuestions.keys
+              children: allQuestions!.keys
                   .map((key) => CheckboxListTile(
                         value: selectedTags.contains(key),
                         title: Text(key),
@@ -122,7 +147,10 @@ class _SelectionAreaState extends State<_SelectionArea> {
                 style: themeData.textTheme.titleMedium,
               ),
               subtitle: Text(
-                Difficulty.values.map((e) => '${e.name}: ${selectedDifficulty.contains(e).pictoChar}').join(', '),
+                Difficulty.values
+                    .map((e) =>
+                        '${e.name}: ${selectedDifficulty.contains(e).pictoChar}')
+                    .join(', '),
                 style: themeData.textTheme.titleSmall,
               ),
               children: Difficulty.values
@@ -153,7 +181,10 @@ class _SelectionAreaState extends State<_SelectionArea> {
             onPressed: () {
               context.read<QuizModel>().setup(
                     count: _questionsCount.value,
-                    selectedTags: _selectedTags.value.map(_indexItem2Tag).whereType<String>().toSet(),
+                    selectedTags: _selectedTags.value
+                        .map(_indexItem2Tag)
+                        .whereType<String>()
+                        .toSet(),
                     selectedDifficulty: _selectedDifficulty.value,
                   );
               Navigator.of(context).push(
@@ -167,7 +198,8 @@ class _SelectionAreaState extends State<_SelectionArea> {
     );
   }
 
-  String? _indexItem2Tag(String value) => RegExp(r'/([^/]+).json').firstMatch(value)?.group(1);
+  String? _indexItem2Tag(String value) =>
+      RegExp(r'/([^/]+).json').firstMatch(value)?.group(1);
 }
 
 extension on bool {
