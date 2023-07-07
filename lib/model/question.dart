@@ -7,15 +7,20 @@ class Question {
   final int? difficulty;
   final String? credit;
 
-  Question.fromJson(json)
-      : title = json['title'] ?? json['question'],
-        answer = json['answer'],
-        candidates = List.from(json['candidates']),
-        tags = List.from(json['tags']),
-        difficulty = json['difficulty'],
-        credit = json['credit'];
+  Question.fromJson(Map<String, dynamic> json)
+      : title = '${json['title'] ?? json['question']}',
+        answer = '${json['answer']}',
+        candidates = (json['candidates'] is List)
+            ? List<String>.from(json['candidates'] as List)
+            : [],
+        tags = (json['tags'] is List)
+            ? List<String>.from(json['tags'] as List)
+            : [],
+        difficulty =
+            (json['difficulty'] is int) ? (json['difficulty'] as int) : 0,
+        credit = '${json['credit']}';
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => <String, dynamic>{
         'title': title,
         'answer': answer,
         'candidates': candidates,
