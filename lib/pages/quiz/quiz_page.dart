@@ -69,8 +69,6 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   _submitEvent(List quizItems) async {
-    quizItems.lastOrNull.previousFlag = true;
-
     final completed = quizItems.every((item) => item.answered);
     if (!completed) {
       // TODO: alert dialog if they haven't answered all questions yet
@@ -78,6 +76,7 @@ class _QuizPageState extends State<QuizPage> {
       Toast.show('you are missing some answers');
       return;
     }
+    quizItems.lastOrNull.previousFlag = true;
     Navigator.of(context).push(
       MaterialPageRoute(builder: (_) => const ResultPage()),
     );
@@ -138,6 +137,8 @@ class _PageItemState extends State<_PageItem> {
               selectedColor: Colors.black,
               selectedTileColor: Colors.green.shade200,
               onTap: () {
+
+                //TODO: 多选时候有bug,大佬来pr
                 if (item.previousFlag && item.answered) {
                   return;
                 }
