@@ -16,6 +16,7 @@ class _QuizPageState extends State<QuizPage> {
     final quizItems = context.watch<QuizModel>().quizItems;
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Quiz Page'),
       ),
