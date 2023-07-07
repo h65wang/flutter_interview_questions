@@ -165,7 +165,7 @@ class _SelectionAreaState extends State<_SelectionArea> {
                         .toSet(),
                     selectedDifficulty: _selectedDifficulty.value,
                   );
-              Navigator.of(context).push(
+              Navigator.of(context).push<void>(
                 MaterialPageRoute(builder: (_) => const QuizPage()),
               );
             },
