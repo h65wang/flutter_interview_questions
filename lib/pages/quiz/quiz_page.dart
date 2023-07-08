@@ -19,6 +19,8 @@ class _QuizPageState extends State<QuizPage> {
   final ValueNotifier<int> _currentPage = ValueNotifier(0);
   final _pageController = PageController();
 
+  bool _isAnimating = false;
+
   @override
   Widget build(BuildContext context) {
     final quizItems = context.read<QuizModel>().quizItems;
@@ -34,18 +36,29 @@ class _QuizPageState extends State<QuizPage> {
             valueListenable: _currentPage,
             builder: (context, value, child) => _Overview(
               currentIndex: value,
-              itemOnTap: (index) => _pageController.animateToPage(
-                index,
-                duration: _kAnimationDuration,
-                curve: _kAnimationCurve,
-              ),
+              itemOnTap: (index) {
+                _isAnimating = true;
+                _pageController
+                    .animateToPage(
+                  index,
+                  duration: _kAnimationDuration,
+                  curve: _kAnimationCurve,
+                )
+                    .then((value) {
+                  _isAnimating = false;
+                  _currentPage.value = index;
+                });
+              },
             ),
           ),
           const Divider(),
           Expanded(
             child: PageView.builder(
               itemCount: quizItems.length,
-              onPageChanged: (value) => _currentPage.value = value,
+              onPageChanged: (value) {
+                if (_isAnimating) return;
+                _currentPage.value = value;
+              },
               controller: _pageController,
               itemBuilder: (_, index) => _PageItem(
                 index,
@@ -108,6 +121,7 @@ class _Overview extends StatelessWidget {
   Widget build(BuildContext context) {
     final quizItems = context.read<QuizModel>().quizItems;
     final indexTemp = _getItems(quizItems.length);
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -115,17 +129,18 @@ class _Overview extends StatelessWidget {
         (e) {
           final isCurrent = e == currentIndex;
           return RawMaterialButton(
+            constraints: BoxConstraints(minWidth: 36, minHeight: 36),
             onPressed: isCurrent ? null : () => itemOnTap?.call(e),
             shape: CircleBorder(
               side: quizItems[e].answered
-                  ? const BorderSide(color: Colors.green)
+                  ? BorderSide(color: colorScheme.tertiary)
                   : isCurrent
                       ? BorderSide.none
-                      : BorderSide(color: Theme.of(context).primaryColor),
+                      : BorderSide(color: colorScheme.primary),
             ),
             elevation: isCurrent ? 0 : 4,
             fillColor:
-                isCurrent ? Theme.of(context).primaryColor : Colors.white,
+                isCurrent ? colorScheme.primary : colorScheme.inversePrimary,
             child: Text(
               '${e + 1}',
               style: TextStyle(
@@ -175,7 +190,7 @@ class _PageItemState extends State<_PageItem> {
             title: Text(choice.content),
             selected: choice.selected,
             selectedColor: Colors.black,
-            selectedTileColor: Colors.green.shade200,
+            selectedTileColor: Theme.of(context).colorScheme.tertiaryContainer,
             onTap: () {
               setState(() => item.radioChoose(choice));
               widget.onComplete?.call();

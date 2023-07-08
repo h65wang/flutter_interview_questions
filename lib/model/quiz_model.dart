@@ -11,10 +11,13 @@ export '../components/provider.dart';
 export 'question.dart';
 
 class QuizModel extends ChangeNotifier {
-  Map<String, List<Question>>?
-      allQuestions; // all questions in the knowledge base
+  Map<String, List<Question>> allQuestions =
+      {}; // all questions in the knowledge base
 
   late List<QuizItem> quizItems; // a set of questions used for a quiz
+
+  bool get questionIsEmpty => allQuestions.isEmpty;
+  int get totalCount => allQuestions.values.expand((e) => e).length;
 
   bool isLoading = false;
 
@@ -29,10 +32,6 @@ class QuizModel extends ChangeNotifier {
     notifyListeners();
 
     final res = await http.get(Uri.parse('$root/index.json'));
-
-    isLoading = false;
-    notifyListeners();
-
     if (res.statusCode != 200) throw Exception('Network ex: ${res.body}');
     final json = convert.jsonDecode(res.body) as Map<String, dynamic>;
     Map<String, List<Question>> resultTemp = {};
@@ -47,6 +46,8 @@ class QuizModel extends ChangeNotifier {
       resultTemp.putIfAbsent(filename as String, () => questionsTemp);
     }
     allQuestions = resultTemp;
+
+    isLoading = false;
     notifyListeners();
   }
 
@@ -57,12 +58,12 @@ class QuizModel extends ChangeNotifier {
     required Set<String> selectedTags,
     required Set<Difficulty> selectedDifficulty,
   }) {
-    var resultTemp = allQuestions!.values.expand((e) => e);
+    var resultTemp = allQuestions.values.expand((e) => e);
     if (selectedDifficulty.length != Difficulty.values.length) {
       resultTemp = resultTemp.where((e) => selectedDifficulty
           .any((element) => (element.index + 1) == e.difficulty));
     }
-    if (selectedTags.length != allQuestions!.length) {
+    if (selectedTags.length != allQuestions.length) {
       resultTemp = resultTemp
           .where((e) => selectedTags.intersection(e.tags.toSet()).isNotEmpty);
     }
