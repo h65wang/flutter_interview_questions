@@ -1,8 +1,10 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_interview_questions/components/toast.dart';
 import 'package:flutter_interview_questions/components/indicator.dart';
 import 'package:flutter_interview_questions/model/quiz_model.dart';
 
+import '../../model/quiz_item.dart';
 import '../result/result_page.dart';
 
 const _kAnimationDuration = Duration(milliseconds: 800);
@@ -17,8 +19,9 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   final ValueNotifier<int> _currentPage = ValueNotifier(0);
-  final _pageController = PageController();
+  late final ValueNotifier<int> _currentFlage = ValueNotifier(0);
 
+  final _pageController = PageController();
   @override
   Widget build(BuildContext context) {
     final quizItems = context.read<QuizModel>().quizItems;
@@ -65,7 +68,15 @@ class _QuizPageState extends State<QuizPage> {
           Expanded(
             child: PageView.builder(
               itemCount: quizItems.length,
-              onPageChanged: (value) => _currentPage.value = value,
+              onPageChanged: (value) {
+                _currentPage.value = value;
+                _currentFlage.value = value;
+                if (value > 0) {
+                  quizItems[value - 1].previousFlag = true;
+                } else {
+                  quizItems[value].previousFlag = true;
+                }
+              },
               controller: _pageController,
               itemBuilder: (_, index) => _PageItem(
                 index,
@@ -76,40 +87,72 @@ class _QuizPageState extends State<QuizPage> {
               ),
             ),
           ),
+          ValueListenableBuilder(
+            valueListenable: _currentFlage,
+            builder: (BuildContext context, int value, Widget? child) {
+              if (value != quizItems.length - 1) {
+                return Container();
+              }
+              return Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  child: ElevatedButton(
+                      onPressed: () => _submitEvent(quizItems),
+                      child: const Text('Submit')));
+            },
+          ),
+          const SizedBox(
+            height: 100,
+          ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Submit',
-        child: const Icon(Icons.done),
-        onPressed: () async {
-          final navigator = Navigator.of(context);
-          var completed = quizItems.every((item) => item.answered);
-          if (!completed) {
-            completed = (await showDialog<bool?>(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    content:
-                        const Text('You are missing some answers, continue?'),
-                    actions: [
-                      TextButton(
-                        onPressed: Navigator.of(context).pop,
-                        child: const Text('no'),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pop(true),
-                        child: const Text('yes'),
-                      ),
-                    ],
-                  ),
-                )) ==
-                true;
-          }
-          if (!completed) return;
-          navigator.push<void>(
-            MaterialPageRoute(builder: (_) => const ResultPage()),
-          );
-        },
-      ),
+      //TODO:提交按钮是否要在所有页面都要展现？
+      // floatingActionButton: FloatingActionButton(
+      //   tooltip: 'Submit',
+      //   child: const Icon(Icons.done),
+      //   onPressed: () async {
+      //     final navigator = Navigator.of(context);
+      //     var completed = quizItems.every((item) => item.answered);
+      //     if (!completed) {
+      //       completed = (await showDialog<bool?>(
+      //             context: context,
+      //             builder: (context) => AlertDialog(
+      //               content:
+      //                   const Text('You are missing some answers, continue?'),
+      //               actions: [
+      //                 TextButton(
+      //                   onPressed: Navigator.of(context).pop,
+      //                   child: const Text('no'),
+      //                 ),
+      //                 TextButton(
+      //                   onPressed: () => Navigator.of(context).pop(true),
+      //                   child: const Text('yes'),
+      //                 ),
+      //               ],
+      //             ),
+      //           )) ==
+      //           true;
+      //     }
+      //     if (!completed) return;
+      //     navigator.push<void>(
+      //       MaterialPageRoute(builder: (_) => const ResultPage()),
+      //     );
+      //   },
+      // ),
+    );
+  }
+
+  void _submitEvent(List<QuizItem> quizItems) async {
+    final completed = quizItems.every((item) => item.answered);
+    if (!completed) {
+      // TODO: alert dialog if they haven't answered all questions yet
+      print('you are missing some answers');
+      Toast.show('you are missing some answers');
+      return;
+    }
+    quizItems.lastOrNull?.previousFlag = true;
+    Navigator.of(context).push<ResultPage>(
+      MaterialPageRoute(builder: (_) => const ResultPage()),
     );
   }
 
@@ -252,18 +295,31 @@ class _PageItemState extends State<_PageItem> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(item.question.title),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            item.question.title,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+        ),
         const Divider(),
         for (final choice in item.choices)
-          ListTile(
-            title: Text(choice.content),
-            selected: choice.selected,
-            selectedColor: Colors.black,
-            selectedTileColor: Colors.green.shade200,
-            onTap: () {
-              setState(() => item.radioChoose(choice));
-              widget.onComplete?.call();
-            },
+          Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: ListTile(
+              title: Text(choice.content),
+              selected: choice.selected,
+              selectedColor: Colors.black,
+              selectedTileColor: Colors.green.shade200,
+              onTap: () {
+                 //TODO: 多选时候有bug
+                if (item.previousFlag && item.answered) {
+                  return;
+                }
+                setState(() => item.radioChoose(choice));
+                // widget.onComplete?.call();
+              },
+            ),
           ),
       ],
     );
