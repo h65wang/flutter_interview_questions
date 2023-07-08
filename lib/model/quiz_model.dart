@@ -21,6 +21,8 @@ class QuizModel extends ChangeNotifier {
 
   bool isLoading = false;
 
+  bool get completed => quizItems.every((item) => item.answered);
+
   QuizModel() {
     fetchAllQuestions();
   }

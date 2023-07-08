@@ -1,8 +1,10 @@
-import 'dart:math';
-
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_interview_questions/components/toast.dart';
+import 'package:flutter_interview_questions/components/indicator.dart';
 import 'package:flutter_interview_questions/model/quiz_model.dart';
 
+import '../../model/quiz_item.dart';
 import '../result/result_page.dart';
 
 const _kAnimationDuration = Duration(milliseconds: 800);
@@ -17,10 +19,11 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   final ValueNotifier<int> _currentPage = ValueNotifier(0);
-  final _pageController = PageController();
+  late final ValueNotifier<int> _currentFlage = ValueNotifier(0);
 
   bool _isAnimating = false;
 
+  final _pageController = PageController();
   @override
   Widget build(BuildContext context) {
     final quizItems = context.read<QuizModel>().quizItems;
@@ -34,30 +37,49 @@ class _QuizPageState extends State<QuizPage> {
         children: [
           ValueListenableBuilder(
             valueListenable: _currentPage,
-            builder: (context, value, child) => _Overview(
-              currentIndex: value,
-              itemOnTap: (index) {
-                _isAnimating = true;
-                _pageController
-                    .animateToPage(
-                  index,
-                  duration: _kAnimationDuration,
-                  curve: _kAnimationCurve,
-                )
-                    .then((value) {
-                  _isAnimating = false;
-                  _currentPage.value = index;
-                });
-              },
-            ),
+            builder: (BuildContext context1, int value, Widget? child) {
+              return IndicatorWidget(
+                  itemCount: quizItems.length,
+                  current: value,
+                  onTap: (index) {
+                    _pageController.animateToPage(
+                      index,
+                      duration: _kAnimationDuration,
+                      curve: _kAnimationCurve,
+                    );
+                  },
+                  onTapThumbnail: () {
+                    showDialog<String>(
+                      context: context1,
+                      builder: (BuildContext context) =>
+                          _showOverviewDialog(value, context),
+                    );
+                  },
+                  onTapSubmit: () async {
+                    final navigator = Navigator.of(context);
+                    var isGoToResultPage = await _showSubmitDialog(context);
+                    if (isGoToResultPage == true) {
+                      navigator.push<void>(
+                        MaterialPageRoute(builder: (_) => const ResultPage()),
+                      );
+                    }
+                  });
+            },
           ),
           const Divider(),
           Expanded(
             child: PageView.builder(
               itemCount: quizItems.length,
               onPageChanged: (value) {
-                if (_isAnimating) return;
+
                 _currentPage.value = value;
+                _currentFlage.value = value;
+                if (value > 0) {
+                  quizItems[value - 1].previousFlag = true;
+                } else {
+                  quizItems[value].previousFlag = true;
+                }
+
               },
               controller: _pageController,
               itemBuilder: (_, index) => _PageItem(
@@ -69,39 +91,143 @@ class _QuizPageState extends State<QuizPage> {
               ),
             ),
           ),
+          ValueListenableBuilder(
+            valueListenable: _currentFlage,
+            builder: (BuildContext context, int value, Widget? child) {
+              if (value != quizItems.length - 1) {
+                return Container();
+              }
+              return Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  child: ElevatedButton(
+                      onPressed: () => _submitEvent(quizItems),
+                      child: const Text('Submit')));
+            },
+          ),
+          const SizedBox(
+            height: 100,
+          ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Submit',
-        child: const Icon(Icons.done),
-        onPressed: () async {
-          final navigator = Navigator.of(context);
-          var completed = quizItems.every((item) => item.answered);
-          if (!completed) {
-            completed = (await showDialog<bool?>(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    content:
-                        const Text('You are missing some answers, continue?'),
-                    actions: [
-                      TextButton(
-                        onPressed: Navigator.of(context).pop,
-                        child: const Text('no'),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pop(true),
-                        child: const Text('yes'),
-                      ),
-                    ],
-                  ),
-                )) ==
-                true;
-          }
-          if (!completed) return;
-          navigator.push<void>(
-            MaterialPageRoute(builder: (_) => const ResultPage()),
-          );
-        },
+      //TODO:提交按钮是否要在所有页面都要展现？
+      // floatingActionButton: FloatingActionButton(
+      //   tooltip: 'Submit',
+      //   child: const Icon(Icons.done),
+      //   onPressed: () async {
+      //     final navigator = Navigator.of(context);
+      //     var completed = quizItems.every((item) => item.answered);
+      //     if (!completed) {
+      //       completed = (await showDialog<bool?>(
+      //             context: context,
+      //             builder: (context) => AlertDialog(
+      //               content:
+      //                   const Text('You are missing some answers, continue?'),
+      //               actions: [
+      //                 TextButton(
+      //                   onPressed: Navigator.of(context).pop,
+      //                   child: const Text('no'),
+      //                 ),
+      //                 TextButton(
+      //                   onPressed: () => Navigator.of(context).pop(true),
+      //                   child: const Text('yes'),
+      //                 ),
+      //               ],
+      //             ),
+      //           )) ==
+      //           true;
+      //     }
+      //     if (!completed) return;
+      //     navigator.push<void>(
+      //       MaterialPageRoute(builder: (_) => const ResultPage()),
+      //     );
+      //   },
+      // ),
+    );
+  }
+
+  void _submitEvent(List<QuizItem> quizItems) async {
+    final completed = quizItems.every((item) => item.answered);
+    if (!completed) {
+      // TODO: alert dialog if they haven't answered all questions yet
+      print('you are missing some answers');
+      Toast.show('you are missing some answers');
+      return;
+    }
+    quizItems.lastOrNull?.previousFlag = true;
+    Navigator.of(context).push<ResultPage>(
+      MaterialPageRoute(builder: (_) => const ResultPage()),
+    );
+  }
+
+  Future<bool?> _showSubmitDialog(BuildContext context) {
+    var completed = context.read<QuizModel>().completed;
+    if (completed) {
+      return showDialog<bool?>(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: const Text('Do you confirm to submit?'),
+          actions: [
+            TextButton(
+              onPressed: Navigator.of(context).pop,
+              child: const Text('no'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text('yes'),
+            ),
+          ],
+        ),
+      );
+    }
+    return showDialog<bool?>(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: const Text('You are missing some answers, continue?'),
+        actions: [
+          TextButton(
+            onPressed: Navigator.of(context).pop,
+            child: const Text('yes'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('submit anyway'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _showOverviewDialog(int value, BuildContext context) {
+    return Dialog(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text('Quiz Overview'),
+            _Overview(
+              currentIndex: value,
+              itemOnTap: (index) => _pageController.animateToPage(
+                index,
+                duration: _kAnimationDuration,
+                curve: _kAnimationCurve,
+              ),
+            ),
+            const SizedBox(height: 15),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Close'),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -120,20 +246,30 @@ class _Overview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final quizItems = context.read<QuizModel>().quizItems;
-    final indexTemp = _getItems(quizItems.length);
-    final colorScheme = Theme.of(context).colorScheme;
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: indexTemp.map(
-        (e) {
+
+
+    return Wrap(
+      direction: Axis.horizontal,
+      alignment: WrapAlignment.start,
+      spacing: 8.0,
+      runSpacing: 4.0,
+      children: quizItems.mapIndexed(
+        (i, e) {
           final isCurrent = e == currentIndex;
           return RawMaterialButton(
+
             constraints: BoxConstraints(minWidth: 36, minHeight: 36),
             onPressed: isCurrent ? null : () => itemOnTap?.call(e),
             shape: CircleBorder(
               side: quizItems[e].answered
                   ? BorderSide(color: colorScheme.tertiary)
+
+            onPressed: isCurrent ? null : () => itemOnTap?.call(i),
+            shape: CircleBorder(
+              side: e.answered
+                  ? const BorderSide(color: Colors.green)
+
                   : isCurrent
                       ? BorderSide.none
                       : BorderSide(color: colorScheme.primary),
@@ -142,7 +278,7 @@ class _Overview extends StatelessWidget {
             fillColor:
                 isCurrent ? colorScheme.primary : colorScheme.inversePrimary,
             child: Text(
-              '${e + 1}',
+              '${i + 1}',
               style: TextStyle(
                 color:
                     isCurrent ? Colors.white : Theme.of(context).primaryColor,
@@ -152,16 +288,6 @@ class _Overview extends StatelessWidget {
         },
       ).toList(),
     );
-  }
-
-  List<int> _getItems(int quizCount) {
-    final resultLength = min(quizCount, 5);
-    final centerOffset = resultLength ~/ 2;
-    final startItem = min(
-      max(currentIndex - centerOffset, 0),
-      quizCount - resultLength,
-    );
-    return List.generate(resultLength, (index) => startItem + index);
   }
 }
 
@@ -183,18 +309,32 @@ class _PageItemState extends State<_PageItem> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(item.question.title),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            item.question.title,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+        ),
         const Divider(),
         for (final choice in item.choices)
-          ListTile(
-            title: Text(choice.content),
-            selected: choice.selected,
-            selectedColor: Colors.black,
-            selectedTileColor: Theme.of(context).colorScheme.tertiaryContainer,
-            onTap: () {
-              setState(() => item.radioChoose(choice));
-              widget.onComplete?.call();
-            },
+
+          Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: ListTile(
+              title: Text(choice.content),
+              selected: choice.selected,
+              selectedColor: Colors.black,
+              selectedTileColor: Colors.green.shade200,
+              onTap: () {
+                 //TODO: 多选时候有bug
+                if (item.previousFlag && item.answered) {
+                  return;
+                }
+                setState(() => item.radioChoose(choice));
+                // widget.onComplete?.call();
+              },
+            ),
           ),
       ],
     );
