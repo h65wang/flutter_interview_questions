@@ -1,7 +1,7 @@
-import 'dart:math';
-
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_interview_questions/components/toast.dart';
+import 'package:flutter_interview_questions/components/indicator.dart';
 import 'package:flutter_interview_questions/model/quiz_model.dart';
 
 import '../../model/quiz_item.dart';
@@ -35,14 +35,34 @@ class _QuizPageState extends State<QuizPage> {
         children: [
           ValueListenableBuilder(
             valueListenable: _currentPage,
-            builder: (context, value, child) => _Overview(
-              currentIndex: value,
-              itemOnTap: (index) => _pageController.animateToPage(
-                index,
-                duration: _kAnimationDuration,
-                curve: _kAnimationCurve,
-              ),
-            ),
+            builder: (BuildContext context1, int value, Widget? child) {
+              return IndicatorWidget(
+                  itemCount: quizItems.length,
+                  current: value,
+                  onTap: (index) {
+                    _pageController.animateToPage(
+                      index,
+                      duration: _kAnimationDuration,
+                      curve: _kAnimationCurve,
+                    );
+                  },
+                  onTapThumbnail: () {
+                    showDialog<String>(
+                      context: context1,
+                      builder: (BuildContext context) =>
+                          _showOverviewDialog(value, context),
+                    );
+                  },
+                  onTapSubmit: () async {
+                    final navigator = Navigator.of(context);
+                    var isGoToResultPage = await _showSubmitDialog(context);
+                    if (isGoToResultPage == true) {
+                      navigator.push<void>(
+                        MaterialPageRoute(builder: (_) => const ResultPage()),
+                      );
+                    }
+                  });
+            },
           ),
           const Divider(),
           Expanded(
@@ -135,6 +155,78 @@ class _QuizPageState extends State<QuizPage> {
       MaterialPageRoute(builder: (_) => const ResultPage()),
     );
   }
+
+  Future<bool?> _showSubmitDialog(BuildContext context) {
+    var completed = context.read<QuizModel>().completed;
+    if (completed) {
+      return showDialog<bool?>(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: const Text('Do you confirm to submit?'),
+          actions: [
+            TextButton(
+              onPressed: Navigator.of(context).pop,
+              child: const Text('no'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text('yes'),
+            ),
+          ],
+        ),
+      );
+    }
+    return showDialog<bool?>(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: const Text('You are missing some answers, continue?'),
+        actions: [
+          TextButton(
+            onPressed: Navigator.of(context).pop,
+            child: const Text('yes'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('submit anyway'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _showOverviewDialog(int value, BuildContext context) {
+    return Dialog(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text('Quiz Overview'),
+            _Overview(
+              currentIndex: value,
+              itemOnTap: (index) => _pageController.animateToPage(
+                index,
+                duration: _kAnimationDuration,
+                curve: _kAnimationCurve,
+              ),
+            ),
+            const SizedBox(height: 15),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Close'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class _Overview extends StatelessWidget {
@@ -150,17 +242,19 @@ class _Overview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final quizItems = context.read<QuizModel>().quizItems;
-    final indexTemp = _getItems(quizItems.length);
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: indexTemp.map(
-        (e) {
+    return Wrap(
+      direction: Axis.horizontal,
+      alignment: WrapAlignment.start,
+      spacing: 8.0,
+      runSpacing: 4.0,
+      children: quizItems.mapIndexed(
+        (i, e) {
           final isCurrent = e == currentIndex;
           return RawMaterialButton(
-            onPressed: isCurrent ? null : () => itemOnTap?.call(e),
+            onPressed: isCurrent ? null : () => itemOnTap?.call(i),
             shape: CircleBorder(
-              side: quizItems[e].answered
+              side: e.answered
                   ? const BorderSide(color: Colors.green)
                   : isCurrent
                       ? BorderSide.none
@@ -170,7 +264,7 @@ class _Overview extends StatelessWidget {
             fillColor:
                 isCurrent ? Theme.of(context).primaryColor : Colors.white,
             child: Text(
-              '${e + 1}',
+              '${i + 1}',
               style: TextStyle(
                 color:
                     isCurrent ? Colors.white : Theme.of(context).primaryColor,
@@ -180,16 +274,6 @@ class _Overview extends StatelessWidget {
         },
       ).toList(),
     );
-  }
-
-  List<int> _getItems(int quizCount) {
-    final resultLength = min(quizCount, 5);
-    final centerOffset = resultLength ~/ 2;
-    final startItem = min(
-      max(currentIndex - centerOffset, 0),
-      quizCount - resultLength,
-    );
-    return List.generate(resultLength, (index) => startItem + index);
   }
 }
 
