@@ -19,6 +19,11 @@ class QuizItem {
   bool get correct => choices.every(
       (choice) => (choice.content == question.answer) == choice.selected);
 
+  bool previousFlag = false;//上一个问题是否已经做完  
+  set isAnswered(bool flage) {
+    isAnswered = flage;
+  }
+
   void radioChoose(Choice choice) {
     for (var element in choices) {
       element.selected = element == choice;

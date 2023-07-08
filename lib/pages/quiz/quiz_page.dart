@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_interview_questions/components/toast.dart';
 import 'package:flutter_interview_questions/model/quiz_model.dart';
 
 import '../result/result_page.dart';
@@ -18,7 +19,6 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   final ValueNotifier<int> _currentPage = ValueNotifier(0);
   final _pageController = PageController();
-
   @override
   Widget build(BuildContext context) {
     final quizItems = context.read<QuizModel>().quizItems;
@@ -168,7 +168,13 @@ class _PageItemState extends State<_PageItem> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(item.question.title),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            item.question.title,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+        ),
         const Divider(),
         for (final choice in item.choices)
           ListTile(
