@@ -21,6 +21,8 @@ class _QuizPageState extends State<QuizPage> {
   final ValueNotifier<int> _currentPage = ValueNotifier(0);
   late final ValueNotifier<int> _currentFlage = ValueNotifier(0);
 
+  bool _isAnimating = false;
+
   final _pageController = PageController();
   @override
   Widget build(BuildContext context) {
@@ -69,6 +71,7 @@ class _QuizPageState extends State<QuizPage> {
             child: PageView.builder(
               itemCount: quizItems.length,
               onPageChanged: (value) {
+
                 _currentPage.value = value;
                 _currentFlage.value = value;
                 if (value > 0) {
@@ -76,6 +79,7 @@ class _QuizPageState extends State<QuizPage> {
                 } else {
                   quizItems[value].previousFlag = true;
                 }
+
               },
               controller: _pageController,
               itemBuilder: (_, index) => _PageItem(
@@ -243,6 +247,8 @@ class _Overview extends StatelessWidget {
   Widget build(BuildContext context) {
     final quizItems = context.read<QuizModel>().quizItems;
 
+
+
     return Wrap(
       direction: Axis.horizontal,
       alignment: WrapAlignment.start,
@@ -252,17 +258,25 @@ class _Overview extends StatelessWidget {
         (i, e) {
           final isCurrent = e == currentIndex;
           return RawMaterialButton(
+
+            constraints: BoxConstraints(minWidth: 36, minHeight: 36),
+            onPressed: isCurrent ? null : () => itemOnTap?.call(e),
+            shape: CircleBorder(
+              side: quizItems[e].answered
+                  ? BorderSide(color: colorScheme.tertiary)
+
             onPressed: isCurrent ? null : () => itemOnTap?.call(i),
             shape: CircleBorder(
               side: e.answered
                   ? const BorderSide(color: Colors.green)
+
                   : isCurrent
                       ? BorderSide.none
-                      : BorderSide(color: Theme.of(context).primaryColor),
+                      : BorderSide(color: colorScheme.primary),
             ),
             elevation: isCurrent ? 0 : 4,
             fillColor:
-                isCurrent ? Theme.of(context).primaryColor : Colors.white,
+                isCurrent ? colorScheme.primary : colorScheme.inversePrimary,
             child: Text(
               '${i + 1}',
               style: TextStyle(
@@ -304,6 +318,7 @@ class _PageItemState extends State<_PageItem> {
         ),
         const Divider(),
         for (final choice in item.choices)
+
           Padding(
             padding: const EdgeInsets.all(2.0),
             child: ListTile(

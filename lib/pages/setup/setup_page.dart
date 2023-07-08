@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_interview_questions/components/toast.dart';
+import 'package:flutter_interview_questions/widget/error_displayer.dart';
 
 import '../../config/constants.dart';
 import '../../model/difficulty.dart';
@@ -40,25 +41,24 @@ class _SelectionArea extends StatefulWidget {
 }
 
 class _SelectionAreaState extends State<_SelectionArea> {
-  Map<String, List<Question>>? get allQuestions =>
-      context.read<QuizModel>().allQuestions;
-
-  bool get questionIsEmpty => allQuestions == null || allQuestions!.isEmpty;
-
-  final ValueNotifier<int> _questionsCount = ValueNotifier<int>(0);
-  final ValueNotifier<Set<String>> _selectedTags =
-      ValueNotifier<Set<String>>(<String>{});
-
-  final ValueNotifier<Set<Difficulty>> _selectedDifficulty =
-      ValueNotifier({Difficulty.easy});
+  late final quizModel = context.read<QuizModel>();
+  late final ValueNotifier<int> _questionsCount = ValueNotifier<int>(
+    quizModel.allQuestions.values.expand((e) => e).length,
+  );
+  late final ValueNotifier<Set<String>> _selectedTags =
+      ValueNotifier<Set<String>>(
+    quizModel.allQuestions.keys.toSet(),
+  );
+  final ValueNotifier<Set<Difficulty>> _selectedDifficulty = ValueNotifier(
+    {Difficulty.easy},
+  );
 
   @override
   Widget build(BuildContext context) {
-    if (questionIsEmpty) {
+    if (quizModel.questionIsEmpty) {
       return Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             const Text('No Question Found... Please Retry...'),
             const SizedBox(height: 12.0),
@@ -71,11 +71,9 @@ class _SelectionAreaState extends State<_SelectionArea> {
       );
     }
 
-    final totalCount = allQuestions!.values.expand((e) => e).length;
-    _questionsCount.value = totalCount;
-    _selectedTags.value = allQuestions!.keys.toSet();
+    final totalCount = quizModel.totalCount;
 
-    var themeData = Theme.of(context);
+    final themeData = Theme.of(context);
     return ListView(
       children: [
         ListTile(
@@ -112,29 +110,35 @@ class _SelectionAreaState extends State<_SelectionArea> {
           builder: (context, selectedTags, __) => Card(
             child: ExpansionTile(
               title: Text(
-                'Select Tags (${selectedTags.length}/${allQuestions!.length})',
+                'Select Tags (${selectedTags.length}/${quizModel.allQuestions.length})',
                 style: themeData.textTheme.titleMedium,
               ),
-              children: allQuestions!.keys
-                  .map((key) => CheckboxListTile(
-                        value: selectedTags.contains(key),
-                        title: Text(key),
-                        onChanged: (e) {
-                          if (e == null) return;
-                          final resultTemp = selectedTags.toSet();
-                          if (e) {
-                            resultTemp.add(key);
-                          } else {
-                            if (resultTemp.length == 1) {
-                              Toast.show('Choose at least one');
-                              return;
+              children: [
+                ...quizModel.allQuestions.keys
+                    .map((key) => CheckboxListTile(
+                          value: selectedTags.contains(key),
+                          title: Text(key),
+                          onChanged: (e) {
+                            if (e == null) return;
+                            final resultTemp = selectedTags.toSet();
+                            if (e) {
+                              resultTemp.add(key);
+                            } else {
+                              resultTemp.remove(key);
                             }
-                            resultTemp.remove(key);
-                          }
-                          _selectedTags.value = resultTemp;
-                        },
-                      ))
-                  .toList(),
+                            _selectedTags.value = resultTemp;
+                          },
+                        ))
+                    .toList(),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.only(left: 16),
+                  child: ErrorDisplayer(
+                    errorText:
+                        selectedTags.isEmpty ? 'Choose at least one' : null,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -153,33 +157,44 @@ class _SelectionAreaState extends State<_SelectionArea> {
                     .join(', '),
                 style: themeData.textTheme.titleSmall,
               ),
-              children: Difficulty.values
-                  .map((difficultyValue) => CheckboxListTile(
-                        value: selectedDifficulty.contains(difficultyValue),
-                        title: Text(difficultyValue.name),
-                        onChanged: (e) {
-                          if (e == null) return;
-                          final resultTemp = selectedDifficulty.toSet();
-                          if (e) {
-                            resultTemp.add(difficultyValue);
-                          } else {
-                            if (resultTemp.length == 1) {
-                              Toast.show('Choose at least one');
-                              return;
+              children: [
+                ...Difficulty.values
+                    .map((difficultyValue) => CheckboxListTile(
+                          value: selectedDifficulty.contains(difficultyValue),
+                          title: Text(difficultyValue.name),
+                          onChanged: (e) {
+                            if (e == null) return;
+                            final resultTemp = selectedDifficulty.toSet();
+                            if (e) {
+                              resultTemp.add(difficultyValue);
+                            } else {
+                              resultTemp.remove(difficultyValue);
                             }
-                            resultTemp.remove(difficultyValue);
-                          }
-                          _selectedDifficulty.value = resultTemp;
-                        },
-                      ))
-                  .toList(),
+                            _selectedDifficulty.value = resultTemp;
+                          },
+                        ))
+                    .toList(),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.only(left: 16),
+                  child: ErrorDisplayer(
+                    errorText: selectedDifficulty.isEmpty
+                        ? 'Choose at least one'
+                        : null,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
         ListTile(
           title: FilledButton(
             onPressed: () {
-              final quizModel = context.read<QuizModel>();
+              if (_selectedTags.value.isEmpty ||
+                  _selectedDifficulty.value.isEmpty) {
+                Toast.show('Choose at least one');
+                return;
+              }
               quizModel.setup(
                 count: _questionsCount.value,
                 selectedTags: _selectedTags.value
