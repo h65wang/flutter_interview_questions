@@ -1,4 +1,4 @@
-name: Flutter Format Check
+name: Dart Analyze🚀
 
 on:
   workflow_dispatch:
