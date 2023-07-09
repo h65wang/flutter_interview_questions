@@ -7,7 +7,7 @@ class QuizItem {
   late final List<Choice> choices;
 
   QuizItem(this.question) {
-    choices = ([question.answer, ...question.candidates]..shuffle())
+    choices = ([...question.answers, ...question.candidates]..shuffle())
         .map(Choice.new)
         .toList();
   }
@@ -17,7 +17,7 @@ class QuizItem {
 
   /// Returns true if this question is answered correctly.
   bool get correct => choices.every(
-      (choice) => (choice.content == question.answer) == choice.selected);
+      (choice) => (choice.content == question.answers) == choice.selected);
 
   bool previousFlag = false; //上一个问题是否已经做完
   set isAnswered(bool flage) {
