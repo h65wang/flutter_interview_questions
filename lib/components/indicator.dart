@@ -19,17 +19,12 @@ class IndicatorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _buildPrevious(),
-          const Spacer(),
-          _buildTextButton(context),
-          const Spacer(),
-          _buildNext(),
-        ],
+    return SizedBox(
+      height: 44,
+      child: NavigationToolbar(
+        leading: _buildPrevious(),
+        middle: _buildTextButton(context),
+        trailing: _buildNext(),
       ),
     );
   }
@@ -51,6 +46,7 @@ class IndicatorWidget extends StatelessWidget {
       return TextButton(
         onPressed: onTapSubmit,
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text('submit'),
             const Icon(Icons.done),
@@ -61,6 +57,7 @@ class IndicatorWidget extends StatelessWidget {
     return TextButton(
       onPressed: () => onTap(current + 1),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text('Next'),
           Icon(Icons.arrow_forward),
@@ -75,6 +72,7 @@ class IndicatorWidget extends StatelessWidget {
       child: TextButton(
         onPressed: () => onTap(current - 1),
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.arrow_back),
             Text('Previous'),
