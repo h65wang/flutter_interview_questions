@@ -17,7 +17,7 @@ class QuizItem {
 
   /// Returns true if this question is answered correctly.
   bool get correct => choices.every(
-      (choice) => (choice.content == question.answers) == choice.selected);
+      (choice) => (question.answers.contains(choice.content)) == choice.selected);
 
   bool previousFlag = false; //上一个问题是否已经做完
   set isAnswered(bool flage) {
