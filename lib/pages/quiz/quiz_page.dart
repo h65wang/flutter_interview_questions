@@ -34,31 +34,20 @@ class _QuizPageState extends State<QuizPage> {
             valueListenable: _currentPage,
             builder: (BuildContext context1, int value, Widget? child) {
               return IndicatorWidget(
-                  itemCount: quizItems.length,
-                  current: value,
-                  onTap: (index) {
-                    _pageController.animateToPage(
-                      index,
-                      duration: _kAnimationDuration,
-                      curve: _kAnimationCurve,
-                    );
-                  },
-                  onTapThumbnail: () {
-                    showDialog<String>(
-                      context: context1,
-                      builder: (BuildContext context) =>
-                          _showOverviewDialog(value, context),
-                    );
-                  },
-                  onTapSubmit: () async {
-                    final navigator = Navigator.of(context);
-                    var isGoToResultPage = await _showSubmitDialog(context);
-                    if (isGoToResultPage == true) {
-                      navigator.push<void>(
-                        MaterialPageRoute(builder: (_) => const ResultPage()),
-                      );
-                    }
-                  });
+                itemCount: quizItems.length,
+                current: value,
+                onTap: (index) => _pageController.animateToPage(
+                  index,
+                  duration: _kAnimationDuration,
+                  curve: _kAnimationCurve,
+                ),
+                onTapThumbnail: () => showDialog<String>(
+                  context: context1,
+                  builder: (BuildContext context) =>
+                      _buildOverviewDialog(value, context),
+                ),
+                onTapSubmit: onSubmit,
+              );
             },
           ),
           const Divider(),
@@ -81,40 +70,23 @@ class _QuizPageState extends State<QuizPage> {
       floatingActionButton: FloatingActionButton(
         tooltip: 'Submit',
         child: const Icon(Icons.done),
-        onPressed: () async {
-          final navigator = Navigator.of(context);
-          var completed = quizItems.every((item) => item.answered);
-          if (!completed) {
-            completed = (await showDialog<bool?>(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    content:
-                        const Text('You are missing some answers, continue?'),
-                    actions: [
-                      TextButton(
-                        onPressed: Navigator.of(context).pop,
-                        child: const Text('no'),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pop(true),
-                        child: const Text('yes'),
-                      ),
-                    ],
-                  ),
-                )) ==
-                true;
-          }
-          if (!completed) return;
-          navigator.push<void>(
-            MaterialPageRoute(builder: (_) => const ResultPage()),
-          );
-        },
+        onPressed: onSubmit,
       ),
     );
   }
 
+  void onSubmit() async {
+    final navigator = Navigator.of(context);
+    final isGoToResultPage = await _showSubmitDialog(context);
+    if (isGoToResultPage == true) {
+      navigator.push<void>(
+        MaterialPageRoute(builder: (_) => const ResultPage()),
+      );
+    }
+  }
+
   Future<bool?> _showSubmitDialog(BuildContext context) {
-    var completed = context.read<QuizModel>().completed;
+    final completed = context.read<QuizModel>().completed;
     if (completed) {
       return showDialog<bool?>(
         context: context,
@@ -151,7 +123,7 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 
-  Widget _showOverviewDialog(int value, BuildContext context) {
+  Widget _buildOverviewDialog(int value, BuildContext context) {
     return Dialog(
       child: Container(
         decoration: BoxDecoration(
@@ -164,13 +136,16 @@ class _QuizPageState extends State<QuizPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text('Quiz Overview'),
-            _Overview(
+            _OverviewWrap(
               currentIndex: value,
-              itemOnTap: (index) => _pageController.animateToPage(
-                index,
-                duration: _kAnimationDuration,
-                curve: _kAnimationCurve,
-              ),
+              itemOnTap: (index) {
+                Navigator.of(context).pop();
+                _pageController.animateToPage(
+                  index,
+                  duration: _kAnimationDuration,
+                  curve: _kAnimationCurve,
+                );
+              },
             ),
             const SizedBox(height: 15),
             TextButton(
@@ -186,8 +161,8 @@ class _QuizPageState extends State<QuizPage> {
   }
 }
 
-class _Overview extends StatelessWidget {
-  const _Overview({
+class _OverviewWrap extends StatelessWidget {
+  const _OverviewWrap({
     Key? key,
     required this.currentIndex,
     this.itemOnTap,
@@ -207,9 +182,10 @@ class _Overview extends StatelessWidget {
       runSpacing: 4.0,
       children: quizItems.mapIndexed(
         (i, e) {
-          final isCurrent = e == currentIndex;
+          final isCurrent = i == currentIndex;
           return RawMaterialButton(
             onPressed: isCurrent ? null : () => itemOnTap?.call(i),
+            constraints: BoxConstraints.tightFor(width: 36, height: 36),
             shape: CircleBorder(
               side: e.answered
                   ? const BorderSide(color: Colors.green)

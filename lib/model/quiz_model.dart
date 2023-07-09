@@ -19,7 +19,8 @@ class QuizModel extends ChangeNotifier {
   bool get questionIsEmpty => allQuestions.isEmpty;
   int get totalCount => allQuestions.values.expand((e) => e).length;
 
-  bool isLoading = false;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
 
   bool get completed => quizItems.every((item) => item.answered);
 
@@ -27,10 +28,10 @@ class QuizModel extends ChangeNotifier {
     fetchAllQuestions();
   }
 
-  Future fetchAllQuestions() async {
+  Future<void> fetchAllQuestions() async {
     const root = 'https://raw.githubusercontent.com/h65wang'
         '/flutter_interview_questions/main/public';
-    isLoading = true;
+    _isLoading = true;
     notifyListeners();
 
     final res = await http.get(Uri.parse('$root/index.json'));
@@ -49,7 +50,7 @@ class QuizModel extends ChangeNotifier {
     }
     allQuestions = resultTemp;
 
-    isLoading = false;
+    _isLoading = false;
     notifyListeners();
   }
 
