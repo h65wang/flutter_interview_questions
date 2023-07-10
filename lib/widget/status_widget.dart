@@ -20,11 +20,9 @@ class StatusWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (status == QuizStatus.loading) {
-      return const Center(child: CircularProgressIndicator());
-    }else if (status == QuizStatus.display) {
+    if (status == QuizStatus.display) {
       return contentWidget.call(context);
-    }  else if (status == QuizStatus.empty || status == QuizStatus.error) {
+    } else if (status == QuizStatus.empty || status == QuizStatus.error) {
       return Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
