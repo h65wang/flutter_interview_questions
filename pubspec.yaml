@@ -25,6 +25,8 @@ flutter:
     - assets/questions/index.json
     - assets/questions/en/
     - assets/questions/zh/
+    - public/index.json
+    - public/questions/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
