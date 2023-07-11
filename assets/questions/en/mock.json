@@ -1,8 +1,9 @@
 [
   {
     "title": "Which of the following statement is correct?",
-    "answer": "Correct",
+    "answers": ["Correct"],
     "candidates": [
+      "Wrong",
       "Wrong",
       "Wrong",
       "Wrong"
