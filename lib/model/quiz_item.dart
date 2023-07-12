@@ -19,11 +19,13 @@ class QuizItem {
   bool get correct => choices.every((choice) =>
       (question.answers.contains(choice.content)) == choice.selected);
 
-  bool get isSingleChoice => question.answers.length == 1;
+  ///Return if this question is single selection
+  bool get isSingleSelection => question.answers.length == 1;
 
   bool previousFlag = false; //上一个问题是否已经做完
-  set isAnswered(bool flage) {
-    isAnswered = flage;
+
+  set isAnswered(bool flag) {
+    isAnswered = flag;
   }
 
   void radioChoose(Choice currentChoice, bool isSingleChoice) {

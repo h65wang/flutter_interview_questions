@@ -238,7 +238,7 @@ class _PageItemState extends State<_PageItem> {
               selectedColor: Colors.black,
               selectedTileColor: Colors.green.shade200,
               onTap: () {
-                setState(() => item.radioChoose(choice, item.isSingleChoice));
+                setState(() => item.radioChoose(choice, item.isSingleSelection));
               },
             ),
         ],
