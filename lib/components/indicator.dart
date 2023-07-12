@@ -36,7 +36,6 @@ class IndicatorWidget extends StatelessWidget {
       },
       child: Text(
         '${current + 1}/$itemCount',
-        style: TextStyle(color: Theme.of(context).primaryColor),
       ),
     );
   }
