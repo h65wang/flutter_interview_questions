@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_interview_questions/state/app_theme.dart';
 
 import 'model/quiz_model.dart';
+import 'pages/menu/menu_page.dart';
 import 'pages/setup/setup_page.dart';
 
 void main() {
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         theme: appTheme.lightTheme(),
         darkTheme: appTheme.darkTheme(),
-        home: const SetupPage(),
+        home: const MenuPage(),
         scrollBehavior: _AppScrollBehavior(),
       ),
     );

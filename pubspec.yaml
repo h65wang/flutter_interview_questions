@@ -13,6 +13,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^1.1.0
   collection: ^1.17.1
+  easy_sidemenu: ^0.4.2
 
 dev_dependencies:
   flutter_test:
