@@ -1,20 +1,15 @@
 import 'dart:convert' as convert;
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 import 'language_item.dart';
 import 'question.dart';
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  AssetReader().loadFileList();
-}
+typedef Bank = Map<LanguageItem, List<Question>>;
 
-class AssetReader {
-  late final Map<LanguageItem, List<Question>> _bank;
-
-  Future loadFileList() async {
+class QuestionBank {
+  static Future<Bank> getAllQuestions() async {
+    // Fetch `index` to get the list of files for all locale
     List index;
     try {
       index = await _loadUrlAsJson('index.json');
@@ -23,8 +18,8 @@ class AssetReader {
     }
     final languages = index.map(LanguageItem.fromJson).toList();
 
-    final Map<LanguageItem, List<Question>> bank = {};
-
+    // Construct question bank, group questions by locale
+    final Bank bank = {};
     for (final lang in languages) {
       final questions = <Question>[];
       for (final file in lang.files) {
@@ -34,15 +29,14 @@ class AssetReader {
       }
       bank[lang] = questions;
     }
-
-    _bank = Map.unmodifiable(bank);
+    return bank;
   }
 
-  Future<List<dynamic>> _loadUrlAsJson(String url) async {
+  static Future<List<dynamic>> _loadUrlAsJson(String url) async {
     throw UnimplementedError();
   }
 
-  Future<List<dynamic>> _loadFileAsJson(String filename) async {
+  static Future<List<dynamic>> _loadFileAsJson(String filename) async {
     const root = 'assets/questions';
     final file = await rootBundle.loadString('$root/$filename');
     final json = convert.jsonDecode(file) as List<dynamic>;

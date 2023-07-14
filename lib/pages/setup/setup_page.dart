@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_interview_questions/components/toast.dart';
+import 'package:flutter_interview_questions/model/language_item.dart';
 import 'package:flutter_interview_questions/widget/error_displayer.dart';
 import 'package:flutter_interview_questions/widget/status_widget.dart';
 
@@ -28,7 +29,7 @@ class SetupPage extends StatelessWidget {
           child: StatusWidget(
             status: status,
             contentWidget: (_) => _SelectionArea(),
-            onRefresh: context.read<QuizModel>().fetchAllQuestions,
+            onRefresh: () {},
           ),
         ),
       ),
@@ -48,8 +49,8 @@ class _SelectionAreaState extends State<_SelectionArea> {
   late final ValueNotifier<int> _questionsCount = ValueNotifier<int>(
     quizModel.allQuestions.values.expand((e) => e).length,
   );
-  late final ValueNotifier<Set<String>> _selectedTags =
-      ValueNotifier<Set<String>>(
+  late final ValueNotifier<Set<LanguageItem>> _selectedTags =
+      ValueNotifier<Set<LanguageItem>>(
     quizModel.allQuestions.keys.toSet(),
   );
   final ValueNotifier<Set<Difficulty>> _selectedDifficulty = ValueNotifier(
@@ -104,7 +105,7 @@ class _SelectionAreaState extends State<_SelectionArea> {
             ...quizModel.allQuestions.keys
                 .map((key) => CheckboxListTile(
                       value: selectedTags.contains(key),
-                      title: Text(key),
+                      title: Text(key.lang),
                       onChanged: (e) {
                         if (e == null) return;
                         final resultTemp = selectedTags.toSet();
@@ -185,10 +186,7 @@ class _SelectionAreaState extends State<_SelectionArea> {
           }
           quizModel.setup(
             count: _questionsCount.value,
-            selectedTags: _selectedTags.value
-                .map(_indexItem2Tag)
-                .whereType<String>()
-                .toSet(),
+            selectedTags: _selectedTags.value,
             selectedDifficulty: _selectedDifficulty.value,
           );
           if (quizModel.quizItems.isEmpty) {
@@ -229,9 +227,6 @@ class _SelectionAreaState extends State<_SelectionArea> {
       },
     );
   }
-
-  String? _indexItem2Tag(String value) =>
-      RegExp(r'/([^/]+).json').firstMatch(value)?.group(1);
 }
 
 extension on bool {
