@@ -1,81 +1,85 @@
-import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_interview_questions/main.dart';
 import 'package:flutter_interview_questions/pages/setup/setup_page.dart';
 
-PageController pageController = PageController();
-SideMenuController sideMenu = SideMenuController();
+import '../../util/only_web/only_web.dart';
 
-class MenuPage extends StatefulWidget {
-  const MenuPage({super.key});
+class MenuPage extends StatelessWidget {
+  const MenuPage({super.key, required this.child});
 
-  @override
-  State<MenuPage> createState() => _MenuPageState();
-}
-
-class _MenuPageState extends State<MenuPage> {
-  @override
-  void initState() {
-    super.initState();
-    sideMenu.addListener((index) {
-      pageController.jumpToPage(index);
-    });
-  }
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Row(
+    return LayoutBuilder(
+      builder: (context, constraints) => Row(
         children: [
-          _buildSideMenu(),
-          _buildPage(),
+          if (constraints.maxWidth > 829) SideMenu(),
+          Expanded(child: ClipRect(child: child)),
         ],
       ),
     );
   }
+}
 
-  Widget _buildPage() {
-    return Expanded(
-      child: PageView(
-        controller: pageController,
-        children: [
-          SetupPage(),
-          Container(
-            child: Center(child: Text('TODO Page')),
-          ),
-        ],
+class SideMenu extends StatelessWidget {
+  const SideMenu({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 220,
+      child: Material(
+        color: Theme.of(context).colorScheme.secondaryContainer,
+        child: ListView(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 44),
+              child: InkWell(
+                onTap: () => launchUrlString(
+                  'https://github.com/h65wang',
+                ),
+                child: CircleAvatar(
+                  backgroundImage: AssetImage(
+                    'assets/image/uncle_wang.png',
+                  ),
+                  radius: 80,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.app_registration_outlined),
+              title: Text('Setup'),
+              onTap: () => _pushWithoutAnimation(SetupPage()),
+            ),
+            ListTile(
+              leading: Icon(Icons.token_outlined),
+              title: Text('TODO'),
+              onTap: () => _pushWithoutAnimation(
+                Center(child: Text('todo')),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildSideMenu() {
-    return SideMenu(
-      title: Text(
-        'Flutter Interview Question',
-        style: TextStyle(
-          fontSize: 20,
-        ),
+  void _pushWithoutAnimation(Widget page) {
+    navigatorKey.currentState?.pushAndRemoveUntil<void>(
+      PageRouteBuilder(
+        pageBuilder: (_, __, ___) => page,
+        transitionDuration: Duration.zero,
+        transitionsBuilder: (_, __, ___, child) => child,
       ),
-      showToggle: true,
-      footer: Text('footer'),
-      items: [
-        SideMenuItem(
-          title: 'Home',
-          priority: 0,
-          icon: Icon(Icons.home),
-          onTap: (index, _) {
-            sideMenu.changePage(index);
-          },
-        ),
-        SideMenuItem(
-          title: 'TODO',
-          icon: Icon(Icons.toc),
-          priority: 1,
-          onTap: (index, _) {
-            sideMenu.changePage(index);
-          },
-        ),
-      ],
-      controller: sideMenu,
+      (_) => false,
     );
   }
+
+  // void _push(Widget page) {
+  //   navigatorKey.currentState?.pushAndRemoveUntil<void>(
+  //     MaterialPageRoute(builder: (context) => page),
+  //     (_) => false,
+  //   );
+  // }
 }

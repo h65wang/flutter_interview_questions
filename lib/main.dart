@@ -32,7 +32,10 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         theme: appTheme.lightTheme(),
         darkTheme: appTheme.darkTheme(),
-        home: const MenuPage(),
+        home: SetupPage(),
+        builder: (context, child) => MenuPage(
+          child: child ?? SizedBox.shrink(),
+        ),
         scrollBehavior: _AppScrollBehavior(),
       ),
     );
