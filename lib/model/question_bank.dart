@@ -23,7 +23,7 @@ class QuestionBank {
     for (final lang in languages) {
       final questions = <Question>[];
       for (final file in lang.files) {
-        final json = await _loadFileAsJson('/${lang.folder}/$file');
+        final json = await _loadFileAsJson('${lang.folder}/$file');
         final q = json.map(Question.fromJson).toList();
         questions.addAll(q);
       }
