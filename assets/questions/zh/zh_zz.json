@@ -1,0 +1,130 @@
+[
+  {
+    "title": "如果你想定义一个AnimationController(动画控制器),那么你会新建一个:",
+    "answers": [
+      "explicit animation(显式动画)"
+    ],
+    "candidates": [
+      "stateless widget(无状态组件)",
+      "implicit animation(隐式动画)",
+      "AnimatedContainer widget(动画容器组件)"
+    ],
+    "tags": [
+      "animation"
+    ],
+    "difficulty": 1,
+    "credit": null
+  },
+  {
+    "title": "AnimatedContainer中的以下哪个属性，当该值改变的时候不会呈现动画?",
+    "answers": [
+      "child"
+    ],
+    "candidates": [
+      "width",
+      "color",
+      "padding"
+    ],
+    "tags": [
+      "animation"
+    ],
+    "difficulty": 1,
+    "credit": null
+  },
+  {
+    "title": "如果你想在屏幕上切换文本时应用有淡入淡出效果，以下哪个小部件可能有用:",
+    "answers": [
+      "AnimatedSwitcher"
+    ],
+    "candidates": [
+      "AnimatedContainer",
+      "AnimatedText",
+      "AnimatedFade"
+    ],
+    "tags": [
+      "animation"
+    ],
+    "difficulty": 1,
+    "credit": null
+  },
+  {
+    "title": "以下哪项是动画组件的默认曲线:",
+    "answers": [
+      "Curves.linear"
+    ],
+    "candidates": [
+      "Curves.easeOut",
+      "Curves.easeInOut",
+      "Curves.ease"
+    ],
+    "tags": [
+      "animation"
+    ],
+    "difficulty": 1,
+    "credit": null
+  },
+  {
+    "title": "以下哪项不是组件TweenAnimationBuilder的参数:",
+    "answers": [
+      "animation"
+    ],
+    "candidates": [
+      "duration",
+      "builder",
+      "child"
+    ],
+    "tags": [
+      "animation"
+    ],
+    "difficulty": 1,
+    "credit": null
+  },
+  {
+    "title": "AnimationController可以用来在以下哪个类里:",
+    "answers": [
+      "SingleTickerProviderStateMixin"
+    ],
+    "candidates": [
+      "DynamicAnimationControllerMixin",
+      "TickerAnimationControllerProvider",
+      "GetTickerBlocStateMixin"
+    ],
+    "tags": [
+      "animation"
+    ],
+    "difficulty": 1,
+    "credit": null
+  },
+  {
+    "title": "以下哪项最能描述Tween的用途?",
+    "answers": [
+      "控制动画从开始到结束的值."
+    ],
+    "candidates": [
+      "定义了动画的持续时间.",
+      "决定动画的初始状态.",
+      "改变动画循环的时间."
+    ],
+    "tags": [
+      "animation"
+    ],
+    "difficulty": 1,
+    "credit": null
+  },
+  {
+    "title": "Which of the following describes a way to apply transitions to common elements across different screens?",
+    "answers": [
+      "Use Hero widgets and specify the same tag."
+    ],
+    "candidates": [
+      "Use Hero widgets and specify different values for tag.",
+      "Use Navigator widgets and specify the same key.",
+      "Use Navigator widgets and specify different values for key."
+    ],
+    "tags": [
+      "animation"
+    ],
+    "difficulty": 1,
+    "credit": null
+  }
+]
