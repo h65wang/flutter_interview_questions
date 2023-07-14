@@ -1,32 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_interview_questions/components/toast.dart';
+import 'package:flutter_interview_questions/config/constants.dart';
+import 'package:flutter_interview_questions/model/difficulty.dart';
+import 'package:flutter_interview_questions/model/quiz_model.dart';
+import 'package:flutter_interview_questions/pages/quiz/quiz_page.dart';
 import 'package:flutter_interview_questions/widget/error_displayer.dart';
-
-import '../../config/constants.dart';
-import '../../model/difficulty.dart';
-import '../../model/quiz_model.dart';
-import '../quiz/quiz_page.dart';
+import 'package:flutter_interview_questions/widget/status_widget.dart';
 
 class SetupPage extends StatelessWidget {
   const SetupPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = context.watch<QuizModel>().isLoading;
-
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Setup'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(kDefaultPadding),
-        child: AnimatedSwitcher(
-          duration: k300MS,
-          child: !isLoading
-              ? const _SelectionArea()
-              : const Center(child: CircularProgressIndicator()),
+    final status = context.watch<QuizModel>().status;
+    return Padding(
+      padding: const EdgeInsets.all(kDefaultPadding),
+      child: AnimatedSwitcher(
+        duration: k300MS,
+        child: StatusWidget(
+          status: status,
+          contentWidget: (_) => _SelectionArea(),
+          onRefresh: context.read<QuizModel>().fetchAllQuestions,
         ),
       ),
     );
@@ -55,24 +49,7 @@ class _SelectionAreaState extends State<_SelectionArea> {
 
   @override
   Widget build(BuildContext context) {
-    if (quizModel.questionIsEmpty) {
-      return Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            const Text('No Question Found... Please Retry...'),
-            const SizedBox(height: 12.0),
-            ElevatedButton(
-              onPressed: context.read<QuizModel>().fetchAllQuestions,
-              child: const Text('Retry'),
-            ),
-          ],
-        ),
-      );
-    }
-
     final totalCount = quizModel.totalCount;
-
     final themeData = Theme.of(context);
     return ListView(
       children: [

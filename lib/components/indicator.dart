@@ -35,8 +35,7 @@ class IndicatorWidget extends StatelessWidget {
         onTapThumbnail();
       },
       child: Text(
-        '${current + 1}/ $itemCount',
-        style: TextStyle(color: Theme.of(context).primaryColor),
+        '${current + 1}/$itemCount',
       ),
     );
   }

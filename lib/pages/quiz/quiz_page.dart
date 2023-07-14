@@ -225,23 +225,25 @@ class _PageItemState extends State<_PageItem> {
   Widget build(BuildContext context) {
     final item = context.read<QuizModel>().quizItems[widget.index];
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(item.question.title),
-        const Divider(),
-        for (final choice in item.choices)
-          ListTile(
-            title: Text(choice.content),
-            selected: choice.selected,
-            selectedColor: Colors.black,
-            selectedTileColor: Colors.green.shade200,
-            onTap: () {
-              setState(() => item.radioChoose(choice));
-              widget.onComplete?.call();
-            },
-          ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(item.question.title),
+          const Divider(),
+          for (final choice in item.choices)
+            ListTile(
+              title: Text(choice.content),
+              selected: choice.selected,
+              selectedColor: Colors.black,
+              selectedTileColor: Colors.green.shade200,
+              onTap: () {
+                setState(
+                    () => item.radioChoose(choice, item.isSingleSelection));
+              },
+            ),
+        ],
+      ),
     );
   }
 }
