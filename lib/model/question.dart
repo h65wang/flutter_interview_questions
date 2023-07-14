@@ -9,7 +9,7 @@ class Question {
   final int? difficulty;
   final String? credit;
 
-  Question.fromJson(Json json)
+  Question.fromJson(dynamic json)
       : title = as<String>(json['title'] ?? json['question'], '')!,
         answers = List.from(as<List>(json['answers'], <String>[])!),
         candidates = List.from(as<List>(json['candidates'], <String>[])!),

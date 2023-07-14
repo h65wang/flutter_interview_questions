@@ -4,8 +4,8 @@
     "locale": "en-en",
     "folder": "en",
     "files": [
-      "animation.json",
-      "mock.json"
+      "mock.json",
+      "wsbt_1.json"
     ]
   },
   {
