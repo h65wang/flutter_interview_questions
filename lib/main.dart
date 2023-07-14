@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_interview_questions/pages/menu/menu_page.dart';
 import 'package:flutter_interview_questions/state/app_theme.dart';
 
 import 'model/quiz_model.dart';
@@ -31,7 +32,10 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         theme: appTheme.lightTheme(),
         darkTheme: appTheme.darkTheme(),
-        home: const SetupPage(),
+        home: SetupPage(),
+        builder: (context, child) => MenuPage(
+          child: child ?? SizedBox.shrink(),
+        ),
         scrollBehavior: _AppScrollBehavior(),
       ),
     );

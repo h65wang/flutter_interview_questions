@@ -23,6 +23,7 @@ jobs:
           git init
           git config --global user.email h65wang@uwaterloo.ca
           git config --global user.name h65wang
+          git config --global init.defaultBranch main
           git status
           git remote add origin https://${{secrets.commit_secret}}@github.com/h65wang/flutter_interview_questions.git
           git checkout -b gh-pages
