@@ -1,12 +1,15 @@
 [
   {
-    "title": "Which of the following statement is correct?",
-    "answers": ["Correct"],
+    "title": "Pick number 100.",
+    "answers": [
+      "100"
+    ],
     "candidates": [
-      "Wrong",
-      "Wrong",
-      "Wrong",
-      "Wrong"
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
     ],
     "tags": [
       "mock"
