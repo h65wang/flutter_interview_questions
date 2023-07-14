@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_interview_questions/pages/menu/menu_page.dart';
 import 'package:flutter_interview_questions/state/app_theme.dart';
 
 import 'model/quiz_model.dart';
-import 'pages/menu/menu_page.dart';
 import 'pages/setup/setup_page.dart';
 
 void main() {

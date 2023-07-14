@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_interview_questions/components/toast.dart';
-import 'package:flutter_interview_questions/config/constants.dart';
-import 'package:flutter_interview_questions/model/difficulty.dart';
-import 'package:flutter_interview_questions/model/quiz_model.dart';
-import 'package:flutter_interview_questions/pages/quiz/quiz_page.dart';
 import 'package:flutter_interview_questions/widget/error_displayer.dart';
 import 'package:flutter_interview_questions/widget/status_widget.dart';
+
+import '../../config/constants.dart';
+import '../../model/difficulty.dart';
+import '../../model/quiz_model.dart';
+import '../quiz/quiz_page.dart';
 
 class SetupPage extends StatelessWidget {
   const SetupPage({super.key});
@@ -13,14 +14,22 @@ class SetupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final status = context.watch<QuizModel>().status;
-    return Padding(
-      padding: const EdgeInsets.all(kDefaultPadding),
-      child: AnimatedSwitcher(
-        duration: k300MS,
-        child: StatusWidget(
-          status: status,
-          contentWidget: (_) => _SelectionArea(),
-          onRefresh: context.read<QuizModel>().fetchAllQuestions,
+
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text('Setup'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(kDefaultPadding),
+        child: AnimatedSwitcher(
+          duration: k300MS,
+          child: StatusWidget(
+            status: status,
+            contentWidget: (_) => _SelectionArea(),
+            onRefresh: context.read<QuizModel>().fetchAllQuestions,
+          ),
         ),
       ),
     );
@@ -196,30 +205,28 @@ class _SelectionAreaState extends State<_SelectionArea> {
       ),
     );
 
-    return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return ListView(
-            children: [
-              quizCountPicker,
-              if (constraints.maxWidth > 640)
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(child: tagPicker),
-                    SizedBox(width: 16),
-                    Expanded(child: difficultyPicker),
-                  ],
-                )
-              else ...[
-                tagPicker,
-                difficultyPicker,
-              ],
-              checkoutButton,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return ListView(
+          children: [
+            quizCountPicker,
+            if (constraints.maxWidth > 640)
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: tagPicker),
+                  SizedBox(width: 16),
+                  Expanded(child: difficultyPicker),
+                ],
+              )
+            else ...[
+              tagPicker,
+              difficultyPicker,
             ],
-          );
-        },
-      ),
+            checkoutButton,
+          ],
+        );
+      },
     );
   }
 
