@@ -5,7 +5,8 @@
     "folder": "en",
     "files": [
       "mock.json",
-      "wsbt_1.json"
+      "wsbt_animation.json",
+      "wsbt_key.json"
     ]
   },
   {
