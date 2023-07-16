@@ -5,6 +5,7 @@ import 'package:flutter_interview_questions/widget/error_displayer.dart';
 import 'package:flutter_interview_questions/widget/status_widget.dart';
 
 import '../../config/constants.dart';
+import '../../foundation/set_notifier.dart';
 import '../../model/difficulty.dart';
 import '../../model/quiz_model.dart';
 import '../quiz/quiz_page.dart';
@@ -49,11 +50,10 @@ class _SelectionAreaState extends State<_SelectionArea> {
   late final ValueNotifier<int> _questionsCount = ValueNotifier<int>(
     quizModel.allQuestions.values.expand((e) => e).length,
   );
-  late final ValueNotifier<Set<LanguageItem>> _selectedTags =
-      ValueNotifier<Set<LanguageItem>>(
+  late final SetNotifier<LanguageItem> _selectedTags = SetNotifier(
     quizModel.allQuestions.keys.toSet(),
   );
-  final ValueNotifier<Set<Difficulty>> _selectedDifficulty = ValueNotifier(
+  final SetNotifier<Difficulty> _selectedDifficulty = SetNotifier(
     {Difficulty.easy},
   );
 
@@ -102,22 +102,15 @@ class _SelectionAreaState extends State<_SelectionArea> {
           ),
           initiallyExpanded: true,
           children: [
-            ...quizModel.allQuestions.keys
-                .map((key) => CheckboxListTile(
-                      value: selectedTags.contains(key),
-                      title: Text(key.lang),
-                      onChanged: (e) {
-                        if (e == null) return;
-                        final resultTemp = selectedTags.toSet();
-                        if (e) {
-                          resultTemp.add(key);
-                        } else {
-                          resultTemp.remove(key);
-                        }
-                        _selectedTags.value = resultTemp;
-                      },
-                    ))
-                .toList(),
+            for (var key in quizModel.allQuestions.keys)
+              CheckboxListTile(
+                value: selectedTags.contains(key),
+                title: Text(key.lang),
+                onChanged: (e) {
+                  if (e == null) return;
+                  _selectedTags.toggle(key);
+                },
+              ),
             Container(
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.only(left: 16),
@@ -147,22 +140,15 @@ class _SelectionAreaState extends State<_SelectionArea> {
             style: themeData.textTheme.titleSmall,
           ),
           children: [
-            ...Difficulty.values
-                .map((difficultyValue) => CheckboxListTile(
-                      value: selectedDifficulty.contains(difficultyValue),
-                      title: Text(difficultyValue.name),
-                      onChanged: (e) {
-                        if (e == null) return;
-                        final resultTemp = selectedDifficulty.toSet();
-                        if (e) {
-                          resultTemp.add(difficultyValue);
-                        } else {
-                          resultTemp.remove(difficultyValue);
-                        }
-                        _selectedDifficulty.value = resultTemp;
-                      },
-                    ))
-                .toList(),
+            for (var difficultyValue in Difficulty.values)
+              CheckboxListTile(
+                value: selectedDifficulty.contains(difficultyValue),
+                title: Text(difficultyValue.name),
+                onChanged: (e) {
+                  if (e == null) return;
+                  _selectedDifficulty.toggle(difficultyValue);
+                },
+              ),
             Container(
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.only(left: 16),
