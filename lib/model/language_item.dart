@@ -1,4 +1,3 @@
-
 class LanguageItem {
   final String lang;
   final String locale;
