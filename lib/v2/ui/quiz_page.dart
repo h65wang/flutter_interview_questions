@@ -14,7 +14,13 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  bool _reviewing = false;
+  // After the user clicks submit at least once, we will highlight any
+  // questions that they did not provide an answer.
+  bool _showUnanswered = false;
+
+  // After the user submits, we lock all answers so they cannot change them.
+  // And we reveal the result (correct/incorrect).
+  bool _submitted = false;
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +40,13 @@ class _QuizPageState extends State<QuizPage> {
                     width: 800,
                     child: Padding(
                       padding: const EdgeInsets.all(8),
-                      child: _QuizItemCard(
-                        quizItem: q,
-                        showWarning: _reviewing,
+                      child: IgnorePointer(
+                        ignoring: _submitted,
+                        child: _QuizItemCard(
+                          quizItem: q,
+                          showUnanswered: _showUnanswered,
+                          showGrading: _submitted,
+                        ),
                       ),
                     ),
                   ),
@@ -49,12 +59,15 @@ class _QuizPageState extends State<QuizPage> {
             child: SafeArea(
               minimum: EdgeInsets.symmetric(vertical: 16),
               child: Center(
-                child: ElevatedButton(
-                  onPressed: () => setState(() {
-                    _reviewing = true;
-                  }),
-                  child: Text('Review'),
-                ),
+                child: _submitted
+                    ? ElevatedButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: Text('Go back'),
+                      )
+                    : ElevatedButton(
+                        onPressed: _submit,
+                        child: Text('Review & Submit'),
+                      ),
               ),
             ),
           ),
@@ -62,13 +75,50 @@ class _QuizPageState extends State<QuizPage> {
       ),
     );
   }
+
+  void _submit() async {
+    final confirmSubmit = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        final ready = widget.model.completed;
+        return AlertDialog(
+          title: Text(ready ? 'Ready to submit' : 'Missing answers'),
+          content: Text(ready
+              ? 'You have answered all questions.'
+              : 'Not all questions have been answered. '
+                  'Please go back and review.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text('Go back'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: Text(
+                ready ? 'Submit' : 'Submit anyway',
+                style: ready ? null : TextStyle(color: Colors.red),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+    if (confirmSubmit ?? false) {
+      setState(() => _submitted = true);
+    }
+  }
 }
 
 class _QuizItemCard extends StatefulWidget {
   final QuizItem quizItem;
-  final bool showWarning;
+  final bool showUnanswered; // display "answer not provided" if unanswered
+  final bool showGrading; // display grading (correct or incorrect)
 
-  const _QuizItemCard({required this.quizItem, required this.showWarning});
+  const _QuizItemCard({
+    required this.quizItem,
+    required this.showUnanswered,
+    required this.showGrading,
+  });
 
   @override
   State<_QuizItemCard> createState() => _QuizItemCardState();
@@ -89,13 +139,24 @@ class _QuizItemCardState extends State<_QuizItemCard> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
-          if (q.warning != null && widget.showWarning)
+          if ((widget.showUnanswered || widget.showGrading) && !q.answered)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
-                q.warning!,
+                "No answer",
                 style: TextStyle(
                   color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          if (widget.showGrading && q.answered)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                q.correct ? "Correct" : "Incorrect",
+                style: TextStyle(
+                  color: q.correct ? Colors.green : Colors.red,
                   fontWeight: FontWeight.bold,
                 ),
               ),

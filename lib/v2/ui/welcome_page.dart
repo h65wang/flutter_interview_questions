@@ -22,6 +22,12 @@ class _WelcomePageState extends State<WelcomePage> {
   // [QuestionSet] being selected. By default we select everything.
   late Set<QuestionSet> _sets = widget.bank.values.expand((s) => s).toSet();
 
+  // A list of questions that matches user's preference on language and sets.
+  List<Question> get selectedQuestions => widget.bank[_language]!
+      .where((s) => _sets.contains(s))
+      .expand((s) => s.questions)
+      .toList();
+
   @override
   Widget build(BuildContext context) {
     print('selected lan: $_language');
@@ -90,22 +96,20 @@ class _WelcomePageState extends State<WelcomePage> {
             ),
             const SizedBox(height: 8),
             ElevatedButton(
-              onPressed: () {
-                final List<Question> selected = widget.bank[_language]!
-                    .where((s) => _sets.contains(s))
-                    .expand((s) => s.questions)
-                    .toList();
-                final model = QuizModel(selected..shuffle());
-                Navigator.of(context).push<void>(
-                  MaterialPageRoute(
-                    builder: (_) => QuizPage(model: model),
-                  ),
-                );
-              },
+              onPressed: selectedQuestions.isNotEmpty ? _startQuiz : null,
               child: Text("Let's go!"),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _startQuiz() {
+    final model = QuizModel(selectedQuestions..shuffle());
+    Navigator.of(context).push<void>(
+      MaterialPageRoute(
+        builder: (_) => QuizPage(model: model),
       ),
     );
   }

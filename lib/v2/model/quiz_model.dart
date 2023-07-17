@@ -1,11 +1,9 @@
-import 'package:flutter/foundation.dart';
-
 import 'question.dart';
 import 'quiz_item.dart';
 
 export 'question.dart';
 
-class QuizModel extends ChangeNotifier {
+class QuizModel {
   late List<QuizItem> questions; // a set of questions used for a quiz
 
   QuizModel(List<Question> selectedQuestions) {

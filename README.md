@@ -24,7 +24,7 @@ provide content in Chinese and English. For the rest, we may need to rely on com
 modern tools like GPT for translation.
 
 A web version (still a work-in-progress) is
-[available here](https://h65wang.github.io/flutter_interview_questions).
+[available here](https://h65wang.github.io/flutter_interview_questions/#/).
 
 # Flutter面试题
 
@@ -41,4 +41,4 @@ A web version (still a work-in-progress) is
 该项目会支持多语言，但因本人能力有限，只能亲自提供中文和英文的题库，剩下的恐怕需要借助社区或GPT等现代工具完成翻译。
 
 网页版（还没做完）请
-[点此预览](https://h65wang.github.io/flutter_interview_questions).
+[点此预览](https://h65wang.github.io/flutter_interview_questions/#/).
