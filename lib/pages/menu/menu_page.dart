@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_interview_questions/main.dart';
 import 'package:flutter_interview_questions/pages/setup/setup_page.dart';
 
-import '../../util/only_web/only_web.dart';
-
 class MenuPage extends StatelessWidget {
   const MenuPage({super.key, required this.child});
 
@@ -35,17 +33,7 @@ class SideMenu extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.symmetric(vertical: 44),
-              child: InkWell(
-                onTap: () => launchUrlString(
-                  'https://github.com/h65wang',
-                ),
-                child: CircleAvatar(
-                  backgroundImage: AssetImage(
-                    'assets/image/uncle_wang.png',
-                  ),
-                  radius: 80,
-                ),
-              ),
+              child: CircleAvatar(radius: 80),
             ),
             ListTile(
               leading: Icon(Icons.app_registration_outlined),
@@ -76,10 +64,10 @@ class SideMenu extends StatelessWidget {
     );
   }
 
-  // void _push(Widget page) {
-  //   navigatorKey.currentState?.pushAndRemoveUntil<void>(
-  //     MaterialPageRoute(builder: (context) => page),
-  //     (_) => false,
-  //   );
-  // }
+// void _push(Widget page) {
+//   navigatorKey.currentState?.pushAndRemoveUntil<void>(
+//     MaterialPageRoute(builder: (context) => page),
+//     (_) => false,
+//   );
+// }
 }
