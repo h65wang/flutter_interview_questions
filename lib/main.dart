@@ -1,18 +1,23 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_interview_questions/state/app_theme.dart';
+import 'package:flutter_interview_questions/v2/home_page.dart';
 
 import 'model/quiz_model.dart';
 import 'pages/setup/setup_page.dart';
 
 void main() {
-  runApp(
-    Provider(
-      create: () => AppTheme(),
-      child: const MyApp(),
-    ),
-  );
+  runApp(const HomePage());
 }
+
+// void main() {
+//   runApp(
+//     Provider(
+//       create: () => AppTheme(),
+//       child: const MyApp(),
+//     ),
+//   );
+// }
 
 final navigatorKey = GlobalKey<NavigatorState>();
 

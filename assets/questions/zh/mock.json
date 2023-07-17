@@ -1,18 +1,23 @@
-[
-  {
-    "title": "这是用来调试的模拟题，请选择正确选项。",
-    "answers": [
-      "正确"
-    ],
-    "candidates": [
-      "错误",
-      "错误",
-      "错误"
-    ],
-    "tags": [
-      "调试"
-    ],
-    "difficulty": 1,
-    "credit": null
-  }
-]
+{
+  "name": "测试卷",
+  "description": "中文的测试卷",
+  "author": null,
+  "questions": [
+    {
+      "title": "这是用来调试的模拟题，请选择正确选项。",
+      "answers": [
+        "正确"
+      ],
+      "candidates": [
+        "错误",
+        "错误",
+        "错误"
+      ],
+      "tags": [
+        "调试"
+      ],
+      "difficulty": 1,
+      "credit": null
+    }
+  ]
+}
