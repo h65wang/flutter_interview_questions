@@ -14,6 +14,8 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  bool _reviewing = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,24 +23,52 @@ class _QuizPageState extends State<QuizPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text('Quiz Page!'),
       ),
-      body: ListView.builder(
-        itemCount: widget.model.questions.length,
-        itemBuilder: (BuildContext context, int index) {
-          final q = widget.model.questions[index];
-          return Padding(
-            padding: const EdgeInsets.all(8),
-            child: _QuizItemCard(q),
-          );
-        },
+      body: CustomScrollView(
+        slivers: [
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                final q = widget.model.questions[index];
+                return Center(
+                  child: SizedBox(
+                    width: 800,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: _QuizItemCard(
+                        quizItem: q,
+                        showWarning: _reviewing,
+                      ),
+                    ),
+                  ),
+                );
+              },
+              childCount: widget.model.questions.length,
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: SafeArea(
+              minimum: EdgeInsets.symmetric(vertical: 16),
+              child: Center(
+                child: ElevatedButton(
+                  onPressed: () => setState(() {
+                    _reviewing = true;
+                  }),
+                  child: Text('Review'),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
 class _QuizItemCard extends StatefulWidget {
-  final QuizItem q;
+  final QuizItem quizItem;
+  final bool showWarning;
 
-  const _QuizItemCard(this.q, {Key? key}) : super(key: key);
+  const _QuizItemCard({required this.quizItem, required this.showWarning});
 
   @override
   State<_QuizItemCard> createState() => _QuizItemCardState();
@@ -47,6 +77,7 @@ class _QuizItemCard extends StatefulWidget {
 class _QuizItemCardState extends State<_QuizItemCard> {
   @override
   Widget build(BuildContext context) {
+    final q = widget.quizItem;
     return Card(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -54,17 +85,27 @@ class _QuizItemCardState extends State<_QuizItemCard> {
           Padding(
             padding: const EdgeInsets.all(16),
             child: Text(
-              widget.q.question.title,
+              q.question.title,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
+          if (q.warning != null && widget.showWarning)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                q.warning!,
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           SelectorGroup<Choice>(
-            items: widget.q.choices,
-            selected: widget.q.choices.where((c) => c.selected).toList(),
-            onTap: (Choice c) {
-              widget.q.choose(c);
-              setState(() {});
-            },
+            items: q.choices,
+            selected: q.choices.where((c) => c.selected).toList(),
+            onTap: (Choice c) => setState(() {
+              q.choose(c);
+            }),
             display: (Choice c) => c.content,
           ),
         ],

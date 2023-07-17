@@ -28,10 +28,13 @@ class SelectorGroup<T> extends StatelessWidget {
     return Column(
       children: [
         for (final it in items)
-          Selector(
-            content: display?.call(it) ?? '$it',
-            selected: selected.contains(it),
-            onTap: () => onTap(it),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 2),
+            child: Selector(
+              content: display?.call(it) ?? '$it',
+              selected: selected.contains(it),
+              onTap: () => onTap(it),
+            ),
           ),
       ],
     );

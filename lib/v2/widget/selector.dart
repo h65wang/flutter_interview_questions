@@ -18,8 +18,9 @@ class Selector extends StatelessWidget {
       title: Text(content),
       selected: selected,
       selectedColor: Colors.black,
-      selectedTileColor: Colors.green.shade200,
+      selectedTileColor: Theme.of(context).colorScheme.inversePrimary,
       onTap: onTap,
+      splashColor: Colors.transparent,
     );
   }
 }

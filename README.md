@@ -23,6 +23,9 @@ This project will support multiple languages, but due to my limited abilities, I
 provide content in Chinese and English. For the rest, we may need to rely on community support or
 modern tools like GPT for translation.
 
+A web version (still a work-in-progress) is
+[available here](https://h65wang.github.io/flutter_interview_questions).
+
 # Flutter面试题
 
 由于Flutter还算是一个相对新的技术，相信大家在面试Flutter岗位时，经常会遇到一些不太专业的面试题。
@@ -37,85 +40,5 @@ modern tools like GPT for translation.
 
 该项目会支持多语言，但因本人能力有限，只能亲自提供中文和英文的题库，剩下的恐怕需要借助社区或GPT等现代工具完成翻译。
 
-# Questions (draft)
-
-The following questions came from the first session of live broadcast earlier today.
-
-以下是首次直播时记录下来的问题草稿（都是关于动画的）。暂时还没有翻译。
-
-## Animation
-
-If you need to declare an AnimationController, you are likely creating:
-
-1. a stateless widget
-2. an implicit animation
-3. an explicit animation
-4. a AnimatedContainer widget
-
-answer: 3
-
-Which of the following properties of an `AnimatedContainer` will NOT get animated when its value is
-changed?
-
-1. child
-2. width
-3. color
-4. padding
-
-answer: 1
-
-If you need to apply fading effect when switching texts on a screen, which of the following widget
-might be useful:
-
-1. AnimatedContainer
-2. AnimatedText
-3. AnimatedFade
-4. AnimatedSwitcher
-
-answer: 4
-
-Which of the following is the default `curve` for animation widgets:
-
-1. Curves.easeOut
-2. Curves.linear
-3. Curves.easeInOut
-4. Curves.ease
-
-answer: 2
-
-Which of the following is not a parameter of `TweenAnimationBuilder` widget:
-
-1. animation
-2. duration
-3. builder
-4. child
-
-answer: 1
-
-An `AnimationController` can be used in a class with:
-
-1. SingleTickerProviderStateMixin
-2. DynamicAnimationControllerMixin
-3. TickerAnimationControllerProvider
-4. GetTickerBlocStateMixin
-
-answer: 1
-
-Which of the following best describes the purpose of a `Tween`?
-
-1. It defines the `duration` of an animation.
-2. It determines the initial state of an animation.
-3. It controls animation values between `begin` and `end`.
-4. It changes the `timing` of an animation loop.
-
-answer: 3
-
-Which of the following describes a way to apply transitions to common elements across different
-screens?
-
-1. Use `Hero` widgets and specify the same `tag`.
-2. Use `Hero` widgets and specify different values for `tag`.
-3. Use `Navigator` widgets and specify the same `key`.
-4. Use `Navigator` widgets and specify different values for `key`.
-
-answer: 1
+网页版（还没做完）请
+[点此预览](https://h65wang.github.io/flutter_interview_questions).

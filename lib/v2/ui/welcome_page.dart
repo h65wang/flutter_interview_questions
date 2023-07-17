@@ -16,8 +16,11 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+  // Current language being selected.
   late LanguageItem _language = widget.bank.keys.first;
-  late Set<QuestionSet> _sets = widget.bank[_language]!.toSet();
+
+  // [QuestionSet] being selected. By default we select everything.
+  late Set<QuestionSet> _sets = widget.bank.values.expand((s) => s).toSet();
 
   @override
   Widget build(BuildContext context) {
@@ -31,33 +34,68 @@ class _WelcomePageState extends State<WelcomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Select language:"),
-            SelectorGroup<LanguageItem>(
-              items: widget.bank.keys.toList(),
-              selected: [_language],
-              onTap: (LanguageItem it) => setState(() {
-                _language = it;
-              }),
+            const SizedBox(height: 8),
+            SizedBox(
+              width: 600,
+              child: Card(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Select language:",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                    SelectorGroup<LanguageItem>(
+                      items: widget.bank.keys.toList(),
+                      selected: [_language],
+                      onTap: (LanguageItem it) => setState(() {
+                        _language = it;
+                      }),
+                      display: (LanguageItem it) => it.lang,
+                    ),
+                  ],
+                ),
+              ),
             ),
-            Divider(),
-            Text('Select question set(s):'),
-            SelectorGroup<QuestionSet>(
-              items: widget.bank[_language]!,
-              selected: _sets,
-              onTap: (QuestionSet it) => setState(() {
-                if (_sets.contains(it)) {
-                  _sets.remove(it);
-                } else {
-                  _sets.add(it);
-                }
-              }),
-              display: (QuestionSet set) => set.name,
+            const SizedBox(height: 8),
+            SizedBox(
+              width: 600,
+              child: Card(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Select question set(s):',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                    SelectorGroup<QuestionSet>(
+                      items: widget.bank[_language]!,
+                      selected: _sets,
+                      onTap: (QuestionSet it) => setState(() {
+                        if (_sets.contains(it)) {
+                          _sets.remove(it);
+                        } else {
+                          _sets.add(it);
+                        }
+                      }),
+                      display: (QuestionSet set) => set.name,
+                    ),
+                  ],
+                ),
+              ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             ElevatedButton(
               onPressed: () {
-                final q = _sets.expand((s) => s.questions).toList();
-                final model = QuizModel(q..shuffle());
+                final List<Question> selected = widget.bank[_language]!
+                    .where((s) => _sets.contains(s))
+                    .expand((s) => s.questions)
+                    .toList();
+                final model = QuizModel(selected..shuffle());
                 Navigator.of(context).push<void>(
                   MaterialPageRoute(
                     builder: (_) => QuizPage(model: model),

@@ -15,6 +15,16 @@ class QuizItem {
         .toList();
   }
 
+  String? get warning {
+    if (!answered) return 'No answer provided.';
+    if (hasMultipleAnswers) {
+      if (choices.where((choice) => choice.selected).length == 1) {
+        return 'This question can have multiple answers.';
+      }
+    }
+    return null;
+  }
+
   /// Returns true if user has selected ANYTHING at all.
   bool get answered => choices.any((choice) => choice.selected);
 
