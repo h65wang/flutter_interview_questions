@@ -1,21 +1,22 @@
 [
-  {
-    "lang": "English",
-    "locale": "en-en",
-    "folder": "en",
-    "files": [
-      "mock.json",
-      "wsbt_animation.json",
-      "wsbt_key.json"
-    ]
-  },
-  {
-    "lang": "中文",
-    "locale": "zh-cn",
-    "folder": "zh",
-    "files": [
-      "mock.json",
-      "zh_zz.json"
-    ]
-  }
+    {
+        "lang": "English",
+        "locale": "en-en",
+        "folder": "en",
+        "files": [
+            "mock.json",
+            "wsbt_animation.json",
+            "wsbt_key.json"
+        ]
+    },
+    {
+        "lang": "中文",
+        "locale": "zh-cn",
+        "folder": "zh",
+        "files": [
+            "mock.json",
+            "zh_zz.json",
+            "getx_specialization.json"
+        ]
+    }
 ]
