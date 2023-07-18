@@ -189,6 +189,7 @@ class _QuizItemCardState extends State<_QuizItemCard> {
             q.choices.forEach((choice) {
               choice.selected = false;
             });
+
             /// Let's do this first,
             /// the status here should be changed
             /// when the user clicks on the submit button.
