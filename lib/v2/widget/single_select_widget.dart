@@ -27,7 +27,6 @@ class SingleSelectWidget extends StatelessWidget {
                   groupValue: index,
                   onChanged: (value) {
                     onTap(value!);
-                    e.selected = true;
                   },
                 ),
               ))
