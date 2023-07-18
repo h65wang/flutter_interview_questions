@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../model/quiz_item.dart';
 import '../model/quiz_model.dart';
-import '../widget/selector_group.dart';
+import '../widget/multi_select_widget.dart';
+import '../widget/single_select_widget.dart';
 
 class QuizPage extends StatefulWidget {
   final QuizModel model;
@@ -163,17 +164,39 @@ class _QuizItemCardState extends State<_QuizItemCard> {
                 ),
               ),
             ),
-          SelectorGroup<Choice>(
-            items: q.choices,
-            selected: q.choices.where((c) => c.selected).toList(),
-            onTap: (Choice c) => setState(() {
-              q.choose(c);
-            }),
-            display: (Choice c) => c.content,
-          ),
+          _buildSelectWidget(q),
           const SizedBox(height: 8),
         ],
       ),
+    );
+  }
+
+  Widget _buildSelectWidget(QuizItem q) {
+    if (q.hasMultipleAnswers)
+      return MultiSelectWidget(
+        items: q.choices,
+        onTap: () {
+          setState(() {});
+        },
+      );
+    return SingleSelectWidget(
+      items: q.choices,
+      index: q.singleSelectIndex,
+      onTap: (int value) {
+        setState(
+          () {
+            q.singleSelectIndex = value;
+            q.choices.forEach((choice) {
+              choice.selected = false;
+            });
+
+            /// Let's do this first,
+            /// the status here should be changed
+            /// when the user clicks on the submit button.
+            q.choices[value].selected = true;
+          },
+        );
+      },
     );
   }
 }
