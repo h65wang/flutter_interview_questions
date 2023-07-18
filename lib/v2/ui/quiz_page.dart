@@ -128,7 +128,6 @@ class _QuizItemCard extends StatefulWidget {
 }
 
 class _QuizItemCardState extends State<_QuizItemCard> {
-
   @override
   Widget build(BuildContext context) {
     final q = widget.quizItem;
@@ -177,8 +176,7 @@ class _QuizItemCardState extends State<_QuizItemCard> {
       return MultiSelectWidget(
         items: q.choices,
         onTap: () {
-          setState(() {
-          });
+          setState(() {});
         },
       );
     return SingleSelectWidget(
