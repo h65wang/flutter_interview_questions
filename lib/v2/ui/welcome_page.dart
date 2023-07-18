@@ -30,7 +30,6 @@ class _WelcomePageState extends State<WelcomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print('selected lan: $_language');
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -61,6 +60,7 @@ class _WelcomePageState extends State<WelcomePage> {
                       }),
                       display: (LanguageItem it) => it.lang,
                     ),
+                    const SizedBox(height: 8),
                   ],
                 ),
               ),
@@ -90,12 +90,13 @@ class _WelcomePageState extends State<WelcomePage> {
                       }),
                       display: (QuestionSet set) => set.name,
                     ),
+                    const SizedBox(height: 8),
                   ],
                 ),
               ),
             ),
             const SizedBox(height: 8),
-            ElevatedButton(
+            FilledButton(
               onPressed: selectedQuestions.isNotEmpty ? _startQuiz : null,
               child: Text("Let's go!"),
             ),

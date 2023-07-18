@@ -16,7 +16,7 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   // After the user clicks submit at least once, we will highlight any
   // questions that they did not provide an answer.
-  bool _showUnanswered = false;
+  bool _reviewed = false;
 
   // After the user submits, we lock all answers so they cannot change them.
   // And we reveal the result (correct/incorrect).
@@ -44,7 +44,7 @@ class _QuizPageState extends State<QuizPage> {
                         ignoring: _submitted,
                         child: _QuizItemCard(
                           quizItem: q,
-                          showUnanswered: _showUnanswered,
+                          showUnanswered: _reviewed,
                           showGrading: _submitted,
                         ),
                       ),
@@ -64,7 +64,7 @@ class _QuizPageState extends State<QuizPage> {
                         onPressed: () => Navigator.of(context).pop(),
                         child: Text('Go back'),
                       )
-                    : ElevatedButton(
+                    : FilledButton(
                         onPressed: _submit,
                         child: Text('Review & Submit'),
                       ),
@@ -105,6 +105,8 @@ class _QuizPageState extends State<QuizPage> {
     );
     if (confirmSubmit ?? false) {
       setState(() => _submitted = true);
+    } else {
+      setState(() => _reviewed = true);
     }
   }
 }
@@ -143,7 +145,7 @@ class _QuizItemCardState extends State<_QuizItemCard> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
-                "No answer",
+                "No answer provided",
                 style: TextStyle(
                   color: Colors.red,
                   fontWeight: FontWeight.bold,
@@ -169,6 +171,7 @@ class _QuizItemCardState extends State<_QuizItemCard> {
             }),
             display: (Choice c) => c.content,
           ),
+          const SizedBox(height: 8),
         ],
       ),
     );

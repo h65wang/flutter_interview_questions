@@ -14,7 +14,8 @@
     "locale": "zh-cn",
     "folder": "zh",
     "files": [
-      "mock.json"
+      "mock.json",
+      "zh_zz.json"
     ]
   }
 ]
