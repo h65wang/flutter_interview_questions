@@ -128,6 +128,15 @@ class _QuizItemCard extends StatefulWidget {
 }
 
 class _QuizItemCardState extends State<_QuizItemCard> {
+  late int singleSelectIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    singleSelectIndex = -1;
+    print('_QuizItemCardState.initState');
+  }
+
   @override
   Widget build(BuildContext context) {
     final q = widget.quizItem;
@@ -181,18 +190,14 @@ class _QuizItemCardState extends State<_QuizItemCard> {
       );
     return SingleSelectWidget(
       items: q.choices,
-      index: q.singleSelectIndex,
+      index: singleSelectIndex,
       onTap: (int value) {
         setState(
           () {
-            q.singleSelectIndex = value;
+            singleSelectIndex = value;
             q.choices.forEach((choice) {
               choice.selected = false;
             });
-
-            /// Let's do this first,
-            /// the status here should be changed
-            /// when the user clicks on the submit button.
             q.choices[value].selected = true;
           },
         );
