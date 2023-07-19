@@ -7,7 +7,7 @@ class SingleSelectWidget extends StatelessWidget {
 
   final int index;
 
-  final void Function(int idx) onTap;
+  final void Function(Choice e) onTap;
 
   const SingleSelectWidget(
       {super.key,
@@ -23,8 +23,9 @@ class SingleSelectWidget extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 2),
                 child: RadioListTile(
                   title: Text(e.content),
-                  value: i,
-                  groupValue: index,
+                  value: e,
+                  groupValue:
+                      items.firstWhereOrNull((element) => element.selected),
                   onChanged: (value) {
                     onTap(value!);
                   },
