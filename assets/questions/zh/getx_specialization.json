@@ -2,9 +2,8 @@
     "name": "GetX专场",
     "description": "帮助大伙更加规范地使用GetX，题目难度简单-中等。\n如果无法反抗，那么不如享受其中。\n即使身处黑暗也可以向往光明!!!",
     "author": "hhh",
-    "questions": [
-        {
-            "title": "以下哪个方法，不能注册GetXController？",
+    "questions": [{
+            "title": "以下哪个方法，不能注册`GetXController`？",
             "answers": [
                 "`Get.find`",
                 "`Get.config`",
@@ -31,7 +30,7 @@
             "difficulty": 1
         },
         {
-            "title": "现在有如下代码：\n  Get.create(() => FooController())\n  final FooController a = Get.find()\n  final FooController b = Get.find()\n继续运行`a == b`的结果为'false`",
+            "title": "现在有如下代码：\n  `Get.create(() => FooController());`\n  `final FooController a = Get.find();`\n  `final FooController b = Get.find();`\n继续运行`a == b`的结果为`false`",
             "answers": [
                 "正确"
             ],
@@ -41,7 +40,7 @@
             "difficulty": 1
         },
         {
-            "title": "`Get.putAsync`会延迟GetXController的实例化，实现“按需创建”。",
+            "title": "`Get.putAsync`会延迟`GetXController`的实例化，实现“按需创建”。",
             "answers": [
                 "错误"
             ],
@@ -51,7 +50,7 @@
             "difficulty": 1
         },
         {
-            "title": "以下说法正确的有：\n  ①`GetView`是一个StatefulWidget\n  ②`GetBuilder`是一个StatefulWidget\n  ③`Obx`是一个StatefulWidget",
+            "title": "以下说法正确的有：\n  ①`GetView`是一个`StatefulWidget`\n  ②`GetBuilder`是一个`StatefulWidget`\n  ③`Obx`是一个`StatefulWidget`",
             "answers": [
                 "②③"
             ],
@@ -65,7 +64,7 @@
             "difficulty": 1
         },
         {
-            "title": "以下属于GetXController生命周期的有：",
+            "title": "以下属于`GetXController`生命周期的有：",
             "answers": [
                 "`onInit`",
                 "`onReady`",
@@ -103,7 +102,7 @@
             "difficulty": 2
         },
         {
-            "title": "现在有如下代码：\n  final isSelected = true.obs;\n下面描述中正确的是：",
+            "title": "现在有如下代码：\n  `final isSelected = true.obs;`\n下面描述中正确的是：",
             "answers": [
                 "代码`isSelected.value = null;`无法运行",
                 "代码`isSelected = false;`无法运行"

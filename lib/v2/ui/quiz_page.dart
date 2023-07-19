@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_interview_questions/v2/widget/markdown.dart';
 
 import '../model/quiz_item.dart';
 import '../model/quiz_model.dart';
@@ -142,9 +143,11 @@ class _QuizItemCardState extends State<_QuizItemCard> {
         children: [
           Padding(
             padding: const EdgeInsets.all(16),
-            child: Text(
+            child: Markdown(
               q.question.title,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
             ),
           ),
           if ((widget.showUnanswered || widget.showGrading) && !q.answered)
