@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_interview_questions/v2/model/quiz_item.dart';
+import 'package:flutter_interview_questions/v2/widget/markdown.dart';
 
 class MultiSelectWidget extends StatelessWidget {
   final List<Choice> items;
@@ -19,7 +20,7 @@ class MultiSelectWidget extends StatelessWidget {
                   onTap.call();
                   e.selected = !e.selected;
                 },
-                title: Text(e.content),
+                title: Markdown(e.content),
               ))
           .toList(),
     );
