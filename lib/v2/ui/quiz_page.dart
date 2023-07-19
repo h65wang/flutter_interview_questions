@@ -129,13 +129,9 @@ class _QuizItemCard extends StatefulWidget {
 }
 
 class _QuizItemCardState extends State<_QuizItemCard> {
-  late int singleSelectIndex;
-
   @override
   void initState() {
     super.initState();
-    singleSelectIndex = -1;
-    print('_QuizItemCardState.initState');
   }
 
   @override
@@ -193,15 +189,13 @@ class _QuizItemCardState extends State<_QuizItemCard> {
       );
     return SingleSelectWidget(
       items: q.choices,
-      index: singleSelectIndex,
-      onTap: (int value) {
+      onTap: (value) {
         setState(
           () {
-            singleSelectIndex = value;
-            q.choices.forEach((choice) {
-              choice.selected = false;
+            q.choices.forEach((element) {
+              element.selected = false;
             });
-            q.choices[value].selected = true;
+            value.selected = true;
           },
         );
       },
