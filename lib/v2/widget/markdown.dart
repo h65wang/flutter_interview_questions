@@ -70,9 +70,12 @@ class _MarkdownState extends State<Markdown> {
 
   @override
   Widget build(BuildContext context) {
-    return SelectableText.rich(
-      _spanTemp,
-      selectionHeightStyle: BoxHeightStyle.max,
+    return IgnorePointer(
+      ignoring: true,
+      child: SelectableText.rich(
+        _spanTemp,
+        selectionHeightStyle: BoxHeightStyle.max,
+      ),
     );
   }
 }
