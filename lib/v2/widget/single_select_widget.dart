@@ -4,16 +4,10 @@ import 'package:flutter_interview_questions/v2/model/quiz_item.dart';
 
 class SingleSelectWidget extends StatelessWidget {
   final List<Choice> items;
-
-  final int index;
-
   final void Function(Choice e) onTap;
 
   const SingleSelectWidget(
-      {super.key,
-      required this.items,
-      required this.index,
-      required this.onTap});
+      {super.key, required this.items, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
