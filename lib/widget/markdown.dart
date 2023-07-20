@@ -13,55 +13,40 @@ class Markdown extends StatefulWidget {
 }
 
 class _MarkdownState extends State<Markdown> {
-  late TextSpan _spanTemp = TextSpan(text: widget.text);
+  late TextSpan _spanTemp;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setState(() {
-        _updateSpan();
-      });
-    });
+    _updateSpan();
   }
 
   @override
   void didUpdateWidget(Markdown oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.text == widget.text && oldWidget.style == widget.style)
-      return;
+    if (oldWidget.text == widget.text) return;
     _updateSpan();
   }
 
   void _updateSpan() {
-    final DefaultTextStyle defaultTextStyle = DefaultTextStyle.of(context);
-    TextStyle? effectiveTextStyle = widget.style;
-    if (effectiveTextStyle == null || effectiveTextStyle.inherit) {
-      effectiveTextStyle = defaultTextStyle.style.merge(widget.style);
-    }
-    if (MediaQuery.boldTextOf(context)) {
-      effectiveTextStyle = effectiveTextStyle
-          .merge(const TextStyle(fontWeight: FontWeight.bold));
-    }
     final List<TextSpan> resultTemp = [];
     widget.text.splitMapJoin(
       RegExp(r'`(.*?)`'),
       onMatch: (e) {
         resultTemp.add(
           TextSpan(
-            text: '  ${e.group(1)}  ',
-            style: effectiveTextStyle!.copyWith(
-              fontSize: (effectiveTextStyle.fontSize ?? 14) - 1,
-              fontWeight: FontWeight.w500,
-              color: effectiveTextStyle.color?.withOpacity(0.9),
+            text: ' ${e.group(1)} ',
+            style: TextStyle(
               backgroundColor: const Color.fromARGB(255, 238, 238, 238),
+              fontWeight: FontWeight.w700,
+              fontFamily: 'Courier',
             ),
           ),
         );
         return '';
       },
       onNonMatch: (e) {
-        resultTemp.add(TextSpan(text: e, style: effectiveTextStyle));
+        resultTemp.add(TextSpan(text: e));
         return '';
       },
     );
