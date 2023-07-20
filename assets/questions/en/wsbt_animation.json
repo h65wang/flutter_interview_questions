@@ -12,12 +12,7 @@
         "stateless widget",
         "implicit animation",
         "AnimatedContainer widget"
-      ],
-      "tags": [
-        "animation"
-      ],
-      "difficulty": 1,
-      "credit": null
+      ]
     },
     {
       "title": "Which of the following properties of an `AnimatedContainer` will NOT get animated when its value is changed?",
@@ -28,12 +23,7 @@
         "width",
         "color",
         "padding"
-      ],
-      "tags": [
-        "animation"
-      ],
-      "difficulty": 1,
-      "credit": null
+      ]
     },
     {
       "title": "If you need to apply fading effect when switching texts on a screen, which of the following widget might be useful:",
@@ -44,12 +34,7 @@
         "AnimatedContainer",
         "AnimatedText",
         "AnimatedFade"
-      ],
-      "tags": [
-        "animation"
-      ],
-      "difficulty": 1,
-      "credit": null
+      ]
     },
     {
       "title": "Which of the following is the default curve for animation widgets:",
@@ -60,12 +45,7 @@
         "Curves.easeOut",
         "Curves.easeInOut",
         "Curves.ease"
-      ],
-      "tags": [
-        "animation"
-      ],
-      "difficulty": 1,
-      "credit": null
+      ]
     },
     {
       "title": "Which of the following is not a parameter of TweenAnimationBuilder widget:",
@@ -76,12 +56,7 @@
         "duration",
         "builder",
         "child"
-      ],
-      "tags": [
-        "animation"
-      ],
-      "difficulty": 1,
-      "credit": null
+      ]
     },
     {
       "title": "An AnimationController can be used in a class with:",
@@ -92,12 +67,7 @@
         "DynamicAnimationControllerMixin",
         "TickerAnimationControllerProvider",
         "GetTickerBlocStateMixin"
-      ],
-      "tags": [
-        "animation"
-      ],
-      "difficulty": 1,
-      "credit": null
+      ]
     },
     {
       "title": "Which of the following best describes the purpose of a Tween?",
@@ -108,12 +78,7 @@
         "It defines the duration of an animation.",
         "It determines the initial state of an animation.",
         "It changes the timing of an animation loop."
-      ],
-      "tags": [
-        "animation"
-      ],
-      "difficulty": 1,
-      "credit": null
+      ]
     },
     {
       "title": "Which of the following describes a way to apply transitions to common elements across different screens?",
@@ -124,12 +89,7 @@
         "Use Hero widgets and specify different values for tag.",
         "Use Navigator widgets and specify the same key.",
         "Use Navigator widgets and specify different values for key."
-      ],
-      "tags": [
-        "animation"
-      ],
-      "difficulty": 1,
-      "credit": null
+      ]
     }
   ]
 }

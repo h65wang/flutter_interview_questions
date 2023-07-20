@@ -11,12 +11,7 @@
         "UniqueKey",
         "ValueKey"
       ],
-      "candidates": [],
-      "tags": [
-        "key"
-      ],
-      "difficulty": 1,
-      "credit": null
+      "candidates": []
     },
     {
       "title": "What are some use cases for global keys in Flutter?",
@@ -27,12 +22,7 @@
       "candidates": [
         "Global keys can be used to measure device screen size",
         "Global keys can be used to access global settings in iOS and Android"
-      ],
-      "tags": [
-        "key"
-      ],
-      "difficulty": 2,
-      "credit": null
+      ]
     },
     {
       "title": "Which type of key should be used to access the state of an ancestor widget?",
@@ -43,12 +33,7 @@
         "LocalKey",
         "PrivateKey",
         "InheritedKey"
-      ],
-      "tags": [
-        "key"
-      ],
-      "difficulty": 3,
-      "credit": null
+      ]
     },
     {
       "title": "What is the potential risk of using Global Keys excessively?",
@@ -59,12 +44,7 @@
         "It could potentially mix widget states.",
         "It could change the order of items in `ListView` widgets.",
         "It could reduce the effectiveness of `KeyedSubTree` widget."
-      ],
-      "tags": [
-        "key"
-      ],
-      "difficulty": 3,
-      "credit": null
+      ]
     },
     {
       "title": "When should Local Keys be used in Flutter?",
@@ -75,12 +55,7 @@
         "When we need to preserve widget state across different screens",
         "When layout-related tasks need to be performed more efficiently",
         "When a widget state need to be retained after the widget is destroyed"
-      ],
-      "tags": [
-        "key"
-      ],
-      "difficulty": 2,
-      "credit": null
+      ]
     },
     {
       "title": "What's the purpose of the `key` parameter in widgets?",
@@ -91,12 +66,7 @@
         "To correctly associate a parent widget and its children",
         "To perform encryption when storing widget data",
         "To ensure end-to-end encryption during widget layout"
-      ],
-      "tags": [
-        "key"
-      ],
-      "difficulty": 1,
-      "credit": null
+      ]
     },
     {
       "title": "What is an example purpose of ValueKey in Flutter?",
@@ -107,12 +77,7 @@
         "To keep track of a global value for widget",
         "To keep track of a widget when it appears on a different page",
         "To keep track of widget state when they become invisible for the user"
-      ],
-      "tags": [
-        "key"
-      ],
-      "difficulty": 2,
-      "credit": null
+      ]
     },
     {
       "title": "What differentiates ObjectKey from ValueKey?",
@@ -123,12 +88,7 @@
         "ObjectKey can be used to store any object while ValueKey must store primitive values",
         "ObjectKey is used for storing UI objects while ValueKey is used for data binding",
         "ObjectKey is stored in memory heap while ValueKey is stored on memory stack"
-      ],
-      "tags": [
-        "key"
-      ],
-      "difficulty": 3,
-      "credit": null
+      ]
     },
     {
       "title": "Which kind of key is commonly used when items in a list can be reordered?",
@@ -139,12 +99,7 @@
         "GlobalKey",
         "PrivateKey",
         "ListKey"
-      ],
-      "tags": [
-        "key"
-      ],
-      "difficulty": 2,
-      "credit": null
+      ]
     }
   ]
 }
