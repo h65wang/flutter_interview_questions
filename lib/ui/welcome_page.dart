@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_interview_questions/v2/model/quiz_model.dart';
 
 import '../model/language_item.dart';
 import '../model/question_bank.dart';
+import '../model/quiz_model.dart';
 import '../widget/selector_group.dart';
 import 'quiz_page.dart';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_interview_questions/v2/widget/markdown.dart';
 
 import '../model/quiz_item.dart';
 import '../model/quiz_model.dart';
+import '../widget/markdown.dart';
 import '../widget/multi_select_widget.dart';
 import '../widget/single_select_widget.dart';
 

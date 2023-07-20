@@ -1,54 +1,42 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_interview_questions/state/app_theme.dart';
-import 'package:flutter_interview_questions/v2/home_page.dart';
 
-import 'model/quiz_model.dart';
-import 'pages/setup/setup_page.dart';
+import 'model/question_bank.dart';
+import 'ui/welcome_page.dart';
 
 void main() {
-  runApp(const HomePage());
+  runApp(const MyApp());
 }
 
-// void main() {
-//   runApp(
-//     Provider(
-//       create: () => AppTheme(),
-//       child: const MyApp(),
-//     ),
-//   );
-// }
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
-final navigatorKey = GlobalKey<NavigatorState>();
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
 
-/// First, we take users to [SetupPage], where they customize their questions.
-/// Then we take them to [QuizPage] for the main thing.
-/// Lastly we take them to [ResultPage] for victory!
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class _MyAppState extends State<MyApp> {
+  Future<Bank> fetcher = QuestionBank.getAllQuestions();
 
   @override
   Widget build(BuildContext context) {
-    final appTheme = context.watch<AppTheme>();
-    return Provider(
-      create: () => QuizModel(),
-      child: MaterialApp(
-        navigatorKey: navigatorKey,
-        theme: appTheme.lightTheme(),
-        darkTheme: appTheme.darkTheme(),
-        home: SetupPage(),
-        scrollBehavior: _AppScrollBehavior(),
+    return MaterialApp(
+      title: 'Flutter Interview Questions',
+      theme: ThemeData(
+        colorSchemeSeed: Colors.blue,
+        useMaterial3: true,
+      ),
+      home: FutureBuilder(
+        future: fetcher,
+        builder: (_, AsyncSnapshot<Bank> snapshot) {
+          if (snapshot.hasData) {
+            return WelcomePage(bank: snapshot.data!);
+          }
+          if (snapshot.hasError) {
+            return Center(child: Text('${snapshot.error}'));
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
       ),
     );
   }
-}
-
-///方便web调试
-class _AppScrollBehavior extends MaterialScrollBehavior {
-  @override
-  Set<PointerDeviceKind> get dragDevices => {
-        PointerDeviceKind.touch,
-        PointerDeviceKind.mouse,
-        PointerDeviceKind.trackpad,
-      };
 }

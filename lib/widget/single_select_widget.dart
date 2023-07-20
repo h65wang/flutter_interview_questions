@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_interview_questions/v2/model/quiz_item.dart';
-import 'package:flutter_interview_questions/v2/widget/markdown.dart';
+import 'package:flutter_interview_questions/model/quiz_item.dart';
+import 'package:flutter_interview_questions/widget/markdown.dart';
 
 class SingleSelectWidget extends StatelessWidget {
   final List<Choice> items;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_interview_questions/v2/model/quiz_item.dart';
-import 'package:flutter_interview_questions/v2/widget/markdown.dart';
+
+import '../model/quiz_item.dart';
+import 'markdown.dart';
 
 class MultiSelectWidget extends StatelessWidget {
   final List<Choice> items;

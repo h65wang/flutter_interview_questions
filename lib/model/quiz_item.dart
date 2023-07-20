@@ -1,4 +1,4 @@
-import 'package:flutter_interview_questions/model/question.dart';
+import 'question.dart';
 
 /// Describe a question shown in a quiz.
 class QuizItem {
@@ -7,7 +7,10 @@ class QuizItem {
   late final List<Choice> choices;
 
   QuizItem(this.question) {
-    choices = ([...question.answers, ...question.candidates]..shuffle())
+    choices = ([
+      ...question.answers,
+      ...question.candidates,
+    ]..shuffle())
         .map(Choice.new)
         .toList();
   }
@@ -19,26 +22,24 @@ class QuizItem {
   bool get correct => choices.every((choice) =>
       (question.answers.contains(choice.content)) == choice.selected);
 
-  ///Return if this question is single selection
-  bool get isSingleSelection => question.answers.length == 1;
+  /// Returns true if this question has multiple correct answers.
+  bool get hasMultipleAnswers => question.answers.length > 1;
 
-  bool previousFlag = false; //上一个问题是否已经做完
-
-  set isAnswered(bool flag) {
-    isAnswered = flag;
-  }
-
-  void radioChoose(Choice currentChoice, bool isSingleChoice) {
-    if (currentChoice.selected) {
-      currentChoice.selected = !currentChoice.selected;
+  /// Call this method when the user clicks on a choice, to toggle state.
+  void choose(Choice choice) {
+    // if this choice had been selected, clicking on it again deselects it
+    if (choice.selected) {
+      choice.selected = false;
       return;
     }
-    if (!isSingleChoice) {
-      currentChoice.selected = true;
-      return;
-    }
-    for (var element in choices) {
-      element.selected = element == currentChoice;
+    // if this question allows multiple choices, we add this choice;
+    // otherwise, we exclusively select this choice.
+    if (hasMultipleAnswers) {
+      choice.selected = true;
+    } else {
+      for (final c in choices) {
+        c.selected = c == choice;
+      }
     }
   }
 }
@@ -46,6 +47,7 @@ class QuizItem {
 class Choice {
   final String content; // the "words" of this choice
   bool selected = false; // whether the user has selected it
+  int idx = -1;
 
   Choice(this.content);
 }
