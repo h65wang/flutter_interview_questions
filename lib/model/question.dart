@@ -4,16 +4,26 @@ class Question {
   final List<String> answers;
   final List<String> candidates;
 
-  Question.fromJson(dynamic json)
-      : title = json['title'] as String,
-        answers = List.from(json['answers'] as List),
-        candidates = List.from(json['candidates'] as List);
+  const Question({
+    required this.title,
+    required this.answers,
+    required this.candidates,
+  });
 
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'title': title,
-        'answer': answers,
-        'candidates': candidates,
-      };
+  factory Question.fromJson(dynamic json) {
+    final String title;
+    final List<String> answers;
+    final List<String> candidates;
+    try {
+      title = json['title'] as String;
+      answers = List.from(json['answers'] as List);
+      candidates = List.from(json['candidates'] as List);
+      return Question(title: title, answers: answers, candidates: candidates);
+    } catch (ex) {
+      print('$ex: $json');
+      rethrow;
+    }
+  }
 
   @override
   String toString() =>

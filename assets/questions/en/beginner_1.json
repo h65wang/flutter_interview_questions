@@ -68,51 +68,49 @@
       ],
       "candidates": []
     },
-    [
-      {
-        "title": "What method would you use to run code when a Future has completed?",
-        "answers": [
-          "then()"
-        ],
-        "candidates": [
-          "complete()",
-          "finish()",
-          "after()"
-        ]
-      },
-      {
-        "title": "What is the Hot Reload feature in Flutter?",
-        "answers": [
-          "It allows for instant updates after code changes"
-        ],
-        "candidates": [
-          "It speeds up the app launching process",
-          "It cools down the CPU after executing long computations",
-          "It pushes new app versions (app updates) to users"
-        ]
-      },
-      {
-        "title": "Which controller is closely related to capturing user inputs?",
-        "answers": [
-          "TextEditingController"
-        ],
-        "candidates": [
-          "UserInputController",
-          "InputCaptureController",
-          "None of the above"
-        ]
-      },
-      {
-        "title": "How do you handle async operations in Flutter?",
-        "answers": [
-          "Use Future, async and await"
-        ],
-        "candidates": [
-          "Use Sync",
-          "Use Wait",
-          "None of the above"
-        ]
-      }
-    ]
+    {
+      "title": "What method would you use to run code when a Future has completed?",
+      "answers": [
+        "then()"
+      ],
+      "candidates": [
+        "complete()",
+        "finish()",
+        "after()"
+      ]
+    },
+    {
+      "title": "What is the Hot Reload feature in Flutter?",
+      "answers": [
+        "It allows for instant updates after code changes"
+      ],
+      "candidates": [
+        "It speeds up the app launching process",
+        "It cools down the CPU after executing long computations",
+        "It pushes new app versions (app updates) to users"
+      ]
+    },
+    {
+      "title": "Which controller is closely related to capturing user inputs?",
+      "answers": [
+        "TextEditingController"
+      ],
+      "candidates": [
+        "UserInputController",
+        "InputCaptureController",
+        "None of the above"
+      ]
+    },
+    {
+      "title": "How do you handle async operations in Flutter?",
+      "answers": [
+        "Use Future, async and await"
+      ],
+      "candidates": [
+        "Use Sync",
+        "Use Wait",
+        "None of the above"
+      ]
+    }
   ]
 }
