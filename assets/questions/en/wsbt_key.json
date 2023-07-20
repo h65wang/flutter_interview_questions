@@ -1,7 +1,7 @@
 {
   "name": "Keys",
   "description": "A set of questions on the concept of Keys",
-  "author": null,
+  "author": "WSBT",
   "questions": [
     {
       "title": "What are the some types of keys in Flutter?",

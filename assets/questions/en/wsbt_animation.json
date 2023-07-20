@@ -1,7 +1,7 @@
 {
   "name": "Animation 2",
   "description": "A set of advanced questions on animations",
-  "author": null,
+  "author": "WSBT",
   "questions": [
     {
       "title": "If you need to declare an AnimationController, you are likely creating a:",
