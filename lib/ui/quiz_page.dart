@@ -130,11 +130,6 @@ class _QuizItemCard extends StatefulWidget {
 
 class _QuizItemCardState extends State<_QuizItemCard> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final q = widget.quizItem;
     return Card(
