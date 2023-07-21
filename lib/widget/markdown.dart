@@ -1,12 +1,10 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class Markdown extends StatefulWidget {
-  const Markdown(this.text, {super.key, this.style});
-
   final String text;
   final TextStyle? style;
+
+  const Markdown(this.text, {super.key, this.style});
 
   @override
   State<Markdown> createState() => _MarkdownState();
@@ -35,12 +33,8 @@ class _MarkdownState extends State<Markdown> {
       onMatch: (e) {
         resultTemp.add(
           TextSpan(
-            text: ' ${e.group(1)} ',
-            style: TextStyle(
-              backgroundColor: const Color.fromARGB(255, 238, 238, 238),
-              fontWeight: FontWeight.w700,
-              fontFamily: 'Courier',
-            ),
+            text: '${e.group(1)}',
+            style: TextStyle(fontFamily: 'Courier'),
           ),
         );
         return '';
@@ -55,12 +49,10 @@ class _MarkdownState extends State<Markdown> {
 
   @override
   Widget build(BuildContext context) {
-    return IgnorePointer(
-      ignoring: true,
-      child: SelectableText.rich(
-        _spanTemp,
-        selectionHeightStyle: BoxHeightStyle.max,
-      ),
+    _updateSpan();
+    return Text.rich(
+      _spanTemp,
+      style: widget.style,
     );
   }
 }

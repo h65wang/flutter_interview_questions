@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import '../model/quiz_item.dart';
 import '../model/quiz_model.dart';
 import '../widget/markdown.dart';
-import '../widget/multi_select_widget.dart';
-import '../widget/single_select_widget.dart';
 
 class QuizPage extends StatefulWidget {
   final QuizModel model;
@@ -140,9 +138,10 @@ class _QuizItemCardState extends State<_QuizItemCard> {
             padding: const EdgeInsets.all(16),
             child: Markdown(
               q.question.title,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
           if ((widget.showUnanswered || widget.showGrading) && !q.answered)
@@ -167,33 +166,45 @@ class _QuizItemCardState extends State<_QuizItemCard> {
                 ),
               ),
             ),
-          _buildSelectWidget(q),
+          for (final choice in q.choices)
+            _buildChoice(
+              choice: choice,
+              allowMultiSelect: q.hasMultipleAnswers,
+              onTap: () => setState(() => q.choose(choice)),
+            ),
           const SizedBox(height: 8),
         ],
       ),
     );
   }
 
-  Widget _buildSelectWidget(QuizItem q) {
-    if (q.hasMultipleAnswers)
-      return MultiSelectWidget(
-        items: q.choices,
-        onTap: () {
-          setState(() {});
-        },
+  Widget _buildChoice({
+    required Choice choice,
+    required bool allowMultiSelect,
+    required VoidCallback onTap,
+  }) {
+    final Widget child;
+    if (allowMultiSelect) {
+      child = CheckboxListTile(
+        title: Markdown(choice.content),
+        controlAffinity: ListTileControlAffinity.leading,
+        value: choice.selected,
+        onChanged: (_) {},
       );
-    return SingleSelectWidget(
-      items: q.choices,
-      onTap: (value) {
-        setState(
-          () {
-            q.choices.forEach((element) {
-              element.selected = false;
-            });
-            value.selected = true;
-          },
-        );
-      },
+    } else {
+      child = RadioListTile(
+        title: Markdown(choice.content),
+        value: choice.selected,
+        groupValue: true,
+        onChanged: (_) {},
+      );
+    }
+
+    return InkWell(
+      onTap: onTap,
+      child: IgnorePointer(
+        child: child,
+      ),
     );
   }
 }
