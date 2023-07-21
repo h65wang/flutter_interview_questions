@@ -58,7 +58,7 @@ class _WelcomePageState extends State<WelcomePage> {
                       onTap: (LanguageItem it) => setState(() {
                         _language = it;
                       }),
-                      display: (LanguageItem it) => it.lang,
+                      itemBuilder: (LanguageItem it) => Text(it.lang),
                     ),
                     const SizedBox(height: 8),
                   ],
@@ -88,7 +88,19 @@ class _WelcomePageState extends State<WelcomePage> {
                           _sets.add(it);
                         }
                       }),
-                      display: (QuestionSet set) => set.name,
+                      itemBuilder: (QuestionSet set) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text('${set.name} (${set.questions.length})'),
+                          Text(
+                            set.description,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.merge(TextStyle(color: Colors.grey.shade600)),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 8),
                   ],

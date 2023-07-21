@@ -49,7 +49,6 @@ class _MarkdownState extends State<Markdown> {
 
   @override
   Widget build(BuildContext context) {
-    _updateSpan();
     return Text.rich(
       _spanTemp,
       style: widget.style,

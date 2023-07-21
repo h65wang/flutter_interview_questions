@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class Selector extends StatelessWidget {
-  final String content;
+  final Widget child;
   final bool selected;
   final VoidCallback onTap;
 
   const Selector({
     super.key,
-    required this.content,
+    required this.child,
     required this.selected,
     required this.onTap,
   });
@@ -15,7 +15,7 @@ class Selector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(content),
+      title: child,
       selected: selected,
       selectedColor: Colors.black,
       selectedTileColor: Theme.of(context).colorScheme.inversePrimary,

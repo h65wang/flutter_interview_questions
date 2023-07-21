@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../model/quiz_item.dart';
 import '../model/quiz_model.dart';
-import '../widget/markdown.dart';
+import '../widget/quiz_item_card.dart';
 
 class QuizPage extends StatefulWidget {
   final QuizModel model;
@@ -42,7 +41,7 @@ class _QuizPageState extends State<QuizPage> {
                       padding: const EdgeInsets.all(8),
                       child: IgnorePointer(
                         ignoring: _submitted,
-                        child: _QuizItemCard(
+                        child: QuizItemCard(
                           quizItem: q,
                           showUnanswered: _reviewed,
                           showGrading: _submitted,
@@ -108,103 +107,5 @@ class _QuizPageState extends State<QuizPage> {
     } else {
       setState(() => _reviewed = true);
     }
-  }
-}
-
-class _QuizItemCard extends StatefulWidget {
-  final QuizItem quizItem;
-  final bool showUnanswered; // display "answer not provided" if unanswered
-  final bool showGrading; // display grading (correct or incorrect)
-
-  const _QuizItemCard({
-    required this.quizItem,
-    required this.showUnanswered,
-    required this.showGrading,
-  });
-
-  @override
-  State<_QuizItemCard> createState() => _QuizItemCardState();
-}
-
-class _QuizItemCardState extends State<_QuizItemCard> {
-  @override
-  Widget build(BuildContext context) {
-    final q = widget.quizItem;
-    return Card(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Markdown(
-              q.question.title,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(fontWeight: FontWeight.bold),
-            ),
-          ),
-          if ((widget.showUnanswered || widget.showGrading) && !q.answered)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                "No answer provided",
-                style: TextStyle(
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          if (widget.showGrading && q.answered)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                q.correct ? "Correct" : "Incorrect",
-                style: TextStyle(
-                  color: q.correct ? Colors.green : Colors.red,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          for (final choice in q.choices)
-            _buildChoice(
-              choice: choice,
-              allowMultiSelect: q.hasMultipleAnswers,
-              onTap: () => setState(() => q.choose(choice)),
-            ),
-          const SizedBox(height: 8),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildChoice({
-    required Choice choice,
-    required bool allowMultiSelect,
-    required VoidCallback onTap,
-  }) {
-    final Widget child;
-    if (allowMultiSelect) {
-      child = CheckboxListTile(
-        title: Markdown(choice.content),
-        controlAffinity: ListTileControlAffinity.leading,
-        value: choice.selected,
-        onChanged: (_) {},
-      );
-    } else {
-      child = RadioListTile(
-        title: Markdown(choice.content),
-        value: choice.selected,
-        groupValue: true,
-        onChanged: (_) {},
-      );
-    }
-
-    return InkWell(
-      onTap: onTap,
-      child: IgnorePointer(
-        child: child,
-      ),
-    );
   }
 }

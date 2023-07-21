@@ -12,15 +12,15 @@ class SelectorGroup<T> extends StatelessWidget {
   /// What happens when user clicks on one of the items.
   final void Function(T) onTap;
 
-  /// How to convert item `Type T` into a string to display.
-  final String Function(T)? display;
+  /// How to display each item on screen.
+  final Widget Function(T) itemBuilder;
 
   const SelectorGroup({
     super.key,
     required this.items,
     required this.selected,
     required this.onTap,
-    this.display,
+    required this.itemBuilder,
   });
 
   @override
@@ -31,7 +31,7 @@ class SelectorGroup<T> extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 2),
             child: Selector(
-              content: display?.call(it) ?? '$it',
+              child: itemBuilder(it),
               selected: selected.contains(it),
               onTap: () => onTap(it),
             ),
