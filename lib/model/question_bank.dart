@@ -13,7 +13,7 @@ typedef Bank = Map<LanguageItem, List<QuestionSet>>;
 
 class QuestionSet {
   final String name;
-  final String? description;
+  final String description;
   final String? author;
   final List<Question> questions;
 
@@ -26,7 +26,7 @@ class QuestionSet {
 
   factory QuestionSet.fromJson(dynamic json) => QuestionSet(
         name: json['name'] as String,
-        description: json['description'] as String?,
+        description: json['description'] as String,
         author: json['author'] as String?,
         questions: (json['questions'] as List).map(Question.fromJson).toList(),
       );

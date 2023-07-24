@@ -17,7 +17,8 @@
     "files": [
       "mock.json",
       "zh_zz.json",
-      "getx_specialization.json"
+      "getx_specialization.json",
+      "advanced.json"
     ]
   }
 ]
