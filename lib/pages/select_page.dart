@@ -45,14 +45,6 @@ class _SelectPageState extends State<SelectPage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _start();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     // 又不是不能用
     List<Widget> cards = [];
