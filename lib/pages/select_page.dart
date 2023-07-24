@@ -48,45 +48,58 @@ class _SelectPageState extends State<SelectPage> {
     // 又不是不能用
     List<Widget> cards = [];
     for (int i = 0; i < (currentQuestionSets.length / 2).ceil(); i++) {
-      cards.add(
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: _Card(
-                questionSet: currentQuestionSets[i * 2],
-                selected: _sets.contains(currentQuestionSets[i * 2]),
-                onTap: () {
-                  setState(() {
-                    final current = currentQuestionSets[i * 2];
-                    if (_sets.contains(current))
-                      _sets.remove(current);
-                    else
-                      _sets.add(current);
-                  });
-                },
-              ),
-            ),
-            Expanded(
-              child: currentQuestionSets.asMap()[i * 2 + 1] == null
-                  ? Container()
-                  : _Card(
-                      questionSet: currentQuestionSets[i * 2 + 1],
-                      selected: _sets.contains(currentQuestionSets[i * 2 + 1]),
-                      onTap: () {
-                        setState(() {
-                          final current = currentQuestionSets[i * 2 + 1];
-                          if (_sets.contains(current))
-                            _sets.remove(current);
-                          else
-                            _sets.add(current);
-                        });
-                      },
-                    ),
-            )
-          ],
-        ),
+      var card = _Card(
+        questionSet: currentQuestionSets[i * 2],
+        selected: _sets.contains(currentQuestionSets[i * 2]),
+        onTap: () {
+          setState(() {
+            final current = currentQuestionSets[i * 2];
+            if (_sets.contains(current))
+              _sets.remove(current);
+            else
+              _sets.add(current);
+          });
+        },
       );
+      var card2 = _Card(
+        questionSet: currentQuestionSets[i * 2 + 1],
+        selected: _sets.contains(currentQuestionSets[i * 2 + 1]),
+        onTap: () {
+          setState(() {
+            final current = currentQuestionSets[i * 2 + 1];
+            if (_sets.contains(current))
+              _sets.remove(current);
+            else
+              _sets.add(current);
+          });
+        },
+      );
+      if (MediaQuery.of(context).size.width >= 700) {
+        cards.add(
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: card,
+              ),
+              Expanded(
+                child: currentQuestionSets.asMap()[i * 2 + 1] == null
+                    ? Container()
+                    : card2,
+              )
+            ],
+          ),
+        );
+      } else {
+        cards.add(Column(
+          children: [
+            card,
+            currentQuestionSets.asMap()[i * 2 + 1] == null
+                ? Container()
+                : card2,
+          ],
+        ));
+      }
     }
 
     Widget pageBody = Container(
@@ -335,7 +348,7 @@ class _Card extends StatelessWidget {
             Container(
               margin: EdgeInsets.fromLTRB(12, 18, 0, 0),
               child: Icon(
-                Icons.ramen_dining_sharp,
+                Icons.description,
                 size: 32,
                 color: selected ? ColorPlate.primaryPink : ColorPlate.gray,
               ),
