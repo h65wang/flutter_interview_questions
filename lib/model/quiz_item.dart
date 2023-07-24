@@ -24,7 +24,6 @@ class QuizItem {
 
   /// Returns true if this question has multiple correct answers.
   bool get hasMultipleAnswers => question.answers.length > 1;
-
 }
 
 class Choice {
