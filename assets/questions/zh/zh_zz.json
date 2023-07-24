@@ -15,7 +15,7 @@
       ]
     },
     {
-      "title": "AnimatedContainer中的以下哪个属性，当该值改变的时候不会呈现动画?",
+      "title": "`AnimatedContainer`中的以下哪个属性，当该值改变的时候不会呈现动画?",
       "answers": [
         "child"
       ],
@@ -48,7 +48,7 @@
       ]
     },
     {
-      "title": "以下哪项不是组件TweenAnimationBuilder的参数:",
+      "title": "以下哪项不是组件`TweenAnimationBuilder`的参数:",
       "answers": [
         "animation"
       ],
@@ -59,7 +59,7 @@
       ]
     },
     {
-      "title": "AnimationController可以用来在以下哪个类里:",
+      "title": "`AnimationController`可以用来在以下哪个类里:",
       "answers": [
         "SingleTickerProviderStateMixin"
       ],
@@ -70,7 +70,7 @@
       ]
     },
     {
-      "title": "以下哪项最能描述Tween的用途?",
+      "title": "以下哪项最能描述`Tween`的用途?",
       "answers": [
         "控制动画从开始到结束的值."
       ],
@@ -81,14 +81,14 @@
       ]
     },
     {
-      "title": "Which of the following describes a way to apply transitions to common elements across different screens?",
+      "title": "以下哪个描述了在不同屏幕上应用转场效果到公共元素的方法?",
       "answers": [
-        "Use Hero widgets and specify the same tag."
+        "使用`Hero`小部件并给它们指定相同的标签."
       ],
       "candidates": [
-        "Use Hero widgets and specify different values for tag.",
-        "Use Navigator widgets and specify the same key.",
-        "Use Navigator widgets and specify different values for key."
+        "使用`Hero`小部件并为标签指定不同的值.",
+        "使用`Navigator`小部件并指定相同的key.",
+        "使用`Navigator`小部件并为key指定不同的值."
       ]
     }
   ]
