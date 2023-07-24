@@ -25,23 +25,6 @@ class QuizItem {
   /// Returns true if this question has multiple correct answers.
   bool get hasMultipleAnswers => question.answers.length > 1;
 
-  /// Call this method when the user clicks on a choice, to toggle state.
-  void choose(Choice choice) {
-    // if this choice had been selected, clicking on it again deselects it
-    if (choice.selected) {
-      choice.selected = false;
-      return;
-    }
-    // if this question allows multiple choices, we add this choice;
-    // otherwise, we exclusively select this choice.
-    if (hasMultipleAnswers) {
-      choice.selected = true;
-    } else {
-      for (final c in choices) {
-        c.selected = c == choice;
-      }
-    }
-  }
 }
 
 class Choice {

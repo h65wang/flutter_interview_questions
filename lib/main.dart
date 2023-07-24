@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_interview_questions/pages/select_page.dart';
 
 import 'model/question_bank.dart';
-import 'ui/welcome_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
         future: fetcher,
         builder: (_, AsyncSnapshot<Bank> snapshot) {
           if (snapshot.hasData) {
-            return WelcomePage(bank: snapshot.data!);
+            return SelectPage(bank: snapshot.data!);
           }
           if (snapshot.hasError) {
             return Center(child: Text('${snapshot.error}'));
