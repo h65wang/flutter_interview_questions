@@ -16,6 +16,18 @@ class QuizPage extends StatefulWidget {
   State<QuizPage> createState() => _QuizPageState();
 }
 
+class _CountResult {
+  final int correct;
+  final int incorrect;
+  final int notSubmit;
+
+  _CountResult({
+    required this.correct,
+    required this.incorrect,
+    required this.notSubmit,
+  });
+}
+
 class _QuizPageState extends State<QuizPage> {
   // After the user submits, we lock all answers so they cannot change them.
   // And we reveal the result (correct/incorrect).
@@ -24,6 +36,43 @@ class _QuizPageState extends State<QuizPage> {
   List<QuizItem> get _list => widget.model.questions;
 
   Map<QuizItem, Set<String>> answerMap = {};
+
+  _CountResult get countInfo {
+    int correct = 0;
+    int incorrect = 0;
+    int notSubmit = 0;
+
+    for (final quiz in _list) {
+      final selected = answerMap[quiz] ?? Set();
+      if (selected.length == 0) {
+        notSubmit += 1;
+        continue;
+      }
+      if (quiz.question.answers.length != selected.length) {
+        incorrect += 1;
+        continue;
+      }
+      bool hasErr = false;
+      for (var correct in quiz.question.answers) {
+        if (!selected.contains(correct)) {
+          hasErr = true;
+          break;
+        }
+      }
+      if (hasErr) {
+        incorrect += 1;
+        continue;
+      }
+      correct += 1;
+      continue;
+    }
+
+    return _CountResult(
+      correct: correct,
+      incorrect: incorrect,
+      notSubmit: notSubmit,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +178,7 @@ class _QuizPageState extends State<QuizPage> {
                         Container(
                           margin: EdgeInsets.only(right: 10),
                           child: _Count(
-                            text: '-',
+                            text: '${countInfo.correct}',
                             icons: Icons.check_circle,
                             color: ColorPlate.green,
                           ),
@@ -137,7 +186,7 @@ class _QuizPageState extends State<QuizPage> {
                         Container(
                           margin: EdgeInsets.only(right: 10),
                           child: _Count(
-                            text: '-',
+                            text: '${countInfo.incorrect}',
                             icons: Icons.cancel,
                             color: ColorPlate.primaryPink,
                           ),
@@ -145,7 +194,7 @@ class _QuizPageState extends State<QuizPage> {
                         Container(
                           margin: EdgeInsets.only(right: 10),
                           child: _Count(
-                            text: '-',
+                            text: '${countInfo.notSubmit}',
                             icons: Icons.help,
                             color: ColorPlate.orange,
                           ),
