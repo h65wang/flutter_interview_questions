@@ -204,7 +204,6 @@ class _Count extends StatelessWidget {
   final IconData icons;
   final Color color;
   const _Count({
-    super.key,
     required this.text,
     required this.color,
     required this.icons,
@@ -236,7 +235,6 @@ class _Count extends StatelessWidget {
 
 class _Quiz extends StatelessWidget {
   const _Quiz({
-    super.key,
     required this.data,
     required this.onSelect,
     required this.selected,
