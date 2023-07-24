@@ -1,0 +1,164 @@
+{
+  "name": "进阶题目",
+  "description": "一些进阶题",
+  "author": "Zack",
+  "questions": [
+    {
+      "title": "Flutter中的`ChangeNotifier`是用于实现哪种类型的状态管理？",
+      "answers": [
+        "响应式状态管理"
+      ],
+      "candidates": [
+        "集中式状态管理",
+        "分布式状态管理",
+        "命令式状态管理"
+      ],
+      "explanation": "ChangeNotifier是一个通用的混合类，它提供了通知监听器的能力。它是一个轻量级的状态管理解决方案，适用于单个Widget的状态管理。"
+    },
+    {
+      "title": "Flutter中的`WidgetsBindingObserver`用于什么目的？",
+      "answers": [
+        "监听和处理应用生命周期事件"
+      ],
+      "candidates": [
+        "管理应用的状态和数据",
+        "实现不同屏幕尺寸的适配",
+        "处理网络请求和数据持久化"
+      ],
+      "explanation": "`WidgetsBindingObserver`是一个观察者对象，用于监听Flutter应用的生命周期事件，如应用启动、暂停、恢复和退出等"
+    },
+    {
+      "title": "在Flutter中，如何实现页面过渡动画(Page Transitions)?",
+      "answers": [
+        "通过自定义`PageRoute`实现"
+      ],
+      "candidates": [
+        "使用`Hero`小部件",
+        "使用`AnimatedContainer`进行动画过渡",
+        "Flutter默认提供页面过渡动画，无需额外代码"
+      ],
+        "explanation": "Flutter提供了`PageRouteBuilder`类，可以通过自定义`PageRoute`实现页面过渡动画。"
+    },
+    {
+      "title": "Flutter中的`FutureBuilder`小部件的作用是什么?",
+      "answers": [
+        "处理异步操作，根据Future对象的状态构建UI"
+      ],
+      "candidates": [
+        "帮助在不同屏幕尺寸上构建响应式UI",
+        "实现数据绑定，自动更新UI",
+        "显示动态列表，并支持下拉刷新和上拉加载更多"
+      ],
+        "explanation": "`FutureBuilder`小部件用于处理异步操作，根据Future对象的状态构建UI。"
+    },
+    {
+      "title": "Flutter中的`CustomPainter`类的作用是什么?",
+      "answers": [
+        "自定义小部件的绘制和外观"
+      ],
+      "candidates": [
+        "用于自定义小部件的布局",
+        "实现页面过渡动画",
+        "处理手势交互和用户输入"
+      ],
+        "explanation": "`CustomPainter`类是一个抽象类，用于自定义小部件的绘制和外观，通过实现其中的方法来实现自定义绘制逻辑。"
+    },
+    {
+      "title": "Flutter中的`RenderObject`是什么？",
+      "answers": [
+        "实现页面的渲染和布局"
+      ],
+      "candidates": [
+        "用于管理小部件的布局和状态",
+        "用于创建和管理动画效果",
+        "处理手势交互和用户输入"
+      ],
+        "explanation": "`RenderObject`是Flutter中用于实现页面的渲染和布局的基本单元，它负责处理小部件的绘制和布局逻辑。"
+    },
+    {
+      "title": "Flutter中的`Future`和`Stream`之间有什么区别？",
+      "answers": [
+        "`Future`表示一个异步任务的结果，而`Stream`表示多个异步任务的结果序列"
+      ],
+      "candidates": [
+        "`Future`只能返回单个结果，而`Stream`可以返回多个结果",
+        "`Future`用于处理耗时操作，而`Stream`用于处理频繁更新的数据",
+        "`Future`是单向的，而`Stream`是双向的`"
+      ],
+        "explanation": "`Future`表示一个异步任务的结果，而`Stream`表示多个异步任务的结果序列，可以有多个数据值。"
+    },
+    {
+      "title": "在Flutter中，以下哪种技术用于在原生代码和Flutter代码之间进行通信？",
+      "answers": [
+        "Platform Channels"
+      ],
+      "candidates": [
+        "Native Channels",
+        "Flutter Channels",
+        "Communication Channels"
+      ],
+        "explanation": "Flutter提供了Platform Channels技术，用于在原生代码和Flutter代码之间进行通信。"
+    },
+    {
+      "title": "Flutter中的`InkWell`小部件的作用是什么？",
+      "answers": [
+        "用于在应用程序中创建响应点击事件的区域"
+      ],
+      "candidates": [
+        "用于创建可滚动的列表",
+        "用于创建线性渐变效果",
+        "用于绘制自定义图形和图像"
+      ],
+      "explanation": "`InkWell`是Flutter中用于在应用程序中创建响应点击事件的区域的小部件，它会在用户点击时显示水波纹效果。"
+    },
+    {
+      "title": "Flutter中的`SliverAppBar`小部件用于什么？",
+      "answers": [
+        "实现折叠效果的应用栏"
+      ],
+      "candidates": [
+        "创建可滚动的导航栏",
+        "用于创建悬浮的小部件",
+        "用于实现页面过渡动画"
+      ],
+      "explanation": "`SliverAppBar`是Flutter中用于实现折叠效果的应用栏的小部件，可以在用户滚动页面时折叠和展开应用栏。"
+    },
+    {
+      "title": "在Flutter中，以下哪个小部件用于显示具有半透明效果的遮罩层？",
+      "answers": [
+        "BackdropFilter"
+      ],
+      "candidates": [
+        "Overlay",
+        "ModalBarrier",
+        "Opacity"
+      ],
+        "explanation": "`BackdropFilter`是Flutter中用于显示具有半透明效果的遮罩层的小部件。"
+    },
+    {
+      "title": "Flutter中的`InheritedModel`小部件的作用是什么？",
+      "answers": [
+        "用于在小部件树中传递数据和状态"
+      ],
+      "candidates": [
+        "用于创建自定义的小部件模型",
+        "用于实现自定义的布局模型",
+        "用于管理小部件的生命周期"
+      ],
+        "explanation": "`InheritedModel`是Flutter中用于在小部件树中传递数据和状态的小部件，它可以在小部件树中传递多个数据值。"
+    },
+    {
+      "title": "Flutter中的`SliverAppBar`小部件用于什么？",
+      "answers": [
+        "实现折叠效果的应用栏"
+      ],
+      "candidates": [
+        "创建可滚动的导航栏",
+        "用于创建悬浮的小部件",
+        "用于实现页面过渡动画"
+      ],
+      "explanation": "`SliverAppBar`是Flutter中用于实现折叠效果的应用栏的小部件，可以在用户滚动页面时折叠和展开应用栏。"
+    }
+
+  ]
+}
