@@ -40,7 +40,10 @@ class _TappedState extends State<Tapped> {
         curve: Curves.fastOutSlowIn,
         duration: isTapDown ? Duration.zero : Duration(milliseconds: 330),
         opacity: isTapDown ? 0.3 : 1,
-        child: widget.child,
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: widget.child,
+        ),
       ),
     );
   }

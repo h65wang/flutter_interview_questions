@@ -6,15 +6,22 @@ import 'package:flutter_interview_questions/style/color.dart';
 import 'package:flutter_interview_questions/style/size.dart';
 import 'package:flutter_interview_questions/style/text.dart';
 import 'package:flutter_interview_questions/widget/app_layout.dart';
+import 'package:flutter_interview_questions/widget/love_love_gesture.dart';
 import 'package:flutter_interview_questions/widget/markdown.dart';
 import 'package:flutter_interview_questions/widget/progress.dart';
 import 'package:flutter_interview_questions/widget/tapped.dart';
 
 class QuizPage extends StatefulWidget {
   final QuizModel model;
+  final String description;
   final LanguageItem language;
 
-  const QuizPage({super.key, required this.model, required this.language});
+  const QuizPage({
+    super.key,
+    required this.model,
+    required this.language,
+    required this.description,
+  });
 
   @override
   State<QuizPage> createState() => _QuizPageState();
@@ -36,6 +43,8 @@ class _QuizPageState extends State<QuizPage> {
   // After the user submits, we lock all answers so they cannot change them.
   // And we reveal the result (correct/incorrect).
   bool _submitted = false;
+
+  final scrollController = ScrollController();
 
   List<QuizItem> get _list => widget.model.questions;
 
@@ -81,6 +90,7 @@ class _QuizPageState extends State<QuizPage> {
   @override
   Widget build(BuildContext context) {
     Widget content = ListView.builder(
+      controller: scrollController,
       padding: EdgeInsets.symmetric(
         horizontal: 20,
       ),
@@ -107,170 +117,193 @@ class _QuizPageState extends State<QuizPage> {
     );
 
     return AppLayout(
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: 12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 22),
-              padding: EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 22,
-              ),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: ColorPlate.lightGray,
-                    width: 2,
-                  ),
+      body: LoveLoveGesture(
+        enable: _submitted,
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 22),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 22,
                 ),
-              ),
-              child: Row(
-                children: [
-                  Tapped(
-                    onTap: () {
-                      Navigator.of(context).maybePop();
-                    },
-                    child: Icon(
-                      Icons.cancel,
-                      color: ColorPlate.primaryPink,
-                      size: SysSize.huge,
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: ColorPlate.lightGray,
+                      width: 2,
                     ),
                   ),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.only(left: 12),
-                      child: StText.big(
-                        'Quiz Page',
-                        style: TextStyle(
-                          height: oneLineH,
-                          fontSize: SysSize.huge,
-                        ),
+                ),
+                child: Row(
+                  children: [
+                    Tapped(
+                      onTap: () {
+                        Navigator.of(context).maybePop();
+                      },
+                      child: Icon(
+                        Icons.clear,
+                        color: ColorPlate.primaryPink,
+                        size: SysSize.huge,
                       ),
                     ),
-                  ),
-                  Tapped(
-                    child: Icon(
-                      Icons.share,
-                      color: ColorPlate.primaryPink,
-                      size: SysSize.huge,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Expanded(child: content),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 22),
-              padding: EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 12,
-              ),
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    color: ColorPlate.lightGray,
-                    width: 2,
-                  ),
-                ),
-              ),
-              child: Row(
-                children: [
-                  if (_submitted)
                     Expanded(
-                      child: Row(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(right: 10),
-                            child: _Count(
-                              text: '${countInfo.correct}',
-                              icons: Icons.check_circle,
-                              color: ColorPlate.green,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(right: 10),
-                            child: _Count(
-                              text: '${countInfo.incorrect}',
-                              icons: Icons.cancel,
-                              color: ColorPlate.primaryPink,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(right: 10),
-                            child: _Count(
-                              text: '${countInfo.notSubmit}',
-                              icons: Icons.help,
-                              color: ColorPlate.orange,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  if (!_submitted && _list.length > 0)
-                    Flexible(
                       child: Container(
-                        margin: EdgeInsets.only(right: 12),
-                        child: Row(
+                        margin: EdgeInsets.only(left: 12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(
-                              child: ProgressBar(
-                                progress: (_list.length - countInfo.notSubmit) /
-                                    _list.length,
+                            StText.big(
+                              'Quiz Page',
+                              style: TextStyle(
+                                height: oneLineH,
+                                fontSize: SysSize.huge,
                               ),
                             ),
-                            Container(
-                              padding: EdgeInsets.only(left: 6),
-                              child: StText.normal(
-                                '${_list.length - countInfo.notSubmit}/${_list.length}',
+                            StText.small(
+                              widget.description,
+                              style: TextStyle(
+                                height: oneLineH,
+                                fontSize: SysSize.small,
                               ),
                             ),
                           ],
                         ),
                       ),
                     ),
-                  Tapped(
-                    onTap: () {
-                      setState(() {
-                        _submitted = !_submitted;
-                        if (!_submitted) answerMap.clear();
-                      });
-                    },
-                    child: Container(
-                      width: 178,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
+                    Tapped(
+                      child: Icon(
+                        Icons.share,
                         color: ColorPlate.primaryPink,
-                        borderRadius: BorderRadius.circular(4),
+                        size: SysSize.huge,
                       ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: StText.medium(
-                              _submitted ? 'Retry' : 'Submit',
-                              style: TextStyle(
-                                height: oneLineH,
-                                color: ColorPlate.white,
-                              ),
-                            ),
-                          ),
-                          Icon(
-                            _submitted ? Icons.refresh : Icons.check,
-                            color: ColorPlate.white,
-                            size: SysSize.normal,
-                          )
-                        ],
-                      ),
+                    )
+                  ],
+                ),
+              ),
+              Expanded(child: content),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 22),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 12,
+                ),
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                      color: ColorPlate.lightGray,
+                      width: 2,
                     ),
                   ),
-                ],
-              ),
-            )
-          ],
+                ),
+                child: Row(
+                  children: [
+                    if (_submitted)
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(right: 10),
+                              child: _Count(
+                                text: '${countInfo.correct}',
+                                icons: Icons.check_circle,
+                                color: ColorPlate.green,
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(right: 10),
+                              child: _Count(
+                                text: '${countInfo.incorrect}',
+                                icons: Icons.cancel,
+                                color: ColorPlate.primaryPink,
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(right: 10),
+                              child: _Count(
+                                text: '${countInfo.notSubmit}',
+                                icons: Icons.help,
+                                color: ColorPlate.orange,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    if (!_submitted && _list.length > 0)
+                      Flexible(
+                        child: Container(
+                          margin: EdgeInsets.only(right: 12),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: ProgressBar(
+                                  progress:
+                                      (_list.length - countInfo.notSubmit) /
+                                          _list.length,
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(left: 6),
+                                child: StText.normal(
+                                  '${_list.length - countInfo.notSubmit}/${_list.length}',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    Tapped(
+                      onTap: () {
+                        setState(() {
+                          _submitted = !_submitted;
+                          if (!_submitted) {
+                            answerMap.clear();
+                          }
+                          scrollController.animateTo(
+                            0,
+                            curve: Curves.easeInOutCubic,
+                            duration: Duration(milliseconds: 360),
+                          );
+                        });
+                      },
+                      child: Container(
+                        width: 178,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: ColorPlate.primaryPink,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: StText.medium(
+                                _submitted ? 'Retry' : 'Submit',
+                                style: TextStyle(
+                                  height: oneLineH,
+                                  color: ColorPlate.white,
+                                ),
+                              ),
+                            ),
+                            Icon(
+                              _submitted ? Icons.refresh : Icons.check,
+                              color: ColorPlate.white,
+                              size: SysSize.normal,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -502,57 +535,59 @@ class Candidate extends StatelessWidget {
     }
     return AbsorbPointer(
       absorbing: status != CandidateStatus.notSubmit,
-      child: Tapped(
-        onTap: onTap,
-        child: Row(
-          children: [
-            Flexible(
-              child: Opacity(
-                opacity: (status == CandidateStatus.error) ? 0.3 : 1,
-                child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 4),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    border: Border.all(
-                        color: showSelectStatus
-                            ? highlight.withOpacity(.3)
-                            : ColorPlate.lightGray),
-                  ),
-                  padding: EdgeInsets.only(right: 16),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.fromLTRB(10, 8, 10, 8),
-                        child: Icon(
-                          showSelectStatus
-                              ? (canMutiSelect
-                                  ? Icons.check_box
-                                  : Icons.radio_button_checked)
-                              : (canMutiSelect
-                                  ? Icons.check_box_outline_blank
-                                  : Icons.radio_button_off),
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 4),
+        child: Tapped(
+          onTap: onTap,
+          child: Row(
+            children: [
+              Flexible(
+                child: Opacity(
+                  opacity: (status == CandidateStatus.error) ? 0.3 : 1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      border: Border.all(
                           color: showSelectStatus
-                              ? highlight
-                              : ColorPlate.halfGray,
-                        ),
-                      ),
-                      Flexible(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 6),
-                          child: Markdown(
-                            candidate,
-                            style: StandardTextStyle.normal,
+                              ? highlight.withOpacity(.3)
+                              : ColorPlate.lightGray),
+                    ),
+                    padding: EdgeInsets.only(right: 16),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.fromLTRB(10, 8, 10, 8),
+                          child: Icon(
+                            showSelectStatus
+                                ? (canMutiSelect
+                                    ? Icons.check_box
+                                    : Icons.radio_button_checked)
+                                : (canMutiSelect
+                                    ? Icons.check_box_outline_blank
+                                    : Icons.radio_button_off),
+                            color: showSelectStatus
+                                ? highlight
+                                : ColorPlate.halfGray,
                           ),
                         ),
-                      ),
-                    ],
+                        Flexible(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 6),
+                            child: Markdown(
+                              candidate,
+                              style: StandardTextStyle.normal,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Container(child: tag),
-          ],
+              Container(child: tag),
+            ],
+          ),
         ),
       ),
     );

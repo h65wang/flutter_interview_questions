@@ -10,11 +10,13 @@ class LoveLoveGesture extends StatefulWidget {
     required this.child,
     this.onAddFavorite,
     this.onSingleTap,
+    required this.enable,
   }) : super(key: key);
 
   final Function? onAddFavorite;
   final Function? onSingleTap;
   final Widget child;
+  final bool enable;
 
   @override
   _LoveLoveGestureState createState() => _LoveLoveGestureState();
@@ -53,6 +55,7 @@ class _LoveLoveGestureState extends State<LoveLoveGesture> {
     return GestureDetector(
       key: _key,
       onTapDown: (detail) {
+        if (!widget.enable) return;
         setState(() {
           if (canAddFavorite) {
             // print('添加爱心，当前爱心数量:${icons.length}');
@@ -65,6 +68,7 @@ class _LoveLoveGestureState extends State<LoveLoveGesture> {
         });
       },
       onTapUp: (detail) {
+        if (!widget.enable) return;
         timer?.cancel();
         var delay = canAddFavorite ? 1200 : 600;
         timer = Timer(Duration(milliseconds: delay), () {
