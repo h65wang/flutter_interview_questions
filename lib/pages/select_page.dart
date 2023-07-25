@@ -11,6 +11,7 @@ import 'package:flutter_interview_questions/widget/tapped.dart';
 
 class SelectPage extends StatefulWidget {
   final Bank bank;
+
   const SelectPage({super.key, required this.bank});
 
   @override
@@ -158,11 +159,7 @@ class _SelectPageState extends State<SelectPage> {
               ).copyWith(bottom: 4),
               child: Row(
                 children: [
-                  Expanded(
-                    child: StText.normal(
-                      'Select Question Set(s):',
-                    ),
-                  ),
+                  Spacer(),
                   _LanguagePicker(
                     language: _language,
                     languageList: widget.bank.keys,
@@ -264,6 +261,7 @@ class _LanguagePicker extends StatelessWidget {
   final LanguageItem language;
   final Iterable<LanguageItem> languageList;
   final Function(LanguageItem) onSelect;
+
   const _LanguagePicker({
     required this.language,
     required this.onSelect,
@@ -381,12 +379,20 @@ class _Card extends StatelessWidget {
                         )
                       ],
                     ),
+                    StText.small(
+                      '${questionSet.questions.length} Questions',
+                      style: TextStyle(height: oneLineH),
+                    ),
                     Container(
                       margin: EdgeInsets.only(top: 2),
                       child: StText.small(
                         questionSet.description,
                       ),
-                    )
+                    ),
+                    StText.small(
+                      'Author: ${questionSet.author}',
+                      style: TextStyle(height: oneLineH),
+                    ),
                   ],
                 ),
               ),
