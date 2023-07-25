@@ -39,7 +39,10 @@ class _SelectPageState extends State<SelectPage> {
     Navigator.of(context).push<void>(
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (_) => QuizPage(model: model),
+        builder: (_) => QuizPage(
+          model: model,
+          language: _language,
+        ),
       ),
     );
   }
@@ -51,6 +54,7 @@ class _SelectPageState extends State<SelectPage> {
     for (int i = 0; i < (currentQuestionSets.length / 2).ceil(); i++) {
       var card = _Card(
         questionSet: currentQuestionSets[i * 2],
+        language: _language,
         selected: _sets.contains(currentQuestionSets[i * 2]),
         onTap: () {
           setState(() {
@@ -64,6 +68,7 @@ class _SelectPageState extends State<SelectPage> {
       );
       var card2 = _Card(
         questionSet: currentQuestionSets[i * 2 + 1],
+        language: _language,
         selected: _sets.contains(currentQuestionSets[i * 2 + 1]),
         onTap: () {
           setState(() {
@@ -316,11 +321,13 @@ class _LanguagePicker extends StatelessWidget {
 
 class _Card extends StatelessWidget {
   final QuestionSet questionSet;
+  final LanguageItem language;
   final bool selected;
   final VoidCallback onTap;
 
   const _Card({
     required this.questionSet,
+    required this.language,
     required this.selected,
     required this.onTap,
   });
@@ -380,7 +387,8 @@ class _Card extends StatelessWidget {
                       ],
                     ),
                     StText.small(
-                      '${questionSet.questions.length} Questions',
+                      '${language.translations['total-question-count']}'
+                          .replaceFirst('%', '${questionSet.questions.length}'),
                       style: TextStyle(height: oneLineH),
                     ),
                     Container(
@@ -390,7 +398,8 @@ class _Card extends StatelessWidget {
                       ),
                     ),
                     StText.small(
-                      'Author: ${questionSet.author}',
+                      '${language.translations['author']}'
+                      '${questionSet.author ?? language.translations['anonymous']}',
                       style: TextStyle(height: oneLineH),
                     ),
                   ],
