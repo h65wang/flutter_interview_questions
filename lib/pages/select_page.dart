@@ -42,6 +42,10 @@ class _SelectPageState extends State<SelectPage> {
         builder: (_) => QuizPage(
           model: model,
           language: _language,
+          description: widget.bank[_language]!
+              .where((s) => _sets.contains(s))
+              .map<String>((e) => e.name)
+              .join(', '),
         ),
       ),
     );
@@ -334,79 +338,102 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Tapped(
-      onTap: onTap,
-      child: Container(
-        margin: EdgeInsets.all(6),
-        decoration: BoxDecoration(
-          color: ColorPlate.white,
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(
-            color: selected
-                ? ColorPlate.primaryPink.withOpacity(.5)
-                : ColorPlate.lightGray,
-          ),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: EdgeInsets.fromLTRB(12, 18, 0, 0),
-              child: Icon(
-                Icons.description,
-                size: 32,
-                color: selected ? ColorPlate.primaryPink : ColorPlate.gray,
-              ),
+    return Container(
+      margin: EdgeInsets.all(6),
+      child: Tapped(
+        onTap: onTap,
+        child: Container(
+          decoration: BoxDecoration(
+            color: ColorPlate.white,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              color: selected
+                  ? ColorPlate.primaryPink.withOpacity(.5)
+                  : ColorPlate.lightGray,
             ),
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.fromLTRB(12, 10, 12, 14),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: StText.medium(
-                            questionSet.name,
-                            style: TextStyle(height: oneLineH),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(6),
-                          child: Icon(
-                            selected
-                                ? Icons.check_box
-                                : Icons.check_box_outline_blank,
-                            color: selected
-                                ? ColorPlate.primaryPink
-                                : ColorPlate.gray,
-                            size: SysSize.normal,
-                          ),
-                        )
-                      ],
-                    ),
-                    StText.small(
-                      '${language.translations['total-question-count']}'
-                          .replaceFirst('%', '${questionSet.questions.length}'),
-                      style: TextStyle(height: oneLineH),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 2),
-                      child: StText.small(
-                        questionSet.description,
-                      ),
-                    ),
-                    StText.small(
-                      '${language.translations['author']}'
-                      '${questionSet.author ?? language.translations['anonymous']}',
-                      style: TextStyle(height: oneLineH),
-                    ),
-                  ],
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: EdgeInsets.fromLTRB(12, 18, 0, 0),
+                child: Icon(
+                  Icons.description,
+                  size: 32,
+                  color: selected ? ColorPlate.primaryPink : ColorPlate.gray,
                 ),
               ),
-            ),
-          ],
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(12, 10, 12, 14),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: StText.medium(
+                              questionSet.name,
+                              style: TextStyle(height: oneLineH),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(6),
+                            child: Icon(
+                              selected
+                                  ? Icons.check_box
+                                  : Icons.check_box_outline_blank,
+                              color: selected
+                                  ? ColorPlate.primaryPink
+                                  : ColorPlate.gray,
+                              size: SysSize.normal,
+                            ),
+                          )
+                        ],
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 2),
+                        child: StText.small(
+                          questionSet.description,
+                        ),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.only(top: 6),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: StText.small(
+                                '${language.translations['total-question-count']}'
+                                    .replaceFirst(
+                                        '%', '${questionSet.questions.length}'),
+                                style: TextStyle(
+                                  height: oneLineH,
+                                  color: selected
+                                      ? ColorPlate.primaryPink
+                                      : ColorPlate.gray,
+                                ),
+                              ),
+                            ),
+                            StText.small(
+                              '${language.translations['author']}'
+                              '${questionSet.author ?? language.translations['anonymous']}',
+                              align: TextAlign.right,
+                              style: TextStyle(
+                                height: oneLineH,
+                                color: ColorPlate.gray,
+                                fontSize: SysSize.tiny,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
