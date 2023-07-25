@@ -76,9 +76,6 @@ class _LoveLoveGestureState extends State<LoveLoveGesture> {
         });
         canAddFavorite = true;
       },
-      onTapCancel: () {
-        // print('onTapCancel');
-      },
       child: Stack(
         children: <Widget>[
           widget.child,
