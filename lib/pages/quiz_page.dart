@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_interview_questions/model/language_item.dart';
 import 'package:flutter_interview_questions/model/quiz_item.dart';
 import 'package:flutter_interview_questions/model/quiz_model.dart';
 import 'package:flutter_interview_questions/style/color.dart';
@@ -12,7 +13,9 @@ import 'package:flutter_interview_questions/widget/tapped.dart';
 
 class QuizPage extends StatefulWidget {
   final QuizModel model;
-  const QuizPage({super.key, required this.model});
+  final LanguageItem language;
+
+  const QuizPage({super.key, required this.model, required this.language});
 
   @override
   State<QuizPage> createState() => _QuizPageState();
@@ -87,6 +90,7 @@ class _QuizPageState extends State<QuizPage> {
         final data = _list[index];
         return _Quiz(
           data: data,
+          language: widget.language,
           submitted: _submitted,
           selected: answerMap[data] ?? Set(),
           onSelect: (candidate) {
@@ -281,6 +285,7 @@ class _Count extends StatelessWidget {
   final String text;
   final IconData icons;
   final Color color;
+
   const _Count({
     required this.text,
     required this.color,
@@ -314,12 +319,14 @@ class _Count extends StatelessWidget {
 class _Quiz extends StatelessWidget {
   const _Quiz({
     required this.data,
+    required this.language,
     required this.onSelect,
     required this.selected,
     required this.submitted,
   });
 
   final QuizItem data;
+  final LanguageItem language;
   final bool submitted;
   final Set<String> selected;
   final Function(String) onSelect;
@@ -391,7 +398,10 @@ class _Quiz extends StatelessWidget {
           Container(
             padding: EdgeInsets.only(bottom: 10),
             child: Markdown(
-              data.question.title,
+              (data.hasMultipleAnswers
+                      ? '${language.translations['multiple-answers']}'
+                      : '') +
+                  data.question.title,
               style: StandardTextStyle.medium,
             ),
           ),

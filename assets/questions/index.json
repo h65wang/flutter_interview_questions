@@ -8,7 +8,13 @@
       "beginner_1.json",
       "wsbt_animation.json",
       "wsbt_key.json"
-    ]
+    ],
+    "translations": {
+      "total-question-count": "% Questions",
+      "author": "Author: ",
+      "anonymous": "anonymous",
+      "multiple-answers": "(Select all that apply.) "
+    }
   },
   {
     "lang": "中文",
@@ -19,6 +25,12 @@
       "zh_zz.json",
       "getx_specialization.json",
       "advanced.json"
-    ]
+    ],
+    "translations": {
+      "total-question-count": "共%题",
+      "author": "作者: ",
+      "anonymous": "匿名",
+      "multiple-answers": "[多选题] "
+    }
   }
 ]

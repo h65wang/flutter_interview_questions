@@ -11,6 +11,7 @@ import 'package:flutter_interview_questions/widget/tapped.dart';
 
 class SelectPage extends StatefulWidget {
   final Bank bank;
+
   const SelectPage({super.key, required this.bank});
 
   @override
@@ -38,7 +39,10 @@ class _SelectPageState extends State<SelectPage> {
     Navigator.of(context).push<void>(
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (_) => QuizPage(model: model),
+        builder: (_) => QuizPage(
+          model: model,
+          language: _language,
+        ),
       ),
     );
   }
@@ -50,6 +54,7 @@ class _SelectPageState extends State<SelectPage> {
     for (int i = 0; i < (currentQuestionSets.length / 2).ceil(); i++) {
       var card = _Card(
         questionSet: currentQuestionSets[i * 2],
+        language: _language,
         selected: _sets.contains(currentQuestionSets[i * 2]),
         onTap: () {
           setState(() {
@@ -63,6 +68,7 @@ class _SelectPageState extends State<SelectPage> {
       );
       var card2 = _Card(
         questionSet: currentQuestionSets[i * 2 + 1],
+        language: _language,
         selected: _sets.contains(currentQuestionSets[i * 2 + 1]),
         onTap: () {
           setState(() {
@@ -158,11 +164,7 @@ class _SelectPageState extends State<SelectPage> {
               ).copyWith(bottom: 4),
               child: Row(
                 children: [
-                  Expanded(
-                    child: StText.normal(
-                      'Select Question Set(s):',
-                    ),
-                  ),
+                  Spacer(),
                   _LanguagePicker(
                     language: _language,
                     languageList: widget.bank.keys,
@@ -264,6 +266,7 @@ class _LanguagePicker extends StatelessWidget {
   final LanguageItem language;
   final Iterable<LanguageItem> languageList;
   final Function(LanguageItem) onSelect;
+
   const _LanguagePicker({
     required this.language,
     required this.onSelect,
@@ -318,11 +321,13 @@ class _LanguagePicker extends StatelessWidget {
 
 class _Card extends StatelessWidget {
   final QuestionSet questionSet;
+  final LanguageItem language;
   final bool selected;
   final VoidCallback onTap;
 
   const _Card({
     required this.questionSet,
+    required this.language,
     required this.selected,
     required this.onTap,
   });
@@ -381,12 +386,22 @@ class _Card extends StatelessWidget {
                         )
                       ],
                     ),
+                    StText.small(
+                      '${language.translations['total-question-count']}'
+                          .replaceFirst('%', '${questionSet.questions.length}'),
+                      style: TextStyle(height: oneLineH),
+                    ),
                     Container(
                       margin: EdgeInsets.only(top: 2),
                       child: StText.small(
                         questionSet.description,
                       ),
-                    )
+                    ),
+                    StText.small(
+                      '${language.translations['author']}'
+                      '${questionSet.author ?? language.translations['anonymous']}',
+                      style: TextStyle(height: oneLineH),
+                    ),
                   ],
                 ),
               ),
