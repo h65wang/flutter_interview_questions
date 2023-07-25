@@ -6,6 +6,7 @@ import 'package:flutter_interview_questions/style/size.dart';
 import 'package:flutter_interview_questions/style/text.dart';
 import 'package:flutter_interview_questions/widget/app_layout.dart';
 import 'package:flutter_interview_questions/widget/markdown.dart';
+import 'package:flutter_interview_questions/widget/progress.dart';
 import 'package:flutter_interview_questions/widget/tapped.dart';
 
 class QuizPage extends StatefulWidget {
@@ -173,39 +174,63 @@ class _QuizPageState extends State<QuizPage> {
               child: Row(
                 children: [
                   if (_submitted)
-                    Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: _Count(
-                            text: '${countInfo.correct}',
-                            icons: Icons.check_circle,
-                            color: ColorPlate.green,
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(right: 10),
+                            child: _Count(
+                              text: '${countInfo.correct}',
+                              icons: Icons.check_circle,
+                              color: ColorPlate.green,
+                            ),
                           ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: _Count(
-                            text: '${countInfo.incorrect}',
-                            icons: Icons.cancel,
-                            color: ColorPlate.primaryPink,
+                          Container(
+                            margin: EdgeInsets.only(right: 10),
+                            child: _Count(
+                              text: '${countInfo.incorrect}',
+                              icons: Icons.cancel,
+                              color: ColorPlate.primaryPink,
+                            ),
                           ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: _Count(
-                            text: '${countInfo.notSubmit}',
-                            icons: Icons.help,
-                            color: ColorPlate.orange,
+                          Container(
+                            margin: EdgeInsets.only(right: 10),
+                            child: _Count(
+                              text: '${countInfo.notSubmit}',
+                              icons: Icons.help,
+                              color: ColorPlate.orange,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  Spacer(),
+                  if (!_submitted && _list.length > 0)
+                    Flexible(
+                      child: Container(
+                        margin: EdgeInsets.only(right: 12),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: ProgressBar(
+                                progress: (_list.length - countInfo.notSubmit) /
+                                    _list.length,
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 6),
+                              child: StText.normal(
+                                '${_list.length - countInfo.notSubmit}/${_list.length}',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   Tapped(
                     onTap: () {
                       setState(() {
                         _submitted = !_submitted;
+                        if (!_submitted) answerMap.clear();
                       });
                     },
                     child: Container(
@@ -304,8 +329,8 @@ class _Quiz extends StatelessWidget {
   }
 
   String get tag {
-    if (selected.isEmpty) return '未提供答案';
-    return hasError == true ? '错误' : '正确';
+    if (selected.isEmpty) return 'Not provided';
+    return hasError == true ? 'Wrong' : 'Correct';
   }
 
   Color get highlight {
