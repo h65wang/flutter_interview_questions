@@ -1,0 +1,95 @@
+{
+  "name": "Animations",
+  "description": "A set of questions that focuses on Flutter animations",
+  "author": "WSBT",
+  "questions": [
+    {
+      "title": "If you need to declare an AnimationController, you are likely creating a:",
+      "answers": [
+        "explicit animation"
+      ],
+      "candidates": [
+        "stateless widget",
+        "implicit animation",
+        "AnimatedContainer widget"
+      ]
+    },
+    {
+      "title": "Which of the following properties of an `AnimatedContainer` will NOT get animated when its value is changed?",
+      "answers": [
+        "child"
+      ],
+      "candidates": [
+        "width",
+        "color",
+        "padding"
+      ]
+    },
+    {
+      "title": "If you need to apply fading effect when switching texts on a screen, which of the following widget might be useful:",
+      "answers": [
+        "AnimatedSwitcher"
+      ],
+      "candidates": [
+        "AnimatedContainer",
+        "AnimatedText",
+        "AnimatedFade"
+      ]
+    },
+    {
+      "title": "Which of the following is the default curve for animation widgets:",
+      "answers": [
+        "Curves.linear"
+      ],
+      "candidates": [
+        "Curves.easeOut",
+        "Curves.easeInOut",
+        "Curves.ease"
+      ]
+    },
+    {
+      "title": "Which of the following is NOT a parameter of TweenAnimationBuilder widget:",
+      "answers": [
+        "animation"
+      ],
+      "candidates": [
+        "duration",
+        "builder",
+        "child"
+      ]
+    },
+    {
+      "title": "An AnimationController can be used in a class with:",
+      "answers": [
+        "SingleTickerProviderStateMixin"
+      ],
+      "candidates": [
+        "DynamicAnimationControllerMixin",
+        "TickerAnimationControllerProvider",
+        "GetTickerBlocStateMixin"
+      ]
+    },
+    {
+      "title": "Which of the following best describes the purpose of a Tween?",
+      "answers": [
+        "It controls animation values between begin and end."
+      ],
+      "candidates": [
+        "It defines the duration of an animation.",
+        "It determines the initial state of an animation.",
+        "It changes the timing of an animation loop."
+      ]
+    },
+    {
+      "title": "Which of the following describes a way to apply transitions to common elements across different screens?",
+      "answers": [
+        "Use `Hero` widgets and specify the same `tag`."
+      ],
+      "candidates": [
+        "Use `Hero` widgets and specify different values for `tag`.",
+        "Use `Navigator` widgets and specify the same `key`.",
+        "Use `Navigator` widgets and specify different values for `key`."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Mock Set",
+  "description": "A set of mock questions in English",
+  "author": null,
+  "questions": [
+    {
+      "title": "Pick the number 100.",
+      "answers": [
+        "100"
+      ],
+      "candidates": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "title": "Pick numbers greater than 100.",
+      "answers": [
+        "300",
+        "400"
+      ],
+      "candidates": [
+        "1",
+        "2"
+      ]
+    }
+  ]
+}

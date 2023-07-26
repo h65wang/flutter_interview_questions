@@ -1,0 +1,117 @@
+{
+    "name": "GetX专场",
+    "description": "帮助大伙更加规范地使用GetX，题目难度简单-中等。\n如果无法反抗，那么不如享受其中。\n即使身处黑暗也可以向往光明!!!",
+    "author": "hhh",
+    "questions": [{
+            "title": "以下哪个方法，不能注册`GetXController`？",
+            "answers": [
+                "`Get.find`",
+                "`Get.config`",
+                "`Get.global`"
+            ],
+            "candidates": [
+                "`Get.create`",
+                "`Get.put`",
+                "`Get.lazyPut`",
+                "`Get.putAsync`"
+            ],
+            "difficulty": 1
+        },
+        {
+            "title": "GetX中判定一个`GetXController`生命周期结束的时机是：",
+            "answers": [
+                "路由返回时"
+            ],
+            "candidates": [
+                "`GetPage`中的`Widget`被销毁时",
+                "controller实例没有被引用时",
+                "`StatefulWidget`的`dispose()`方法中"
+            ],
+            "difficulty": 1
+        },
+        {
+            "title": "现在有如下代码：\n  `Get.create(() => FooController());`\n  `final FooController a = Get.find();`\n  `final FooController b = Get.find();`\n继续运行`a == b`的结果为`false`",
+            "answers": [
+                "正确"
+            ],
+            "candidates": [
+                "错误"
+            ],
+            "difficulty": 1
+        },
+        {
+            "title": "`Get.putAsync`会延迟`GetXController`的实例化，实现“按需创建”。",
+            "answers": [
+                "错误"
+            ],
+            "candidates": [
+                "正确"
+            ],
+            "difficulty": 1
+        },
+        {
+            "title": "以下说法正确的有：\n  ①`GetView`是一个`StatefulWidget`\n  ②`GetBuilder`是一个`StatefulWidget`\n  ③`Obx`是一个`StatefulWidget`",
+            "answers": [
+                "②③"
+            ],
+            "candidates": [
+                "①",
+                "②",
+                "①②",
+                "①②③",
+                "均不正确"
+            ],
+            "difficulty": 1
+        },
+        {
+            "title": "以下属于`GetXController`生命周期的有：",
+            "answers": [
+                "`onInit`",
+                "`onReady`",
+                "`onClose`"
+            ],
+            "candidates": [
+                "`onDispose`",
+                "`onUpdate`",
+                "`onChange`"
+            ],
+            "difficulty": 1
+        },
+        {
+            "title": "在`StatelessWidget`的`build`方法中返回一个`Button`，`onPressed`时调用`Get.put(HomeController());`以及`Navigator.of(context).pushNamed('home');`，按下按钮，以下说法正确的是：",
+            "answers": [
+                "会触发名为'home'的路由页面的中间件(如果存在)",
+                "路由到'home'页后，调用`Get.back()`，可以正常返回按钮所在页面"
+            ],
+            "candidates": [
+                "'home'页被从路由栈中移除时，`HomeController`的`onClose`方法会被调用",
+                "在'home'页将不能通过`Get.find<HomeController>()`方法来找到`HomeController`实例"
+            ],
+            "difficulty": 2
+        },
+        {
+            "title": "以下说法正确的是：",
+            "answers": [
+                "`onReady`会在调用`onInit`后的下一帧被调用"
+            ],
+            "candidates": [
+                "`onReady`会在GetXController被实例化完成时被调用",
+                "`onReady`会在`onInit`中的异步操作都完成后再被调用",
+                "`onInit`会在`onReady`之后被调用"
+            ],
+            "difficulty": 2
+        },
+        {
+            "title": "现在有如下代码：\n  `final isSelected = true.obs;`\n下面描述中正确的是：",
+            "answers": [
+                "代码`isSelected.value = null;`无法运行",
+                "代码`isSelected = false;`无法运行"
+            ],
+            "candidates": [
+                "代码`isSelected.value = false;`无法运行",
+                "代码`isSelected = false.obs;`可以运行"
+            ],
+            "difficulty": 1
+        }
+    ]
+}

@@ -1,0 +1,95 @@
+{
+  "name": "动画中等难度",
+  "description": "从英文翻译而来的动画相关题库",
+  "author": "zz",
+  "questions": [
+    {
+      "title": "如果你想定义一个AnimationController(动画控制器),那么你会新建一个:",
+      "answers": [
+        "explicit animation(显式动画)"
+      ],
+      "candidates": [
+        "stateless widget(无状态组件)",
+        "implicit animation(隐式动画)",
+        "AnimatedContainer widget(动画容器组件)"
+      ]
+    },
+    {
+      "title": "`AnimatedContainer`中的以下哪个属性，当该值改变的时候不会呈现动画?",
+      "answers": [
+        "child"
+      ],
+      "candidates": [
+        "width",
+        "color",
+        "padding"
+      ]
+    },
+    {
+      "title": "如果你想在屏幕上切换文本时应用有淡入淡出效果，以下哪个小部件可能有用:",
+      "answers": [
+        "AnimatedSwitcher"
+      ],
+      "candidates": [
+        "AnimatedContainer",
+        "AnimatedText",
+        "AnimatedFade"
+      ]
+    },
+    {
+      "title": "以下哪项是动画组件的默认曲线:",
+      "answers": [
+        "Curves.linear"
+      ],
+      "candidates": [
+        "Curves.easeOut",
+        "Curves.easeInOut",
+        "Curves.ease"
+      ]
+    },
+    {
+      "title": "以下哪项不是组件`TweenAnimationBuilder`的参数:",
+      "answers": [
+        "animation"
+      ],
+      "candidates": [
+        "duration",
+        "builder",
+        "child"
+      ]
+    },
+    {
+      "title": "`AnimationController`可以用来在以下哪个类里:",
+      "answers": [
+        "SingleTickerProviderStateMixin"
+      ],
+      "candidates": [
+        "DynamicAnimationControllerMixin",
+        "TickerAnimationControllerProvider",
+        "GetTickerBlocStateMixin"
+      ]
+    },
+    {
+      "title": "以下哪项最能描述`Tween`的用途?",
+      "answers": [
+        "控制动画从开始到结束的值."
+      ],
+      "candidates": [
+        "定义了动画的持续时间.",
+        "决定动画的初始状态.",
+        "改变动画循环的时间."
+      ]
+    },
+    {
+      "title": "以下哪个描述了在不同屏幕上应用转场效果到公共元素的方法?",
+      "answers": [
+        "使用`Hero`小部件并给它们指定相同的标签."
+      ],
+      "candidates": [
+        "使用`Hero`小部件并为标签指定不同的值.",
+        "使用`Navigator`小部件并指定相同的key.",
+        "使用`Navigator`小部件并为key指定不同的值."
+      ]
+    }
+  ]
+}

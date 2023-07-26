@@ -1,0 +1,116 @@
+{
+  "name": "Beginner Flutter Quiz",
+  "description": "A set of questions for Flutter beginners",
+  "author": "WSBT",
+  "questions": [
+    {
+      "title": "What language is Flutter written in?",
+      "answers": [
+        "Dart"
+      ],
+      "candidates": [
+        "Java",
+        "Kotlin",
+        "Swift"
+      ]
+    },
+    {
+      "title": "What is the starting point for all Flutter apps?",
+      "answers": [
+        "main() function"
+      ],
+      "candidates": [
+        "start() method",
+        "run() function",
+        "begin() method"
+      ]
+    },
+    {
+      "title": "How can you create a Material Design app in Flutter?",
+      "answers": [
+        "Use the `MaterialApp` widget"
+      ],
+      "candidates": [
+        "Select Material Design when creating the project",
+        "Use the `MaterialDesign` widget",
+        "Create a new project with --material-design flag"
+      ]
+    },
+    {
+      "title": "What is a widget in Flutter?",
+      "answers": [
+        "A type of UI building block"
+      ],
+      "candidates": [
+        "A data storage unit",
+        "An interactive component on home screen",
+        "A type of variable"
+      ]
+    },
+    {
+      "title": "How to update the state in a StatefulWidget?",
+      "answers": [
+        "setState()"
+      ],
+      "candidates": [
+        "updateState()",
+        "changeState()",
+        "modifyState()"
+      ]
+    },
+    {
+      "title": "The config file `pubspec.yaml` can be used to define:",
+      "answers": [
+        "packages your app uses",
+        "asset files your app uses",
+        "fonts your app uses",
+        "the name and version of your app"
+      ],
+      "candidates": []
+    },
+    {
+      "title": "What method would you use to run code when a `Future` has completed?",
+      "answers": [
+        "then()"
+      ],
+      "candidates": [
+        "complete()",
+        "finish()",
+        "after()"
+      ]
+    },
+    {
+      "title": "What is the Hot Reload feature in Flutter?",
+      "answers": [
+        "It allows for instant updates after code changes"
+      ],
+      "candidates": [
+        "It speeds up the app launching process",
+        "It cools down the CPU after executing long computations",
+        "It pushes new app versions (app updates) to users"
+      ]
+    },
+    {
+      "title": "Which controller is closely related to capturing user inputs?",
+      "answers": [
+        "TextEditingController"
+      ],
+      "candidates": [
+        "UserInputController",
+        "InputCaptureController",
+        "UserFeedbackController"
+      ]
+    },
+    {
+      "title": "How do you handle async operations in Flutter?",
+      "answers": [
+        "Use `Future`, `async` and `await`"
+      ],
+      "candidates": [
+        "Use `syncFor()`",
+        "Use `wait()` and `then()`",
+        "Use `Promise`, `async` and `await`"
+      ]
+    }
+  ]
+}

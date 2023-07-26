@@ -1,0 +1,26 @@
+{
+  "name": "测试卷",
+  "description": "中文的测试卷",
+  "author": null,
+  "questions": [
+    {
+      "title": "这是用来调试的模拟题，请选择正确选项。",
+      "answers": [
+        "正确"
+      ],
+      "candidates": [
+        "错误"
+      ]
+    },
+    {
+      "title": "这是用来调试的多选题，请选择全部选项。",
+      "answers": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "candidates": []
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "name": "Intermediate Flutter Quiz",
+  "description": "A quiz set for those who have some knowledge and experience.",
+  "author": "WSBT",
+  "questions": [
+    {
+      "title": "What are some types of widgets in Flutter?",
+      "answers": [
+        "StatelessWidget",
+        "StatefulWidget",
+        "InheritedWidget"
+      ],
+      "candidates": [
+        "DynamicWidget"
+      ]
+    },
+    {
+      "title": "What are some proxy widgets in Flutter?",
+      "answers": [
+        "ParentDataWidget",
+        "InheritedWidget"
+      ],
+      "candidates": [
+        "RenderObjectWidget",
+        "LeafRenderObject"
+      ]
+    },
+    {
+      "title": "What is a `BuildContext` in Flutter?",
+      "answers": [
+        "It's an interface for developers to avoid directly using Elements"
+      ],
+      "candidates": [
+        "It's method called every animation frame to build and render widgets",
+        "It's the parent class of all stateless and stateful widgets",
+        "It's a run-time context that contains information about the current device such as screen brightness"
+      ]
+    },
+    {
+      "title": "What's `Navigator` in Flutter used for?",
+      "answers": [
+        "Managing routing between pages"
+      ],
+      "candidates": [
+        "Finding widgets that are higher in the widget tree",
+        "Finding the corresponding element of a given widget",
+        "Building the common navigation menu UI"
+      ]
+    },
+    {
+      "title": "What are some life-cycle events in a StatefulWidget?",
+      "answers": [
+        "didChangeDependencies()",
+        "didUpdateWidget()"
+      ],
+      "candidates": [
+        "didChangeState()",
+        "DidUpdateParentData()"
+      ]
+    },
+    {
+      "title": "How do you transition to a new screen using MaterialApp routes?",
+      "answers": [
+        "By using the `Navigator.push` method"
+      ],
+      "candidates": [
+        "By using the `MaterialApp.open` method",
+        "By calling the `Route.to` method",
+        "By setting the `route` property of the `MaterialApp` widget"
+      ]
+    },
+    {
+      "title": "What is `WillPopScope` used for in Flutter?",
+      "answers": [
+        "It allows developers to intercept a popping event"
+      ],
+      "candidates": [
+        "It pops the current screen to go back to the previous screen",
+        "It allows popping multiple screens at once",
+        "It's for pushing a new replacement screen and popping the previous one"
+      ]
+    },
+    {
+      "title": "How can you get the result of a dialog in Flutter?",
+      "answers": [
+        "By calling `await` on the `showDialog` function"
+      ],
+      "candidates": [
+        "By listening to the `showDialog` result stream",
+        "By setting a callback to the `showDialog` function",
+        "By using a `DialogResult` widget"
+      ]
+    },
+    {
+      "title": "What is `CustomPaint` used for in Flutter?",
+      "answers": [
+        "To provide a canvas on which to draw during the paint phase"
+      ],
+      "candidates": [
+        "To customize the default style of Flutter widgets",
+        "To paint an image from an asset with customized filters",
+        "To help render texts with custom fonts"
+      ]
+    },
+    {
+      "title": "What does a `sliver` in Flutter refer to?",
+      "answers": [
+        "A portion of scrollable area on the screen"
+      ],
+      "candidates": [
+        "An error in the Flutter framework",
+        "A special kind of animation with glowing effects",
+        "A method of theming"
+      ]
+    }
+  ]
+}

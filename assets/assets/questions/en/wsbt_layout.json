@@ -1,0 +1,95 @@
+{
+  "name": "Layouts",
+  "description": "A quiz on Flutter layouts for experienced developers",
+  "author": "WSBT",
+  "questions": [
+    {
+      "title": "What widget can be the parent of a `Positioned` widget?",
+      "answers": [
+        "Stack"
+      ],
+      "candidates": [
+        "Column",
+        "Row",
+        "Container"
+      ]
+    },
+    {
+      "title": "Which widgets can be the parent of an `Expanded` widget?",
+      "answers": [
+        "Flex",
+        "Column",
+        "Row"
+      ],
+      "candidates": [
+        "Flexible"
+      ]
+    },
+    {
+      "title": "What will happen if a big `Container` is placed inside a smaller `Container`?",
+      "answers": [
+        "The inner container will be resized to match its parent container"
+      ],
+      "candidates": [
+        "Flutter will warn about layout overflow with yellow stripes",
+        "Flutter will display a red error screen",
+        "The parent container will be expanded to match its child container"
+      ]
+    },
+    {
+      "title": "What can be used in a `build` method to check the current box constraint?",
+      "answers": [
+        "Use a `LayoutBuilder` widget"
+      ],
+      "candidates": [
+        "Check `BuildContext` argument",
+        "Read from `CurrentConstraints` variable",
+        "Use a `MediaQuery` widget"
+      ]
+    },
+    {
+      "title": "Which widget is best for creating a box that's exactly half the width of its parent?",
+      "answers": [
+        "`FractionallySizedBox`"
+      ],
+      "candidates": [
+        "`SizedBox`",
+        "`ConstrainedBox`",
+        "`MediaQuery`"
+      ]
+    },
+    {
+      "title": "What is the size of this `Container(color: Colors.red)` widget?",
+      "answers": [
+        "It will be as large as its parent widget allows."
+      ],
+      "candidates": [
+        "It will not be visible because `width` and `height` are not specified.",
+        "It will not be visible because it has no `child` property.",
+        "It will automatically adapt to the screen size `MediaQuery` provides."
+      ]
+    },
+    {
+      "title": "What is true about `CrossAxisAlignment.stretch`?",
+      "answers": [
+        "It passes a tight constraint on cross-axis size for all of its children"
+      ],
+      "candidates": [
+        "It passes a loose constraint on cross-axis size for all of its children",
+        "It stretches all of its children to match cross-axis size, similar to `BoxFit.stretch` method",
+        "It still allows children to have different sizes but will automatically align them in the center"
+      ]
+    },
+    {
+      "title": "What does `ConstrainedBox` do in Flutter?",
+      "answers": [
+        "It imposes additional constraints to its child."
+      ],
+      "candidates": [
+        "It removes parent constraint for its child.",
+        "It creates new constraints for unconstrained children.",
+        "It removes parent constraints and creates new constraints for its child."
+      ]
+    }
+  ]
+}
