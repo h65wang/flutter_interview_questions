@@ -21,10 +21,12 @@
     "locale": "zh-cn",
     "folder": "zh",
     "files": [
-      "mock.json",
-      "zh_zz.json",
+      "advanced.json",
+      "dart_basic.json",
+      "flutter_basic.json",
       "getx_specialization.json",
-      "advanced.json"
+      "mock.json",
+      "zh_zz.json"
     ],
     "translations": {
       "total-question-count": "共%题",
