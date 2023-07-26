@@ -1,0 +1,136 @@
+{
+  "name": "Dart语言基础",
+  "description": "Dart编程的入门基础题",
+  "author": "马嘉伦",
+  "questions": [
+    {
+      "title": "Object和dynamic的区别",
+      "answers": [
+        "Object是所有类的基类，dynamic是一个特殊的类型，表示任意类型"
+      ],
+      "candidates": [
+        "Object和dynamic都表示任意类型，但Object有更多的方法",
+        "Object是一个抽象类，不能实例化，dynamic是一个具体类，可以实例化",
+        "Object和dynamic都是抽象类，但Object有更多的子类"
+      ]
+    },
+    {
+      "title": "对可能为空的Function如何调用才能不报错",
+      "answers": [
+        "使用?.运算符，例如f?.call()"
+      ],
+      "candidates": [
+        "使用??运算符，例如f ?? call()",
+        "使用!运算符，例如f!.call()",
+        "使用as运算符，例如f as Function"
+      ]
+    },
+    {
+      "title": "dart的function如何声明可选参数，有几种方法，分别有什么区别，有什么限制",
+      "answers": [
+        "可以使用[]或{}表示可选参数，[]表示位置可选参数，{}表示命名可选参数，位置可选参数必须在命名可选参数之前"
+      ],
+      "candidates": [
+        "可以使用[]或{}表示可选参数，[]表示命名可选参数，{}表示位置可选参数，命名可选参数必须在位置可选参数之前",
+        "可以使用[]或{}表示可选参数，[]表示位置可选参数，{}表示命名可选参数，没有顺序限制",
+        "可以使用[]或{}表示可选参数，[]表示命名可选参数，{}表示位置可选参数，没有顺序限制"
+      ]
+    },
+    {
+      "title": "dart对于可能为空的数据设计了什么语法糖，如何使用",
+      "answers": [
+        "dart使用?和!运算符来处理空安全，?表示可以为空，!表示不为空"
+      ],
+      "candidates": [
+        "dart使用??和??=运算符来处理空安全，??表示如果为空则赋值，??=表示如果不为空则赋值",
+        "dart使用?.和??运算符来处理空安全，?.表示如果不为空则调用方法或属性，??表示如果为空则返回默认值"
+      ]
+    },
+    {
+      "title": "Dart异步编程中的async关键字有什么作用",
+      "answers": [
+        "async关键字用于标记一个函数为异步函数，异步函数返回一个Future对象，并且可以使用await关键字等待异步操作完成"
+      ],
+      "candidates": [
+        "async关键字用于标记一个函数为同步函数，同步函数返回一个Future对象，并且可以使用await关键字等待同步操作完成",
+        "async关键字用于标记一个函数为异步函数，异步函数返回一个Stream对象，并且可以使用await for关键字遍历异步数据流",
+        "async关键字用于标记一个函数为同步函数，同步函数返回一个Stream对象，并且可以使用await for关键字遍历同步数据流"
+      ]
+    },
+    {
+      "title": "如何实现Future并发",
+      "answers": [
+        "使用Future.wait方法将多个Future合并为一个Future，并等待所有Future完成后返回结果列表"
+      ],
+      "candidates": [
+        "使用Future.any方法将多个Future合并为一个Future，并等待任意一个Future完成后返回结果",
+        "使用Future.race方法将多个Future合并为一个Future，并等待最快的一个Future完成后返回结果"
+      ]
+    },
+    {
+      "title": "如何实现限制Future最长执行时间（超时）",
+      "answers": [
+        "使用Future.timeout方法给Future设置一个超时时间，并提供一个超时回调函数"
+      ],
+      "candidates": [
+        "使用Future.delayed方法给Future设置一个延迟时间，并提供一个延迟回调函数",
+        "使用Future.doWhile方法给Future设置一个循环条件，并提供一个循环回调函数",
+        "使用Future.sync方法给Future设置一个同步标志，并提供一个同步回调函数"
+      ]
+    },
+    {
+      "title": "如何实现限制Future最短执行时间（至少loading一秒）",
+      "answers": [
+        "使用Future.wait方法将目标Future和一个延迟一秒的Future合并为一个Future，并等待两个Future都完成后返回结果"
+      ],
+      "candidates": [
+        "使用Future.any方法将目标Future和一个延迟一秒的Future合并为一个Future，并等待任意一个Future完成后返回结果",
+        "使用Future.race方法将目标Future和一个延迟一秒的Future合并为一个Future，并等待最快的一个Future完成后返回结果"
+      ]
+    },
+    {
+      "title": "对结构不定的嵌套map（通常是来自服务器的嵌套json对象）取值，经常因为数据类型或者空值引发错误，讲一讲如何设计较好的方案。",
+      "answers": [
+        "可以使用json_serializable包来生成json序列化和反序列化的代码，将map转换为强类型的对象，避免类型错误和空值错误。"
+      ],
+      "candidates": [
+        "可以使用json_annotation包来生成json注解和验证的代码，将map转换为强类型的对象，避免类型错误和空值错误。",
+        "可以使用json_dynamic包来生成json动态解析和转换的代码，将map转换为弱类型的对象，避免类型错误和空值错误。",
+        "可以使用json_mapper包来生成json映射和转换的代码，将map转换为泛型的对象，避免类型错误和空值错误。"
+      ]
+    },
+    {
+      "title": "讲一讲dart中的操作符重载的应用",
+      "answers": [
+        "dart中可以使用operator关键字来重载操作符，例如+,-,*,[],等，实现自定义类的运算逻辑和语法糖。"
+      ],
+      "candidates": [
+        "dart中可以使用override关键字来重载操作符，例如+,-,*,[],等，实现自定义类的运算逻辑和语法糖。",
+        "dart中可以使用extension关键字来重载操作符，例如+,-,*,[],等，实现自定义类的运算逻辑和语法糖。",
+        "dart中可以使用mixin关键字来重载操作符，例如+,-,*,[],等，实现自定义类的运算逻辑和语法糖。"
+      ]
+    },
+    {
+      "title": "dart的map的内部实现基于什么",
+      "answers": [
+        "dart的map是基于哈希表实现的，根据键值对进行存储和查找。"
+      ],
+      "candidates": [
+        "dart的map是基于链表实现的，根据键值对进行存储和查找。",
+        "dart的map是基于数组实现的，根据键值对进行存储和查找。",
+        "dart的map是基于树实现的，根据键值对进行存储和查找。"
+      ]
+    },
+    {
+      "title": "为什么map的构造方法是工厂方法",
+      "answers": [
+        "map的构造方法是工厂方法，因为它可以根据不同的参数返回不同类型的map实例，例如LinkedHashMap或HashMap。"
+      ],
+      "candidates": [
+        "map的构造方法是工厂方法，因为它可以根据不同的参数返回相同类型的map实例，例如LinkedHashMap或HashMap。",
+        "map的构造方法是工厂方法，因为它可以根据不同的参数返回不同大小的map实例，例如LinkedHashMap或HashMap。",
+        "map的构造方法是工厂方法，因为它可以根据不同的参数返回不同性能的map实例，例如LinkedHashMap或HashMap。"
+      ]
+    }
+  ]
+}
