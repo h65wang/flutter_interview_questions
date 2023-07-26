@@ -1,0 +1,84 @@
+{
+  "name": "Flutter基础",
+  "description": "Flutter编程的入门基础题",
+  "author": "马嘉伦",
+  "questions": [
+    {
+      "title": "StatelessWidget和StatefulWidget的差别，在何时使用",
+      "answers": [
+        "StatelessWidget不维护状态，只依赖传入参数。StatefulWidget维护状态，可以改变自身状态和界面。如果组件不会随用户交互或其他因素改变，用StatelessWidget，否则用StatefulWidget。"
+      ],
+      "candidates": [
+        "StatelessWidget维护状态，可以改变自身状态和界面。StatefulWidget不维护状态，只依赖传入参数。如果组件会随用户交互或其他因素改变，用StatelessWidget，否则用StatefulWidget。",
+        "StatelessWidget和StatefulWidget都维护状态，都可以改变自身状态和界面。区别在于StatelessWidget的状态由父组件管理，而StatefulWidget的状态由自身管理。如果组件的状态需要跨越多个组件共享，用StatelessWidget，否则用StatefulWidget。",
+        "StatelessWidget和StatefulWidget都不维护状态，都只依赖传入参数。区别在于StatelessWidget无法响应用户交互，而StatefulWidget可以响应用户交互。如果组件只是展示静态内容，用StatelessWidget，否则用StatefulWidget。"
+      ]
+    },
+    {
+      "title": "ListView和ListView.builder的差别",
+      "answers": [
+        "ListView直接创建所有子组件，ListView.builder按需创建子组件，适合大量或无限列表。"
+      ],
+      "candidates": [
+        "ListView按需创建所有子组件，ListView.builder直接创建子组件，适合小量或有限列表。",
+        "ListView和ListView.builder都直接创建所有子组件，区别在于ListView是水平滚动，ListView.builder是垂直滚动。",
+        "ListView和ListView.builder都按需创建子组件，区别在于ListView是固定高度，ListView.builder是可变高度。"
+      ]
+    },
+    {
+      "title": "Widget的Key有什么用，不写key在什么时候会出现何种明显问题。",
+      "answers": [
+        "Key用于标识Widget的唯一性，帮助框架判断是否需要更新或复用Widget。不写key可能导致状态丢失或混乱，例如在列表中插入或删除元素时。"
+      ],
+      "candidates": [
+        "Key用于标识Widget的类型，帮助框架判断是否需要重建或销毁Widget。不写key可能导致性能下降或内存泄漏，例如在动画中频繁创建或销毁元素时。",
+        "Key用于标识Widget的位置，帮助框架判断是否需要移动或替换Widget。不写key可能导致布局错乱或冲突，例如在拖拽或排序元素时。",
+        "Key用于标识Widget的属性，帮助框架判断是否需要修改或恢复Widget。不写key可能导致样式不一致或异常，例如在主题变化或异常处理时。"
+      ]
+    },
+    {
+      "title": "实现一个AnimatedOpacity组件需要响应哪个生命周期",
+      "answers": [
+        "实现一个AnimatedOpacity组件需要响应initState和didUpdateWidget两个生命周期，分别用于初始化和更新动画控制器和动画对象。"
+      ],
+      "candidates": [
+        "实现一个AnimatedOpacity组件需要响应build和dispose两个生命周期，分别用于构建和销毁动画控制器和动画对象。",
+        "实现一个AnimatedOpacity组件需要响应didChangeDependencies和deactivate两个生命周期，分别用于处理依赖变化和暂停动画控制器和动画对象。",
+        "实现一个AnimatedOpacity组件需要响应didMount和didUnmount两个生命周期，分别用于挂载和卸载动画控制器和动画对象。"
+      ]
+    },
+    {
+      "title": "setState在干什么",
+      "answers": [
+        "setState是一个用于通知框架当前状态发生变化的方法，它会触发当前组件的重新构建，并且更新界面。"
+      ],
+      "candidates": [
+        "setState是一个用于保存当前状态的方法，它会将当前状态存储到本地，并且持久化数据。",
+        "setState是一个用于恢复当前状态的方法，它会从本地读取之前保存的状态，并且恢复数据。",
+        "setState是一个用于清除当前状态的方法，它会将当前状态置为空，并且释放资源。"
+      ]
+    },
+    {
+      "title": "TikerProviderStateMixin在干什么",
+      "answers": [
+        "TikerProviderStateMixin是一个混入类，它可以为当前组件提供一个Ticker对象，用于驱动动画或其他周期性的任务。"
+      ],
+      "candidates": [
+        "TikerProviderStateMixin是一个抽象类，它可以为当前组件提供一个Timer对象，用于执行延时或重复的任务。",
+        "TikerProviderStateMixin是一个接口类，它可以为当前组件提供一个Future对象，用于处理异步或等待的任务。",
+        "TikerProviderStateMixin是一个工厂类，它可以为当前组件提供一个Widget对象，用于创建或复用子组件。"
+      ]
+    },
+    {
+      "title": "Flutter 是如何与原生Android、iOS进行通信的",
+      "answers": [
+        "Flutter 与原生Android、iOS进行通信的方式是通过平台通道（platform channel），它是一种用于在Dart代码和原生代码之间传递消息的机制。"
+      ],
+      "candidates": [
+        "Flutter 与原生Android、iOS进行通信的方式是通过插件（plugin），它是一种用于在Dart代码和原生代码之间调用方法的机制。",
+        "Flutter 与原生Android、iOS进行通信的方式是通过桥接（bridge），它是一种用于在Dart代码和原生代码之间共享数据的机制。",
+        "Flutter 与原生Android、iOS进行通信的方式是通过嵌入（embedder），它是一种用于在Dart代码和原生代码之间渲染界面的机制。"
+      ]
+    }
+  ]
+}
