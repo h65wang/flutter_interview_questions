@@ -5,9 +5,11 @@
     "folder": "en",
     "files": [
       "mock.json",
-      "beginner_1.json",
+      "wsbt_beginner.json",
+      "wsbt_intermediate.json",
       "wsbt_animation.json",
-      "wsbt_key.json"
+      "wsbt_key.json",
+      "wsbt_layout.json"
     ],
     "translations": {
       "total-question-count": "% Questions",
@@ -21,10 +23,12 @@
     "locale": "zh-cn",
     "folder": "zh",
     "files": [
-      "mock.json",
-      "zh_zz.json",
+      "advanced.json",
+      "dart_basic.json",
+      "flutter_basic.json",
       "getx_specialization.json",
-      "advanced.json"
+      "mock.json",
+      "zh_zz.json"
     ],
     "translations": {
       "total-question-count": "共%题",

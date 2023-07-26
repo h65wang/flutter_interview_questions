@@ -1,7 +1,7 @@
 {
   "name": "Beginner Flutter Quiz",
   "description": "A set of questions for Flutter beginners",
-  "author": "GPT-4",
+  "author": "WSBT",
   "questions": [
     {
       "title": "What language is Flutter written in?",
@@ -59,17 +59,17 @@
       ]
     },
     {
-      "title": "What is pubspec.yaml?",
+      "title": "The config file `pubspec.yaml` can be used to define:",
       "answers": [
-        "A configuration file that defines packages your app uses",
-        "A configuration file that defines asset files your app uses",
-        "A configuration file that defines fonts your app uses",
-        "A configuration file that defines the name and version of your app"
+        "packages your app uses",
+        "asset files your app uses",
+        "fonts your app uses",
+        "the name and version of your app"
       ],
       "candidates": []
     },
     {
-      "title": "What method would you use to run code when a Future has completed?",
+      "title": "What method would you use to run code when a `Future` has completed?",
       "answers": [
         "then()"
       ],
@@ -98,18 +98,18 @@
       "candidates": [
         "UserInputController",
         "InputCaptureController",
-        "None of the above"
+        "UserFeedbackController"
       ]
     },
     {
       "title": "How do you handle async operations in Flutter?",
       "answers": [
-        "Use Future, async and await"
+        "Use `Future`, `async` and `await`"
       ],
       "candidates": [
-        "Use Sync",
-        "Use Wait",
-        "None of the above"
+        "Use `syncFor()`",
+        "Use `wait()` and `then()`",
+        "Use `Promise`, `async` and `await`"
       ]
     }
   ]

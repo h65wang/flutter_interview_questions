@@ -70,44 +70,35 @@ class _SelectPageState extends State<SelectPage> {
           });
         },
       );
-      var card2 = _Card(
-        questionSet: currentQuestionSets[i * 2 + 1],
-        language: _language,
-        selected: _sets.contains(currentQuestionSets[i * 2 + 1]),
-        onTap: () {
-          setState(() {
-            final current = currentQuestionSets[i * 2 + 1];
-            if (_sets.contains(current))
-              _sets.remove(current);
-            else
-              _sets.add(current);
-          });
-        },
-      );
+      var card2 = currentQuestionSets.asMap()[i * 2 + 1] == null
+          ? Container()
+          : _Card(
+              questionSet: currentQuestionSets[i * 2 + 1],
+              language: _language,
+              selected: _sets.contains(currentQuestionSets[i * 2 + 1]),
+              onTap: () {
+                setState(() {
+                  final current = currentQuestionSets[i * 2 + 1];
+                  if (_sets.contains(current))
+                    _sets.remove(current);
+                  else
+                    _sets.add(current);
+                });
+              },
+            );
       if (MediaQuery.of(context).size.width >= 700) {
         cards.add(
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: card,
-              ),
-              Expanded(
-                child: currentQuestionSets.asMap()[i * 2 + 1] == null
-                    ? Container()
-                    : card2,
-              )
+              Expanded(child: card),
+              Expanded(child: card2),
             ],
           ),
         );
       } else {
         cards.add(Column(
-          children: [
-            card,
-            currentQuestionSets.asMap()[i * 2 + 1] == null
-                ? Container()
-                : card2,
-          ],
+          children: [card, card2],
         ));
       }
     }
