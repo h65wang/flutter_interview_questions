@@ -64,15 +64,15 @@
         "By using the `Navigator.push` method"
       ],
       "candidates": [
-        "By using the `MaterialApp.push` method",
+        "By using the `MaterialApp.open` method",
         "By calling the `Route.to` method",
-        "By replacing the `routes` value of the `MaterialApp` widget"
+        "By setting the `route` property of the `MaterialApp` widget"
       ]
     },
     {
       "title": "What is `WillPopScope` used for in Flutter?",
       "answers": [
-        "It's for intercepting a popping event"
+        "It allows developers to intercept a popping event"
       ],
       "candidates": [
         "It pops the current screen to go back to the previous screen",

@@ -4,10 +4,12 @@
     "locale": "en-en",
     "folder": "en",
     "files": [
+      "mock.json",
       "wsbt_beginner.json",
       "wsbt_intermediate.json",
       "wsbt_animation.json",
-      "wsbt_key.json"
+      "wsbt_key.json",
+      "wsbt_layout.json"
     ],
     "translations": {
       "total-question-count": "% Questions",
