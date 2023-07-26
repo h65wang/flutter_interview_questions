@@ -4,8 +4,8 @@
     "locale": "en-en",
     "folder": "en",
     "files": [
-      "mock.json",
-      "beginner_1.json",
+      "wsbt_beginner.json",
+      "wsbt_intermediate.json",
       "wsbt_animation.json",
       "wsbt_key.json"
     ],
