@@ -147,18 +147,5 @@
       ],
         "explanation": "`InheritedModel`是Flutter中用于在小部件树中传递数据和状态的小部件，它可以在小部件树中传递多个数据值。"
     },
-    {
-      "title": "Flutter中的`SliverAppBar`小部件用于什么？",
-      "answers": [
-        "实现折叠效果的应用栏"
-      ],
-      "candidates": [
-        "创建可滚动的导航栏",
-        "用于创建悬浮的小部件",
-        "用于实现页面过渡动画"
-      ],
-      "explanation": "`SliverAppBar`是Flutter中用于实现折叠效果的应用栏的小部件，可以在用户滚动页面时折叠和展开应用栏。"
-    }
-
   ]
 }
