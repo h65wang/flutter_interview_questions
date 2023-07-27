@@ -69,18 +69,18 @@
       ]
     },
     {
-      "title": "What is an example purpose of ValueKey in Flutter?",
+      "title": "What is an example purpose of `ValueKey` in Flutter?",
       "answers": [
-        "To keep track of a widget in a list when sorting"
+        "To keep track of widgets in an list that can be reordered"
       ],
       "candidates": [
-        "To keep track of a global value for widget",
+        "To keep track of a global variable for widget",
         "To keep track of a widget when it appears on a different page",
         "To keep track of widget state when they become invisible for the user"
       ]
     },
     {
-      "title": "What differentiates ObjectKey from ValueKey?",
+      "title": "What differentiates `ObjectKey` from `ValueKey`?",
       "answers": [
         "ObjectKey is compared with object identity while ValueKey uses equals comparison"
       ],
@@ -88,17 +88,6 @@
         "ObjectKey can be used to store any object while ValueKey must store primitive values",
         "ObjectKey is used for storing UI objects while ValueKey is used for data binding",
         "ObjectKey is stored in memory heap while ValueKey is stored on memory stack"
-      ]
-    },
-    {
-      "title": "Which kind of key is commonly used when items in a list can be reordered?",
-      "answers": [
-        "ValueKey"
-      ],
-      "candidates": [
-        "GlobalKey",
-        "PrivateKey",
-        "ListKey"
       ]
     }
   ]

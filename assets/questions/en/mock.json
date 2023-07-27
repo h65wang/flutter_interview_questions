@@ -4,7 +4,7 @@
   "author": null,
   "questions": [
     {
-      "title": "Pick number 100.",
+      "title": "Pick the number 100.",
       "answers": [
         "100"
       ],
@@ -15,7 +15,7 @@
       ]
     },
     {
-      "title": "Pick number greater than 100.",
+      "title": "Pick numbers greater than 100.",
       "answers": [
         "300",
         "400"
